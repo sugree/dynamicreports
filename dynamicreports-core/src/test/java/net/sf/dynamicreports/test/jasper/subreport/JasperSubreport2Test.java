@@ -20,7 +20,7 @@
  */
 package net.sf.dynamicreports.test.jasper.subreport;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
 import net.sf.dynamicreports.report.builder.component.SubreportBuilder;
@@ -82,7 +82,7 @@ public class JasperSubreport2Test extends AbstractJasperValueTest implements Ser
             return JasperCompileManager.compileReport(is);
         } catch (JRException e) {
             e.printStackTrace();
-            Assert.fail(e.getMessage());
+            Assertions.fail(e.getMessage());
             return null;
         }
     }
@@ -93,7 +93,7 @@ public class JasperSubreport2Test extends AbstractJasperValueTest implements Ser
             return JasperCompileManager.compileReport(is);
         } catch (JRException e) {
             e.printStackTrace();
-            Assert.fail(e.getMessage());
+            Assertions.fail(e.getMessage());
             return null;
         }
     }

@@ -20,7 +20,15 @@
  */
 package net.sf.dynamicreports.test.jasper.component;
 
-import org.junit.Assert;
+import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
+import static net.sf.dynamicreports.report.builder.DynamicReports.col;
+import static net.sf.dynamicreports.report.builder.DynamicReports.stl;
+import static net.sf.dynamicreports.report.builder.DynamicReports.template;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Assertions;
+
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.ReportTemplateBuilder;
 import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
@@ -30,13 +38,6 @@ import net.sf.dynamicreports.test.jasper.AbstractJasperPositionTest;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRPrintElement;
 
-import java.util.List;
-
-import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
-import static net.sf.dynamicreports.report.builder.DynamicReports.col;
-import static net.sf.dynamicreports.report.builder.DynamicReports.stl;
-import static net.sf.dynamicreports.report.builder.DynamicReports.template;
-
 /**
  * @author Ricardo Mariaca
  */
@@ -44,9 +45,9 @@ public class ListBackgroundComponentTest extends AbstractJasperPositionTest {
     private TextColumnBuilder<String> column;
 
     @Override
-    protected void configureReport(JasperReportBuilder rb) {
-        RectangleBuilder background = cmp.rectangle();
-        ReportTemplateBuilder template = template().setDetailBackgroundComponent(background);
+    protected void configureReport(final JasperReportBuilder rb) {
+        final RectangleBuilder background = cmp.rectangle();
+        final ReportTemplateBuilder template = template().setDetailBackgroundComponent(background);
 
         rb.setTemplate(template)
           .setTitleBackgroundComponent(background)
@@ -76,8 +77,8 @@ public class ListBackgroundComponentTest extends AbstractJasperPositionTest {
         elementPositionTest("summary.list1", 0, 10, 342, 575, 84);
         elementPositionTest("summary.list1.background", 0, 0, 0, 575, 84);
         elementPositionTest("summary.list2", 0, 0, 26, 575, 16);
-        List<JRPrintElement> elements = findElement("summary.list2.background");
-        Assert.assertTrue("list background", elements.isEmpty());
+        final List<JRPrintElement> elements = findElement("summary.list2.background");
+        Assertions.assertTrue(elements.isEmpty(), "list background");
         elementPositionTest("summary.list3", 0, 143, 0, 288, 16);
         elementPositionTest("summary.list3.background", 0, 0, 0, 288, 16);
         elementPositionTest("summary.list4", 0, 0, 42, 575, 42);
@@ -86,7 +87,7 @@ public class ListBackgroundComponentTest extends AbstractJasperPositionTest {
 
     @Override
     protected JRDataSource createDataSource() {
-        DRDataSource dataSource = new DRDataSource("field1");
+        final DRDataSource dataSource = new DRDataSource("field1");
         dataSource.add("value1");
         dataSource.add("value2");
         return dataSource;

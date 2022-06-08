@@ -20,7 +20,7 @@
  */
 package net.sf.dynamicreports.test.jasper.templatedesign;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
 import net.sf.dynamicreports.report.builder.subtotal.AggregationSubtotalBuilder;
@@ -62,7 +62,7 @@ public class TemplateDesign1Test extends AbstractJasperValueTest implements Seri
         numberOfPagesTest(1);
 
         JasperPrint jasperPrint = getJasperPrint();
-        Assert.assertEquals("templatedesign1", jasperPrint.getName());
+        Assertions.assertEquals("templatedesign1", jasperPrint.getName());
 
         columnTitleValueTest(column1, "Column1");
         columnDetailValueTest(column1, "row0", "row1");

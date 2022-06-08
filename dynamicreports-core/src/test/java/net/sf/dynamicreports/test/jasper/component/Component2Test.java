@@ -20,7 +20,10 @@
  */
 package net.sf.dynamicreports.test.jasper.component;
 
-import org.junit.Assert;
+import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
+
+import org.junit.jupiter.api.Assertions;
+
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.constant.LineDirection;
 import net.sf.dynamicreports.test.jasper.AbstractJasperPositionTest;
@@ -28,15 +31,13 @@ import net.sf.jasperreports.engine.JRPrintLine;
 import net.sf.jasperreports.engine.JRPrintRectangle;
 import net.sf.jasperreports.engine.type.LineDirectionEnum;
 
-import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
-
 /**
  * @author Ricardo Mariaca
  */
 public class Component2Test extends AbstractJasperPositionTest {
 
     @Override
-    protected void configureReport(JasperReportBuilder rb) {
+    protected void configureReport(final JasperReportBuilder rb) {
         rb.title(cmp.horizontalList(cmp.line(), cmp.filler().setFixedWidth(10), cmp.line()),
                  cmp.horizontalList(cmp.line().setFixedDimension(1, 50), cmp.line().setDirection(LineDirection.TOP_DOWN), cmp.line().setDirection(LineDirection.BOTTOM_UP)), cmp.ellipse(),
                  cmp.rectangle(), cmp.roundRectangle(), cmp.roundRectangle(20), cmp.verticalGap(30), cmp.horizontalList(cmp.text(""), cmp.horizontalGap(10), cmp.text("")),
@@ -57,9 +58,9 @@ public class Component2Test extends AbstractJasperPositionTest {
         elementPositionTest("title.line5", 0, 288, 0, 287, 50);
 
         JRPrintLine line = (JRPrintLine) getElementAt("title.line4", 0);
-        Assert.assertEquals("Line direction", LineDirectionEnum.TOP_DOWN, line.getDirectionValue());
+        Assertions.assertEquals(LineDirectionEnum.TOP_DOWN, line.getDirectionValue(), "Line direction");
         line = (JRPrintLine) getElementAt("title.line5", 0);
-        Assert.assertEquals("Line direction", LineDirectionEnum.BOTTOM_UP, line.getDirectionValue());
+        Assertions.assertEquals(LineDirectionEnum.BOTTOM_UP, line.getDirectionValue(), "Line direction");
 
         elementPositionTest("title.ellipse1", 0, 10, 61, 575, 100);
         elementPositionTest("title.rectangle1", 0, 10, 161, 575, 100);
@@ -67,11 +68,11 @@ public class Component2Test extends AbstractJasperPositionTest {
         elementPositionTest("title.rectangle3", 0, 10, 361, 575, 100);
 
         JRPrintRectangle rectangle = (JRPrintRectangle) getElementAt("title.rectangle1", 0);
-        Assert.assertEquals("Rectangle radius", 0, rectangle.getRadius());
+        Assertions.assertEquals(0, rectangle.getRadius(), "Rectangle radius");
         rectangle = (JRPrintRectangle) getElementAt("title.rectangle2", 0);
-        Assert.assertEquals("Rectangle radius", 10, rectangle.getRadius());
+        Assertions.assertEquals(10, rectangle.getRadius(), "Rectangle radius");
         rectangle = (JRPrintRectangle) getElementAt("title.rectangle3", 0);
-        Assert.assertEquals("Rectangle radius", 20, rectangle.getRadius());
+        Assertions.assertEquals(20, rectangle.getRadius(), "Rectangle radius");
 
         elementPositionTest("title.list4", 0, 10, 491, 575, 16);
         elementPositionTest("title.textField1", 0, 0, 0, 282, 16);

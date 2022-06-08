@@ -20,7 +20,7 @@
  */
 package net.sf.dynamicreports.test.jasper.chart;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
 import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
@@ -82,13 +82,13 @@ public class ChartHyperLinkTest extends AbstractJasperChartTest implements Seria
         Rectangle renderingArea = new Rectangle(0, 0, image.getWidth(), image.getHeight());
         try {
             List<JRPrintImageAreaHyperlink> imageAreaHyperlinks = renderer.getImageAreaHyperlinks(renderingArea);
-            Assert.assertEquals("1_value1_1", imageAreaHyperlinks.get(0).getHyperlink().getHyperlinkTooltip());
-            Assert.assertEquals("1_value2_2", imageAreaHyperlinks.get(1).getHyperlink().getHyperlinkTooltip());
-            Assert.assertEquals("1_value3_3", imageAreaHyperlinks.get(2).getHyperlink().getHyperlinkTooltip());
-            Assert.assertEquals("1_value4_4", imageAreaHyperlinks.get(3).getHyperlink().getHyperlinkTooltip());
+            Assertions.assertEquals("1_value1_1", imageAreaHyperlinks.get(0).getHyperlink().getHyperlinkTooltip());
+            Assertions.assertEquals("1_value2_2", imageAreaHyperlinks.get(1).getHyperlink().getHyperlinkTooltip());
+            Assertions.assertEquals("1_value3_3", imageAreaHyperlinks.get(2).getHyperlink().getHyperlinkTooltip());
+            Assertions.assertEquals("1_value4_4", imageAreaHyperlinks.get(3).getHyperlink().getHyperlinkTooltip());
         } catch (JRException e) {
             e.printStackTrace();
-            Assert.fail(e.getMessage());
+            Assertions.fail(e.getMessage());
         }
 
         image = (JRPrintImage) getElementAt("summary.chart2", 0);
@@ -96,17 +96,17 @@ public class ChartHyperLinkTest extends AbstractJasperChartTest implements Seria
         renderingArea = new Rectangle(0, 0, image.getWidth(), image.getHeight());
         try {
             List<JRPrintImageAreaHyperlink> imageAreaHyperlinks = renderer.getImageAreaHyperlinks(renderingArea);
-            Assert.assertEquals("2_value1_1", imageAreaHyperlinks.get(0).getHyperlink().getHyperlinkTooltip());
-            Assert.assertEquals("3_value1_1", imageAreaHyperlinks.get(1).getHyperlink().getHyperlinkTooltip());
-            Assert.assertEquals("2_value2_2", imageAreaHyperlinks.get(2).getHyperlink().getHyperlinkTooltip());
-            Assert.assertEquals("3_value2_2", imageAreaHyperlinks.get(3).getHyperlink().getHyperlinkTooltip());
-            Assert.assertEquals("2_value3_3", imageAreaHyperlinks.get(4).getHyperlink().getHyperlinkTooltip());
-            Assert.assertEquals("3_value3_3", imageAreaHyperlinks.get(5).getHyperlink().getHyperlinkTooltip());
-            Assert.assertEquals("2_value4_4", imageAreaHyperlinks.get(6).getHyperlink().getHyperlinkTooltip());
-            Assert.assertEquals("3_value4_4", imageAreaHyperlinks.get(7).getHyperlink().getHyperlinkTooltip());
+            Assertions.assertEquals("2_value1_1", imageAreaHyperlinks.get(0).getHyperlink().getHyperlinkTooltip());
+            Assertions.assertEquals("3_value1_1", imageAreaHyperlinks.get(1).getHyperlink().getHyperlinkTooltip());
+            Assertions.assertEquals("2_value2_2", imageAreaHyperlinks.get(2).getHyperlink().getHyperlinkTooltip());
+            Assertions.assertEquals("3_value2_2", imageAreaHyperlinks.get(3).getHyperlink().getHyperlinkTooltip());
+            Assertions.assertEquals("2_value3_3", imageAreaHyperlinks.get(4).getHyperlink().getHyperlinkTooltip());
+            Assertions.assertEquals("3_value3_3", imageAreaHyperlinks.get(5).getHyperlink().getHyperlinkTooltip());
+            Assertions.assertEquals("2_value4_4", imageAreaHyperlinks.get(6).getHyperlink().getHyperlinkTooltip());
+            Assertions.assertEquals("3_value4_4", imageAreaHyperlinks.get(7).getHyperlink().getHyperlinkTooltip());
         } catch (JRException e) {
             e.printStackTrace();
-            Assert.fail(e.getMessage());
+            Assertions.fail(e.getMessage());
         }
     }
 

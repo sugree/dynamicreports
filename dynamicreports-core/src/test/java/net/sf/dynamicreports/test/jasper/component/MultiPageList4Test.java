@@ -20,7 +20,13 @@
  */
 package net.sf.dynamicreports.test.jasper.component;
 
-import org.junit.Assert;
+import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
+import static net.sf.dynamicreports.report.builder.DynamicReports.col;
+import static net.sf.dynamicreports.report.builder.DynamicReports.report;
+import static net.sf.dynamicreports.report.builder.DynamicReports.type;
+
+import org.junit.jupiter.api.Assertions;
+
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
 import net.sf.dynamicreports.report.builder.component.MultiPageListBuilder;
@@ -31,11 +37,6 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRPrintElement;
 import net.sf.jasperreports.engine.JRPrintText;
 
-import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
-import static net.sf.dynamicreports.report.builder.DynamicReports.col;
-import static net.sf.dynamicreports.report.builder.DynamicReports.report;
-import static net.sf.dynamicreports.report.builder.DynamicReports.type;
-
 /**
  * @author Ricardo Mariaca
  */
@@ -43,10 +44,10 @@ public class MultiPageList4Test extends AbstractJasperValueTest {
     private TextColumnBuilder<String> column1;
 
     @Override
-    protected void configureReport(JasperReportBuilder rb) {
+    protected void configureReport(final JasperReportBuilder rb) {
         column1 = col.column("Column1", "field1", type.stringType());
 
-        MultiPageListBuilder multiPageList = cmp.multiPageList();
+        final MultiPageListBuilder multiPageList = cmp.multiPageList();
         multiPageList.setSplitType(SplitType.PREVENT);
         multiPageList.add(cmp.subreport(createSubreport()));
         multiPageList.add(cmp.verticalGap(730));
@@ -61,30 +62,30 @@ public class MultiPageList4Test extends AbstractJasperValueTest {
         numberOfPagesTest(2);
 
         int count = 0;
-        for (JRPrintElement element : getJasperPrint().getPages().get(0).getElements()) {
+        for (final JRPrintElement element : getJasperPrint().getPages().get(0).getElements()) {
             if (element instanceof JRPrintText) {
                 count++;
             }
         }
-        Assert.assertEquals("MultipageList split type", 3, count);
+        Assertions.assertEquals(3, count, "MultipageList split type");
         count = 0;
-        for (JRPrintElement element : getJasperPrint().getPages().get(1).getElements()) {
+        for (final JRPrintElement element : getJasperPrint().getPages().get(1).getElements()) {
             if (element instanceof JRPrintText) {
                 count++;
             }
         }
-        Assert.assertEquals("MultipageList split type", 3, count);
+        Assertions.assertEquals(3, count, "MultipageList split type");
     }
 
     private JasperReportBuilder createSubreport() {
-        JasperReportBuilder report = report();
+        final JasperReportBuilder report = report();
         report.columns(column1).setDataSource(createSubreportDataSource());
 
         return report;
     }
 
     protected JRDataSource createSubreportDataSource() {
-        DRDataSource dataSource = new DRDataSource("field1");
+        final DRDataSource dataSource = new DRDataSource("field1");
         dataSource.add("text");
         dataSource.add("text");
         return dataSource;

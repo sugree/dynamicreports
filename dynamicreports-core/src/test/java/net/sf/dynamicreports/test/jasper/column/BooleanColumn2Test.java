@@ -29,7 +29,7 @@ import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRPrintImage;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
 import java.io.Serializable;
 import java.util.Locale;
@@ -67,7 +67,7 @@ public class BooleanColumn2Test extends AbstractJasperValueTest implements Seria
 
         testImage("detail.column_field13", 0);
         testImage("detail.column_field13", 1);
-        Assert.assertNull((((JRPrintImage) getElementAt("detail.column_field13", 2)).getRenderer()));
+        Assertions.assertNull((((JRPrintImage) getElementAt("detail.column_field13", 2)).getRenderer()));
 
         testImage("detail.column_field14", 0);
         testImage("detail.column_field14", 1);
@@ -78,9 +78,9 @@ public class BooleanColumn2Test extends AbstractJasperValueTest implements Seria
         CustomBatikRenderer batikRenderer = ((CustomBatikRenderer) ((JRPrintImage) getElementAt(name, index)).getRenderer());
         try {
             byte[] data = batikRenderer.getData(DefaultJasperReportsContext.getInstance());
-            Assert.assertNotNull(data);
+            Assertions.assertNotNull(data);
         } catch (JRException e) {
-            Assert.fail(e.getMessage());
+            Assertions.fail(e.getMessage());
         }
     }
 

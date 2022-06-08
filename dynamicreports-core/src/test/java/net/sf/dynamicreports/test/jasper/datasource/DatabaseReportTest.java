@@ -20,7 +20,7 @@
  */
 package net.sf.dynamicreports.test.jasper.datasource;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
 import net.sf.dynamicreports.test.jasper.AbstractJasperValueTest;
@@ -52,7 +52,7 @@ public class DatabaseReportTest extends AbstractJasperValueTest {
             createTable();
         } catch (Exception e) {
             e.printStackTrace();
-            Assert.fail(e.getMessage());
+            Assertions.fail(e.getMessage());
         }
         super.init();
     }

@@ -27,13 +27,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Optional;
 
-import net.sf.dynamicreports.report.base.style.DRFont;
-import net.sf.dynamicreports.report.builder.style.FontBuilder;
-import net.sf.jasperreports.charts.util.DrawChartRendererImpl;
-import net.sf.jasperreports.engine.DefaultJasperReportsContext;
-import net.sf.jasperreports.engine.JRPrintImage;
-import net.sf.jasperreports.engine.fonts.FontUtil;
-
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.CategoryDataset;
@@ -41,7 +34,14 @@ import org.jfree.data.gantt.GanttCategoryDataset;
 import org.jfree.data.xy.DefaultHighLowDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYZDataset;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
+
+import net.sf.dynamicreports.report.base.style.DRFont;
+import net.sf.dynamicreports.report.builder.style.FontBuilder;
+import net.sf.jasperreports.charts.util.DrawChartRendererImpl;
+import net.sf.jasperreports.engine.DefaultJasperReportsContext;
+import net.sf.jasperreports.engine.JRPrintImage;
+import net.sf.jasperreports.engine.fonts.FontUtil;
 
 /**
  * Base class for chart builder tests.
@@ -58,114 +58,114 @@ public abstract class AbstractJasperChartTest extends AbstractJasperValueTest {
   protected static final Font ARIMO_ITALIC_AWT = getAwtFont(ARIMO_ITALIC);
 
 
-  protected void chartCountTest(String name, int expectedNumberOfCharts) {
-    Assert.assertEquals("chart count " + name, expectedNumberOfCharts, findElement(name).size());
+  protected void chartCountTest(final String name, final int expectedNumberOfCharts) {
+    Assertions.assertEquals(expectedNumberOfCharts, findElement(name).size(), "chart count " + name);
   }
 
-  protected void chartCategoryCountTest(String name, int index, int expectedNumberOfCategories) {
-    Assert.assertEquals("chart category count " + name, expectedNumberOfCategories,
-        getChart(name, index).getCategoryPlot().getDataset().getColumnCount());
+  protected void chartCategoryCountTest(final String name, final int index, final int expectedNumberOfCategories) {
+    Assertions.assertEquals(expectedNumberOfCategories,
+        getChart(name, index).getCategoryPlot().getDataset().getColumnCount(), "chart category count " + name);
   }
 
-  protected void chartSeriesCountTest(String name, int index, int expectedNumberOfSeries) {
-    Assert.assertEquals("chart series count " + name, expectedNumberOfSeries,
-        getChart(name, index).getCategoryPlot().getDataset().getRowCount());
+  protected void chartSeriesCountTest(final String name, final int index, final int expectedNumberOfSeries) {
+    Assertions.assertEquals(expectedNumberOfSeries,
+        getChart(name, index).getCategoryPlot().getDataset().getRowCount(), "chart series count " + name);
   }
 
-  protected void chartTitleTest(String name, int index, String title) {
-    TextTitle chartTitle = getChart(name, index).getTitle();
+  protected void chartTitleTest(final String name, final int index, final String title) {
+    final TextTitle chartTitle = getChart(name, index).getTitle();
     if (title != null) {
-      Assert.assertEquals("chart title", title, chartTitle.getText());
+      Assertions.assertEquals(title, chartTitle.getText(), "chart title");
     } else {
-      Assert.assertNull("chart title", chartTitle);
+      Assertions.assertNull(chartTitle, "chart title");
     }
   }
 
-  protected void chartDataTest(String name, int index, String[] categories, String[] series,
-      Number[][] values) {
-    CategoryDataset dataset = getChart(name, index).getCategoryPlot().getDataset();
+  protected void chartDataTest(final String name, final int index, final String[] categories, final String[] series,
+      final Number[][] values) {
+    final CategoryDataset dataset = getChart(name, index).getCategoryPlot().getDataset();
     for (int i = 0; i < categories.length; i++) {
       for (int j = 0; j < series.length; j++) {
-        Assert.assertEquals("chart data", values[i][j], dataset.getValue(series[j], categories[i]));
+        Assertions.assertEquals(values[i][j], dataset.getValue(series[j], categories[i]), "chart data");
       }
     }
   }
 
-  protected void xyChartDataTest(JFreeChart chart, int series, String seriesName,
-      Number[][] values) {
-    XYDataset dataset = chart.getXYPlot().getDataset();
+  protected void xyChartDataTest(final JFreeChart chart, final int series, final String seriesName,
+      final Number[][] values) {
+    final XYDataset dataset = chart.getXYPlot().getDataset();
     int index = 0;
-    for (Number[] numbers : values) {
-      Assert.assertEquals("chart data series name", seriesName, dataset.getSeriesKey(series));
-      Assert.assertEquals("chart data x", numbers[0], dataset.getXValue(series, index));
-      Assert.assertEquals("chart data y", numbers[1], dataset.getYValue(series, index));
+    for (final Number[] numbers : values) {
+      Assertions.assertEquals(seriesName, dataset.getSeriesKey(series), "chart data series name");
+      Assertions.assertEquals(numbers[0], dataset.getXValue(series, index), "chart data x");
+      Assertions.assertEquals(numbers[1], dataset.getYValue(series, index), "chart data y");
       index++;
     }
   }
 
-  protected void xyzChartDataTest(JFreeChart chart, int series, String seriesName,
-      Number[][] values) {
-    XYZDataset dataset = (XYZDataset) chart.getXYPlot().getDataset();
+  protected void xyzChartDataTest(final JFreeChart chart, final int series, final String seriesName,
+      final Number[][] values) {
+    final XYZDataset dataset = (XYZDataset) chart.getXYPlot().getDataset();
     int index = 0;
-    for (Number[] numbers : values) {
-      Assert.assertEquals("chart data series name", seriesName, dataset.getSeriesKey(series));
-      Assert.assertEquals("chart data x", numbers[0], dataset.getXValue(series, index));
-      Assert.assertEquals("chart data y", numbers[1], dataset.getYValue(series, index));
-      Assert.assertEquals("chart data z", numbers[2], dataset.getZValue(series, index));
+    for (final Number[] numbers : values) {
+      Assertions.assertEquals(seriesName, dataset.getSeriesKey(series), "chart data series name");
+      Assertions.assertEquals(numbers[0], dataset.getXValue(series, index), "chart data x");
+      Assertions.assertEquals(numbers[1], dataset.getYValue(series, index), "chart data y");
+      Assertions.assertEquals(numbers[2], dataset.getZValue(series, index), "chart data z");
       index++;
     }
   }
 
-  protected void highLowChartDataTest(JFreeChart chart, int series, Object[][] values) {
-    DefaultHighLowDataset dataset = (DefaultHighLowDataset) chart.getXYPlot().getDataset();
+  protected void highLowChartDataTest(final JFreeChart chart, final int series, final Object[][] values) {
+    final DefaultHighLowDataset dataset = (DefaultHighLowDataset) chart.getXYPlot().getDataset();
     int index = 0;
-    for (Object[] value : values) {
-      Assert.assertEquals("chart data series", value[0], dataset.getSeriesKey(series));
-      Assert.assertEquals("chart data date", value[1], dataset.getXDate(series, index));
-      Assert.assertEquals("chart data high value", value[2], dataset.getHigh(series, index));
-      Assert.assertEquals("chart data low value", value[3], dataset.getLow(series, index));
-      Assert.assertEquals("chart data open value", value[4], dataset.getOpenValue(series, index));
-      Assert.assertEquals("chart data close value", value[5], dataset.getClose(series, index));
-      Assert.assertEquals("chart data volume value", value[6], dataset.getVolume(series, index));
+    for (final Object[] value : values) {
+      Assertions.assertEquals(value[0], dataset.getSeriesKey(series), "chart data series");
+      Assertions.assertEquals(value[1], dataset.getXDate(series, index), "chart data date");
+      Assertions.assertEquals(value[2], dataset.getHigh(series, index), "chart data high value");
+      Assertions.assertEquals(value[3], dataset.getLow(series, index), "chart data low value");
+      Assertions.assertEquals(value[4], dataset.getOpenValue(series, index), "chart data open value");
+      Assertions.assertEquals(value[5], dataset.getClose(series, index), "chart data close value");
+      Assertions.assertEquals(value[6], dataset.getVolume(series, index), "chart data volume value");
       index++;
     }
   }
 
-  protected void ganttChartDataTest(JFreeChart chart, String serie, String[] tasks,
-      Object[][] values) {
-    GanttCategoryDataset dataset = (GanttCategoryDataset) chart.getCategoryPlot().getDataset();
+  protected void ganttChartDataTest(final JFreeChart chart, final String serie, final String[] tasks,
+      final Object[][] values) {
+    final GanttCategoryDataset dataset = (GanttCategoryDataset) chart.getCategoryPlot().getDataset();
     for (int i = 0; i < tasks.length; i++) {
-      Assert.assertEquals("chart data start value", ((Date) values[i][0]).getTime(),
-          dataset.getStartValue(serie, tasks[i]));
-      Assert.assertEquals("chart data end value", ((Date) values[i][1]).getTime(),
-          dataset.getEndValue(serie, tasks[i]));
-      Assert.assertEquals("chart data percent value", values[i][2],
-          dataset.getPercentComplete(serie, tasks[i], 0));
+      Assertions.assertEquals(((Date) values[i][0]).getTime(),
+          dataset.getStartValue(serie, tasks[i]), "chart data start value");
+      Assertions.assertEquals(((Date) values[i][1]).getTime(),
+          dataset.getEndValue(serie, tasks[i]), "chart data end value");
+      Assertions.assertEquals(values[i][2],
+          dataset.getPercentComplete(serie, tasks[i], 0), "chart data percent value");
     }
   }
 
-  protected JFreeChart getChart(String key, int index) {
-    JRPrintImage image = (JRPrintImage) getElementAt(key, index);
+  protected JFreeChart getChart(final String key, final int index) {
+    final JRPrintImage image = (JRPrintImage) getElementAt(key, index);
     return getChart(image);
   }
 
-  protected JFreeChart getChart(JRPrintImage image) {
-    DrawChartRendererImpl renderer = (DrawChartRendererImpl) image.getRenderer();
+  protected JFreeChart getChart(final JRPrintImage image) {
+    final DrawChartRendererImpl renderer = (DrawChartRendererImpl) image.getRenderer();
     try {
-      Field field = renderer.getClass().getDeclaredField("chart");
+      final Field field = renderer.getClass().getDeclaredField("chart");
       field.setAccessible(true);
       return (JFreeChart) field.get(renderer);
-    } catch (Exception e) {
+    } catch (final Exception e) {
       e.printStackTrace();
-      Assert.fail(e.getMessage());
+      Assertions.fail(e.getMessage());
     }
     return null;
   }
 
-  private static Font getAwtFont(FontBuilder fontBuilder) {
-    DRFont drFont = fontBuilder.getFont();
-    boolean bold = Optional.ofNullable(drFont.getBold()).orElse(false);
-    boolean italic = Optional.ofNullable(drFont.getItalic()).orElse(false);
+  private static Font getAwtFont(final FontBuilder fontBuilder) {
+    final DRFont drFont = fontBuilder.getFont();
+    final boolean bold = Optional.ofNullable(drFont.getBold()).orElse(false);
+    final boolean italic = Optional.ofNullable(drFont.getItalic()).orElse(false);
     int fontStyle;
     if (bold && italic) {
       fontStyle = Font.BOLD | Font.ITALIC;
@@ -176,10 +176,10 @@ public abstract class AbstractJasperChartTest extends AbstractJasperValueTest {
     } else {
       fontStyle = Font.PLAIN;
     }
-    String fontName = drFont.getFontName();
-    int fontSize = drFont.getFontSize();
-    FontUtil fontUtil = FontUtil.getInstance(DefaultJasperReportsContext.getInstance());
-    return fontUtil.getAwtFontFromBundles(fontName, fontStyle, (float) fontSize,
+    final String fontName = drFont.getFontName();
+    final int fontSize = drFont.getFontSize();
+    final FontUtil fontUtil = FontUtil.getInstance(DefaultJasperReportsContext.getInstance());
+    return fontUtil.getAwtFontFromBundles(fontName, fontStyle, fontSize,
         Locale.getDefault(), true);
   }
 }

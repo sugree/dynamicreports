@@ -42,7 +42,7 @@ import net.sf.dynamicreports.report.definition.ReportParameters;
 import net.sf.dynamicreports.test.jasper.AbstractJasperCrosstabStyleTest;
 import net.sf.jasperreports.engine.JRDataSource;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
 /**
  * Crosstab dataset style tests.
@@ -132,14 +132,14 @@ public class CrosstabDatasetStyleTest extends AbstractJasperCrosstabStyleTest
 
     @Override
     public Boolean evaluate(ReportParameters reportParameters) {
-      Assert.assertNotNull(reportParameters.getMasterParameters());
+      Assertions.assertNotNull(reportParameters.getMasterParameters());
       try {
         reportParameters.getValue("parameter");
-        Assert.fail("parameter is not null");
+        Assertions.fail("parameter is not null");
       } catch (Exception e) {
         // required
       }
-      Assert.assertEquals("parameter_value",
+      Assertions.assertEquals("parameter_value",
           reportParameters.getMasterParameters().getValue("parameter"));
       Integer value = reportParameters.getValue(measure1);
       return values.contains(value);

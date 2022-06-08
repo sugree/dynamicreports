@@ -20,7 +20,7 @@
  */
 package net.sf.dynamicreports.test.jasper.chart;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import net.sf.dynamicreports.design.transformation.chartcustomizer.GroupedStackedBarRendererCustomizer;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
@@ -69,9 +69,9 @@ public class GroupedStackedBarChartData2Test extends AbstractJasperChartTest {
         chartDataTest("groupFooter.chart1", 0, categories, series, values);
         JFreeChart chart = getChart("groupFooter.chart1", 0);
         LegendItemCollection fixedLegendItems = chart.getCategoryPlot().getFixedLegendItems();
-        Assert.assertEquals("series name", "series1", fixedLegendItems.get(0).getLabel());
-        Assert.assertEquals("series name", "series3", fixedLegendItems.get(1).getLabel());
-        Assert.assertEquals("series name", "series4", fixedLegendItems.get(2).getLabel());
+        Assertions.assertEquals("series name", "series1", fixedLegendItems.get(0).getLabel());
+        Assertions.assertEquals("series name", "series3", fixedLegendItems.get(1).getLabel());
+        Assertions.assertEquals("series name", "series4", fixedLegendItems.get(2).getLabel());
 
         series = new String[] {"group1" + GroupedStackedBarRendererCustomizer.GROUP_SERIES_KEY + "series1", "group1" + GroupedStackedBarRendererCustomizer.GROUP_SERIES_KEY + "series2",
             "group1" + GroupedStackedBarRendererCustomizer.GROUP_SERIES_KEY + "series3", "group1" + GroupedStackedBarRendererCustomizer.GROUP_SERIES_KEY + "series4"};
@@ -81,10 +81,10 @@ public class GroupedStackedBarChartData2Test extends AbstractJasperChartTest {
         chartDataTest("groupFooter.chart1", 1, categories, series, values);
         chart = getChart("groupFooter.chart1", 1);
         fixedLegendItems = chart.getCategoryPlot().getFixedLegendItems();
-        Assert.assertEquals("series name", "series1", fixedLegendItems.get(0).getLabel());
-        Assert.assertEquals("series name", "series2", fixedLegendItems.get(1).getLabel());
-        Assert.assertEquals("series name", "series3", fixedLegendItems.get(2).getLabel());
-        Assert.assertEquals("series name", "series4", fixedLegendItems.get(3).getLabel());
+        Assertions.assertEquals("series name", "series1", fixedLegendItems.get(0).getLabel());
+        Assertions.assertEquals("series name", "series2", fixedLegendItems.get(1).getLabel());
+        Assertions.assertEquals("series name", "series3", fixedLegendItems.get(2).getLabel());
+        Assertions.assertEquals("series name", "series4", fixedLegendItems.get(3).getLabel());
     }
 
     @Override

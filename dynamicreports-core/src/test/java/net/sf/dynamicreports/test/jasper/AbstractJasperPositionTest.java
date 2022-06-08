@@ -20,7 +20,8 @@
  */
 package net.sf.dynamicreports.test.jasper;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
+
 import net.sf.dynamicreports.report.builder.column.ColumnBuilder;
 import net.sf.dynamicreports.report.builder.group.GroupBuilder;
 import net.sf.dynamicreports.report.builder.subtotal.SubtotalBuilder;
@@ -31,49 +32,49 @@ import net.sf.jasperreports.engine.JRPrintElement;
  */
 public abstract class AbstractJasperPositionTest extends AbstractJasperTest {
 
-    protected void elementPositionTest(String name, int index, int x, int y, int width, int height) {
-        JRPrintElement element = getElementAt(name, index);
-        Assert.assertEquals("width", width, element.getWidth());
-        Assert.assertEquals("height", height, element.getHeight());
-        Assert.assertEquals("x", x, element.getX());
-        Assert.assertEquals("y", y, element.getY());
+    protected void elementPositionTest(final String name, final int index, final int x, final int y, final int width, final int height) {
+        final JRPrintElement element = getElementAt(name, index);
+        Assertions.assertEquals(width, element.getWidth(), "width");
+        Assertions.assertEquals(height, element.getHeight(), "height");
+        Assertions.assertEquals(x, element.getX(), "x");
+        Assertions.assertEquals(y, element.getY(), "y");
     }
 
     // column detail
-    protected void columnDetailPositionTest(ColumnBuilder<?, ?> column, int index, int x, int y, int width, int height) {
+    protected void columnDetailPositionTest(final ColumnBuilder<?, ?> column, final int index, final int x, final int y, final int width, final int height) {
         elementPositionTest(JasperTestUtils.getColumnDetailName(column), index, x, y, width, height);
     }
 
     // column title
-    protected void columnTitlePositionTest(ColumnBuilder<?, ?> column, int index, int x, int y, int width, int height) {
+    protected void columnTitlePositionTest(final ColumnBuilder<?, ?> column, final int index, final int x, final int y, final int width, final int height) {
         elementPositionTest(JasperTestUtils.getColumnTitleName(column), index, x, y, width, height);
     }
 
     // subtotal label
-    protected void subtotalLabelPositionTest(SubtotalBuilder<?, ?> subtotal, int index, int x, int y, int width, int height) {
+    protected void subtotalLabelPositionTest(final SubtotalBuilder<?, ?> subtotal, final int index, final int x, final int y, final int width, final int height) {
         elementPositionTest(JasperTestUtils.getSubtotalLabelName(subtotal, 1), index, x, y, width, height);
     }
 
-    protected void subtotalLabelIndexPositionTest(SubtotalBuilder<?, ?> subtotal, int subtotalIndex, int index, int x, int y, int width, int height) {
+    protected void subtotalLabelIndexPositionTest(final SubtotalBuilder<?, ?> subtotal, final int subtotalIndex, final int index, final int x, final int y, final int width, final int height) {
         elementPositionTest(JasperTestUtils.getSubtotalLabelName(subtotal, subtotalIndex), index, x, y, width, height);
     }
 
     // subtotal
-    protected void subtotalPositionTest(SubtotalBuilder<?, ?> subtotal, int index, int x, int y, int width, int height) {
+    protected void subtotalPositionTest(final SubtotalBuilder<?, ?> subtotal, final int index, final int x, final int y, final int width, final int height) {
         elementPositionTest(JasperTestUtils.getSubtotalName(subtotal, 1), index, x, y, width, height);
     }
 
-    protected void subtotalIndexPositionTest(SubtotalBuilder<?, ?> subtotal, int subtotalIndex, int index, int x, int y, int width, int height) {
+    protected void subtotalIndexPositionTest(final SubtotalBuilder<?, ?> subtotal, final int subtotalIndex, final int index, final int x, final int y, final int width, final int height) {
         elementPositionTest(JasperTestUtils.getSubtotalName(subtotal, subtotalIndex), index, x, y, width, height);
     }
 
     // group header title
-    protected void groupHeaderTitlePositionTest(GroupBuilder<?> group, int index, int x, int y, int width, int height) {
+    protected void groupHeaderTitlePositionTest(final GroupBuilder<?> group, final int index, final int x, final int y, final int width, final int height) {
         elementPositionTest(JasperTestUtils.getHeaderTitleGroupName(group), index, x, y, width, height);
     }
 
     // group header
-    protected void groupHeaderPositionTest(GroupBuilder<?> group, int index, int x, int y, int width, int height) {
+    protected void groupHeaderPositionTest(final GroupBuilder<?> group, final int index, final int x, final int y, final int width, final int height) {
         elementPositionTest(JasperTestUtils.getHeaderGroupName(group), index, x, y, width, height);
     }
 }

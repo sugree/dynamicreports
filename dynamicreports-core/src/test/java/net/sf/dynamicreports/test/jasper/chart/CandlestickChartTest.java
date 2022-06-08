@@ -27,23 +27,23 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
-import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
-import net.sf.dynamicreports.report.datasource.DRDataSource;
-import net.sf.dynamicreports.test.jasper.AbstractJasperChartTest;
-import net.sf.jasperreports.engine.JRDataSource;
-
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.Axis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
+
+import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
+import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
+import net.sf.dynamicreports.report.datasource.DRDataSource;
+import net.sf.dynamicreports.test.jasper.AbstractJasperChartTest;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  * Candlestick chart tests.
- * 
+ *
  * @author Ricardo Mariaca
  */
 public class CandlestickChartTest extends AbstractJasperChartTest {
@@ -52,7 +52,7 @@ public class CandlestickChartTest extends AbstractJasperChartTest {
   private Date date3;
 
   @Override
-  protected void configureReport(JasperReportBuilder rb) {
+  protected void configureReport(final JasperReportBuilder rb) {
     TextColumnBuilder<String> column1;
     TextColumnBuilder<Date> column2;
     TextColumnBuilder<Double> column3;
@@ -95,42 +95,42 @@ public class CandlestickChartTest extends AbstractJasperChartTest {
     numberOfPagesTest(1);
 
     JFreeChart chart = getChart("summary.chart1", 0);
-    XYItemRenderer renderer = chart.getXYPlot().getRenderer();
-    Assert.assertEquals("renderer", CandlestickRenderer.class, renderer.getClass());
-    Assert.assertEquals("show volume", false, ((CandlestickRenderer) renderer).getDrawVolume());
+    final XYItemRenderer renderer = chart.getXYPlot().getRenderer();
+    Assertions.assertEquals(CandlestickRenderer.class, renderer.getClass(), "renderer");
+    Assertions.assertEquals(false, ((CandlestickRenderer) renderer).getDrawVolume(), "show volume");
     highLowChartDataTest(chart, 0, new Object[][] {{"serie", date1, 50d, 35d, 40d, 47d, 70d},
         {"serie", date2, 55d, 40d, 50d, 45d, 120d}, {"serie", date3, 48d, 41d, 42d, 47d, 90d}});
 
     chart = getChart("summary.chart2", 0);
     Axis axis = chart.getXYPlot().getDomainAxis();
-    Assert.assertEquals("category label", "time", axis.getLabel());
-    Assert.assertEquals("category label color", Color.BLUE, axis.getLabelPaint());
-    Assert.assertEquals("category label font", ARIMO_BOLD_AWT, axis.getLabelFont());
-    Assert.assertEquals("tick label color", Color.CYAN, axis.getTickLabelPaint());
-    Assert.assertEquals("tick label font", ARIMO_ITALIC_AWT, axis.getTickLabelFont());
-    Assert.assertEquals("line color", Color.LIGHT_GRAY, axis.getAxisLinePaint());
-    Assert.assertTrue("vertical tick labels", ((ValueAxis) axis).isVerticalTickLabels());
+    Assertions.assertEquals("time", axis.getLabel(), "category label");
+    Assertions.assertEquals(Color.BLUE, axis.getLabelPaint(), "category label color");
+    Assertions.assertEquals(ARIMO_BOLD_AWT, axis.getLabelFont(), "category label font");
+    Assertions.assertEquals(Color.CYAN, axis.getTickLabelPaint(), "tick label color");
+    Assertions.assertEquals(ARIMO_ITALIC_AWT, axis.getTickLabelFont(), "tick label font");
+    Assertions.assertEquals(Color.LIGHT_GRAY, axis.getAxisLinePaint(), "line color");
+    Assertions.assertTrue(((ValueAxis) axis).isVerticalTickLabels(), "vertical tick labels");
 
     chart = getChart("summary.chart3", 0);
     axis = chart.getXYPlot().getRangeAxis();
-    Assert.assertEquals("value label", "value", axis.getLabel());
-    Assert.assertEquals("value label color", Color.BLUE, axis.getLabelPaint());
-    Assert.assertEquals("value label font", ARIMO_BOLD_AWT, axis.getLabelFont());
-    Assert.assertEquals("tick label color", Color.CYAN, axis.getTickLabelPaint());
-    Assert.assertEquals("tick label font", ARIMO_ITALIC_AWT, axis.getTickLabelFont());
-    Assert.assertEquals("tick label mask", "10.00",
-        ((NumberAxis) axis).getNumberFormatOverride().format(10));
-    // Assert.assertEquals("line color", Color.LIGHT_GRAY, axis.getAxisLinePaint());
-    Assert.assertEquals("range min value", 1d, ((ValueAxis) axis).getLowerBound(), 0);
-    Assert.assertEquals("range max value", 15d, ((ValueAxis) axis).getUpperBound(), 0);
-    Assert.assertTrue("vertical tick labels", ((ValueAxis) axis).isVerticalTickLabels());
+    Assertions.assertEquals("value", axis.getLabel(), "value label");
+    Assertions.assertEquals(Color.BLUE, axis.getLabelPaint(), "value label color");
+    Assertions.assertEquals(ARIMO_BOLD_AWT, axis.getLabelFont(), "value label font");
+    Assertions.assertEquals(Color.CYAN, axis.getTickLabelPaint(), "tick label color");
+    Assertions.assertEquals(ARIMO_ITALIC_AWT, axis.getTickLabelFont(), "tick label font");
+    Assertions.assertEquals("10.00",
+        ((NumberAxis) axis).getNumberFormatOverride().format(10), "tick label mask");
+    // Assertions.assertEquals("line color", Color.LIGHT_GRAY, axis.getAxisLinePaint());
+    Assertions.assertEquals(1d, ((ValueAxis) axis).getLowerBound(), 0, "range min value");
+    Assertions.assertEquals(15d, ((ValueAxis) axis).getUpperBound(), 0, "range max value");
+    Assertions.assertTrue(((ValueAxis) axis).isVerticalTickLabels(), "vertical tick labels");
   }
 
   @Override
   protected JRDataSource createDataSource() {
-    DRDataSource dataSource =
+    final DRDataSource dataSource =
         new DRDataSource("field1", "field2", "field3", "field4", "field5", "field6", "field7");
-    Calendar c = Calendar.getInstance();
+    final Calendar c = Calendar.getInstance();
     c.add(Calendar.DAY_OF_MONTH, -3);
     dataSource.add("serie", date1 = c.getTime(), 50d, 35d, 40d, 47d, 70d);
     c.add(Calendar.DAY_OF_MONTH, 1);

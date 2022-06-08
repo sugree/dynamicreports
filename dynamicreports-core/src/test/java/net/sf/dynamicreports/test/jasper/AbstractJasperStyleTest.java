@@ -21,6 +21,8 @@ package net.sf.dynamicreports.test.jasper;
 
 import java.awt.Color;
 
+import org.junit.jupiter.api.Assertions;
+
 import net.sf.dynamicreports.report.builder.column.ColumnBuilder;
 import net.sf.dynamicreports.report.builder.group.GroupBuilder;
 import net.sf.dynamicreports.report.builder.subtotal.SubtotalBuilder;
@@ -34,232 +36,230 @@ import net.sf.jasperreports.engine.type.LineStyleEnum;
 import net.sf.jasperreports.engine.type.VerticalImageAlignEnum;
 import net.sf.jasperreports.engine.type.VerticalTextAlignEnum;
 
-import org.junit.Assert;
-
 /**
  * Base class for jasper style tests.
  */
 public abstract class AbstractJasperStyleTest extends AbstractJasperTest {
 
   protected static final String TEST_FONT_NAME = "Arimo";
-  
-  protected void styleTest(String name, int index, Color foreColor, Color backColor,
-      String fontName, Float fontSize, Boolean bold, Boolean italic) {
-    JRStyle style = getElementAt(name, index).getStyle();
+
+  protected void styleTest(final String name, final int index, final Color foreColor, final Color backColor,
+      final String fontName, final Float fontSize, final Boolean bold, final Boolean italic) {
+    final JRStyle style = getElementAt(name, index).getStyle();
     styleTest(style, foreColor, backColor, fontName, fontSize, bold, italic);
   }
 
-  protected void styleTest(JRStyle style, Color foreColor, Color backColor, String fontName,
-      Float fontSize, Boolean bold, Boolean italic) {
-    Assert.assertNotNull("style is null", style);
-    Assert.assertEquals("foreColor", foreColor, style.getForecolor());
-    Assert.assertEquals("backColor", backColor, style.getBackcolor());
-    Assert.assertEquals("fontName", fontName, style.getFontName());
-    Assert.assertEquals("fontSize", fontSize, style.getFontsize());
-    Assert.assertEquals("bold", bold, style.isBold());
-    Assert.assertEquals("italic", italic, style.isItalic());
+  protected void styleTest(final JRStyle style, final Color foreColor, final Color backColor, final String fontName,
+      final Float fontSize, final Boolean bold, final Boolean italic) {
+    Assertions.assertNotNull(style, "style is null");
+    Assertions.assertEquals(foreColor, style.getForecolor(), "foreColor");
+    Assertions.assertEquals(backColor, style.getBackcolor(), "backColor");
+    Assertions.assertEquals(fontName, style.getFontName(), "fontName");
+    Assertions.assertEquals(fontSize, style.getFontsize(),"fontSize");
+    Assertions.assertEquals(bold, style.isBold(), "bold");
+    Assertions.assertEquals(italic, style.isItalic(), "italic");
   }
 
-  protected void borderTest(String name, int index, Color topColor, LineStyleEnum topLineStyle,
-      float top, Color bottomColor, LineStyleEnum bottomLineStyle, float bottom, Color leftColor,
-      LineStyleEnum leftLineStyle, float left, Color rightColor, LineStyleEnum rightLineStyle,
-      float right) {
-    JRStyle style = getElementAt(name, index).getStyle();
+  protected void borderTest(final String name, final int index, final Color topColor, final LineStyleEnum topLineStyle,
+      final float top, final Color bottomColor, final LineStyleEnum bottomLineStyle, final float bottom, final Color leftColor,
+      final LineStyleEnum leftLineStyle, final float left, final Color rightColor, final LineStyleEnum rightLineStyle,
+      final float right) {
+    final JRStyle style = getElementAt(name, index).getStyle();
 
     JRBoxPen pen = style.getLineBox().getTopPen();
-    Assert.assertEquals(top, pen.getLineWidth().floatValue(), 0);
-    Assert.assertEquals(topColor, pen.getLineColor());
-    Assert.assertEquals(topLineStyle, pen.getLineStyleValue());
+    Assertions.assertEquals(top, pen.getLineWidth().floatValue(), 0);
+    Assertions.assertEquals(topColor, pen.getLineColor());
+    Assertions.assertEquals(topLineStyle, pen.getLineStyleValue());
 
     pen = style.getLineBox().getBottomPen();
-    Assert.assertEquals(bottom, pen.getLineWidth().floatValue(), 0);
-    Assert.assertEquals(bottomColor, pen.getLineColor());
-    Assert.assertEquals(bottomLineStyle, pen.getLineStyleValue());
+    Assertions.assertEquals(bottom, pen.getLineWidth().floatValue(), 0);
+    Assertions.assertEquals(bottomColor, pen.getLineColor());
+    Assertions.assertEquals(bottomLineStyle, pen.getLineStyleValue());
 
     pen = style.getLineBox().getLeftPen();
-    Assert.assertEquals(left, pen.getLineWidth().floatValue(), 0);
-    Assert.assertEquals(leftColor, pen.getLineColor());
-    Assert.assertEquals(leftLineStyle, pen.getLineStyleValue());
+    Assertions.assertEquals(left, pen.getLineWidth().floatValue(), 0);
+    Assertions.assertEquals(leftColor, pen.getLineColor());
+    Assertions.assertEquals(leftLineStyle, pen.getLineStyleValue());
 
     pen = style.getLineBox().getRightPen();
-    Assert.assertEquals(right, pen.getLineWidth().floatValue(), 0);
-    Assert.assertEquals(rightColor, pen.getLineColor());
-    Assert.assertEquals(rightLineStyle, pen.getLineStyleValue());
+    Assertions.assertEquals(right, pen.getLineWidth().floatValue(), 0);
+    Assertions.assertEquals(rightColor, pen.getLineColor());
+    Assertions.assertEquals(rightLineStyle, pen.getLineStyleValue());
   }
 
-  protected void paddingTest(String name, int index, Integer top, Integer bottom, Integer left,
-      Integer right) {
-    JRStyle style = getElementAt(name, index).getStyle();
-    Assert.assertEquals(top, style.getLineBox().getTopPadding());
-    Assert.assertEquals(bottom, style.getLineBox().getBottomPadding());
-    Assert.assertEquals(left, style.getLineBox().getLeftPadding());
-    Assert.assertEquals(right, style.getLineBox().getRightPadding());
+  protected void paddingTest(final String name, final int index, final Integer top, final Integer bottom, final Integer left,
+      final Integer right) {
+    final JRStyle style = getElementAt(name, index).getStyle();
+    Assertions.assertEquals(top, style.getLineBox().getTopPadding());
+    Assertions.assertEquals(bottom, style.getLineBox().getBottomPadding());
+    Assertions.assertEquals(left, style.getLineBox().getLeftPadding());
+    Assertions.assertEquals(right, style.getLineBox().getRightPadding());
   }
 
-  protected void horizontalAlignmentTest(String name, int index,
-      HorizontalImageAlignEnum horizontalAlignment) {
-    JRImageAlignment element = (JRImageAlignment) getElementAt(name, index);
+  protected void horizontalAlignmentTest(final String name, final int index,
+      final HorizontalImageAlignEnum horizontalAlignment) {
+    final JRImageAlignment element = (JRImageAlignment) getElementAt(name, index);
     if (horizontalAlignment == null) {
-      Assert.assertEquals("horizontalAlignment", HorizontalImageAlignEnum.LEFT,
-          element.getHorizontalImageAlign());
+      Assertions.assertEquals(HorizontalImageAlignEnum.LEFT,
+          element.getHorizontalImageAlign(), "horizontalAlignment");
     }
-    Assert.assertEquals("horizontalAlignment", horizontalAlignment,
-        element.getHorizontalImageAlign());
+    Assertions.assertEquals(horizontalAlignment,
+        element.getHorizontalImageAlign(), "horizontalAlignment");
   }
 
-  protected void horizontalAlignmentTest(String name, int index,
-      HorizontalTextAlignEnum horizontalAlignment) {
-    JRTextAlignment element = (JRTextAlignment) getElementAt(name, index);
+  protected void horizontalAlignmentTest(final String name, final int index,
+      final HorizontalTextAlignEnum horizontalAlignment) {
+    final JRTextAlignment element = (JRTextAlignment) getElementAt(name, index);
     if (horizontalAlignment == null) {
-      Assert.assertEquals("horizontalAlignment", HorizontalTextAlignEnum.LEFT,
-          element.getHorizontalTextAlign());
+      Assertions.assertEquals(HorizontalTextAlignEnum.LEFT,
+          element.getHorizontalTextAlign(), "horizontalAlignment");
     }
-    Assert.assertEquals("horizontalAlignment", horizontalAlignment,
-        element.getHorizontalTextAlign());
+    Assertions.assertEquals(horizontalAlignment,
+        element.getHorizontalTextAlign(), "horizontalAlignment");
   }
 
-  protected void verticalAlignmentTest(String name, int index,
-      VerticalImageAlignEnum verticalAlignment) {
-    JRImageAlignment element = (JRImageAlignment) getElementAt(name, index);
+  protected void verticalAlignmentTest(final String name, final int index,
+      final VerticalImageAlignEnum verticalAlignment) {
+    final JRImageAlignment element = (JRImageAlignment) getElementAt(name, index);
     if (verticalAlignment == null) {
-      Assert.assertEquals("verticalAlignment", VerticalTextAlignEnum.TOP,
-          element.getVerticalImageAlign());
+      Assertions.assertEquals(VerticalTextAlignEnum.TOP,
+          element.getVerticalImageAlign(), "verticalAlignment");
     }
-    Assert.assertEquals("verticalAlignment", verticalAlignment, element.getVerticalImageAlign());
+    Assertions.assertEquals(verticalAlignment, element.getVerticalImageAlign(), "verticalAlignment");
   }
 
-  protected void verticalAlignmentTest(String name, int index,
-      VerticalTextAlignEnum verticalAlignment) {
-    JRTextAlignment element = (JRTextAlignment) getElementAt(name, index);
+  protected void verticalAlignmentTest(final String name, final int index,
+      final VerticalTextAlignEnum verticalAlignment) {
+    final JRTextAlignment element = (JRTextAlignment) getElementAt(name, index);
     if (verticalAlignment == null) {
-      Assert.assertEquals("verticalAlignment", VerticalTextAlignEnum.TOP,
-          element.getVerticalTextAlign());
+      Assertions.assertEquals(VerticalTextAlignEnum.TOP,
+          element.getVerticalTextAlign(), "verticalAlignment");
     }
-    Assert.assertEquals("verticalAlignment", verticalAlignment, element.getVerticalTextAlign());
+    Assertions.assertEquals(verticalAlignment, element.getVerticalTextAlign(), "verticalAlignment");
   }
 
   // column detail
-  protected void columnDetailStyleTest(ColumnBuilder<?, ?> column, int index, Color foreColor,
-      Color backColor, String fontName, Float fontSize, Boolean bold, Boolean italic) {
+  protected void columnDetailStyleTest(final ColumnBuilder<?, ?> column, final int index, final Color foreColor,
+      final Color backColor, final String fontName, final Float fontSize, final Boolean bold, final Boolean italic) {
     styleTest(JasperTestUtils.getColumnDetailName(column), index, foreColor, backColor, fontName,
         fontSize, bold, italic);
   }
 
-  protected void columnDetailPaddingTest(ColumnBuilder<?, ?> column, int index, Integer top,
-      Integer bottom, Integer left, Integer right) {
+  protected void columnDetailPaddingTest(final ColumnBuilder<?, ?> column, final int index, final Integer top,
+      final Integer bottom, final Integer left, final Integer right) {
     paddingTest(JasperTestUtils.getColumnDetailName(column), index, top, bottom, left, right);
   }
 
-  protected void columnDetailAlignmentTest(ColumnBuilder<?, ?> column, int index,
-      HorizontalImageAlignEnum horizontalAlignment) {
+  protected void columnDetailAlignmentTest(final ColumnBuilder<?, ?> column, final int index,
+      final HorizontalImageAlignEnum horizontalAlignment) {
     horizontalAlignmentTest(JasperTestUtils.getColumnDetailName(column), index,
         horizontalAlignment);
   }
 
-  protected void columnDetailAlignmentTest(ColumnBuilder<?, ?> column, int index,
-      VerticalImageAlignEnum verticalAlignment) {
+  protected void columnDetailAlignmentTest(final ColumnBuilder<?, ?> column, final int index,
+      final VerticalImageAlignEnum verticalAlignment) {
     verticalAlignmentTest(JasperTestUtils.getColumnDetailName(column), index, verticalAlignment);
   }
 
-  protected void columnDetailAlignmentTest(ColumnBuilder<?, ?> column, int index,
-      HorizontalTextAlignEnum horizontalAlignment) {
+  protected void columnDetailAlignmentTest(final ColumnBuilder<?, ?> column, final int index,
+      final HorizontalTextAlignEnum horizontalAlignment) {
     horizontalAlignmentTest(JasperTestUtils.getColumnDetailName(column), index,
         horizontalAlignment);
   }
 
-  protected void columnDetailAlignmentTest(ColumnBuilder<?, ?> column, int index,
-      VerticalTextAlignEnum verticalAlignment) {
+  protected void columnDetailAlignmentTest(final ColumnBuilder<?, ?> column, final int index,
+      final VerticalTextAlignEnum verticalAlignment) {
     verticalAlignmentTest(JasperTestUtils.getColumnDetailName(column), index, verticalAlignment);
   }
 
-  protected void columnDetailBorderTest(ColumnBuilder<?, ?> column, int index, Color topColor,
-      LineStyleEnum topLineStyle, float top, Color bottomColor, LineStyleEnum bottomLineStyle,
-      float bottom, Color leftColor, LineStyleEnum leftLineStyle, float left, Color rightColor,
-      LineStyleEnum rightLineStyle, float right) {
+  protected void columnDetailBorderTest(final ColumnBuilder<?, ?> column, final int index, final Color topColor,
+      final LineStyleEnum topLineStyle, final float top, final Color bottomColor, final LineStyleEnum bottomLineStyle,
+      final float bottom, final Color leftColor, final LineStyleEnum leftLineStyle, final float left, final Color rightColor,
+      final LineStyleEnum rightLineStyle, final float right) {
     borderTest(JasperTestUtils.getColumnDetailName(column), index, topColor, topLineStyle, top,
         bottomColor, bottomLineStyle, bottom, leftColor, leftLineStyle, left, rightColor,
         rightLineStyle, right);
   }
 
   // column title
-  protected void columnTitleBorderTest(ColumnBuilder<?, ?> column, int index, Color topColor,
-      LineStyleEnum topLineStyle, float top, Color bottomColor, LineStyleEnum bottomLineStyle,
-      float bottom, Color leftColor, LineStyleEnum leftLineStyle, float left, Color rightColor,
-      LineStyleEnum rightLineStyle, float right) {
+  protected void columnTitleBorderTest(final ColumnBuilder<?, ?> column, final int index, final Color topColor,
+      final LineStyleEnum topLineStyle, final float top, final Color bottomColor, final LineStyleEnum bottomLineStyle,
+      final float bottom, final Color leftColor, final LineStyleEnum leftLineStyle, final float left, final Color rightColor,
+      final LineStyleEnum rightLineStyle, final float right) {
     borderTest(JasperTestUtils.getColumnTitleName(column), index, topColor, topLineStyle, top,
         bottomColor, bottomLineStyle, bottom, leftColor, leftLineStyle, left, rightColor,
         rightLineStyle, right);
   }
 
-  protected void columnTitlePaddingTest(ColumnBuilder<?, ?> column, int index, Integer top,
-      Integer bottom, Integer left, Integer right) {
+  protected void columnTitlePaddingTest(final ColumnBuilder<?, ?> column, final int index, final Integer top,
+      final Integer bottom, final Integer left, final Integer right) {
     paddingTest(JasperTestUtils.getColumnTitleName(column), index, top, bottom, left, right);
   }
 
-  protected void columnTitleStyleTest(ColumnBuilder<?, ?> column, int index, Color foreColor,
-      Color backColor, String fontName, Float fontSize, Boolean bold, Boolean italic) {
+  protected void columnTitleStyleTest(final ColumnBuilder<?, ?> column, final int index, final Color foreColor,
+      final Color backColor, final String fontName, final Float fontSize, final Boolean bold, final Boolean italic) {
     styleTest(JasperTestUtils.getColumnTitleName(column), index, foreColor, backColor, fontName,
         fontSize, bold, italic);
   }
 
-  protected void columnTitleAlignmentTest(ColumnBuilder<?, ?> column, int index,
-      HorizontalTextAlignEnum horizontalAlignment) {
+  protected void columnTitleAlignmentTest(final ColumnBuilder<?, ?> column, final int index,
+      final HorizontalTextAlignEnum horizontalAlignment) {
     horizontalAlignmentTest(JasperTestUtils.getColumnTitleName(column), index, horizontalAlignment);
   }
 
   // subtotal label
-  protected void subtotalLabelBorderTest(SubtotalBuilder<?, ?> subtotal, int index, Color topColor,
-      LineStyleEnum topLineStyle, float top, Color bottomColor, LineStyleEnum bottomLineStyle,
-      float bottom, Color leftColor, LineStyleEnum leftLineStyle, float left, Color rightColor,
-      LineStyleEnum rightLineStyle, float right) {
+  protected void subtotalLabelBorderTest(final SubtotalBuilder<?, ?> subtotal, final int index, final Color topColor,
+      final LineStyleEnum topLineStyle, final float top, final Color bottomColor, final LineStyleEnum bottomLineStyle,
+      final float bottom, final Color leftColor, final LineStyleEnum leftLineStyle, final float left, final Color rightColor,
+      final LineStyleEnum rightLineStyle, final float right) {
     borderTest(JasperTestUtils.getSubtotalLabelName(subtotal, 1), index, topColor, topLineStyle,
         top, bottomColor, bottomLineStyle, bottom, leftColor, leftLineStyle, left, rightColor,
         rightLineStyle, right);
   }
 
-  protected void subtotalLabelStyleTest(SubtotalBuilder<?, ?> subtotal, int index, Color foreColor,
-      Color backColor, String fontName, Float fontSize, Boolean bold, Boolean italic) {
+  protected void subtotalLabelStyleTest(final SubtotalBuilder<?, ?> subtotal, final int index, final Color foreColor,
+      final Color backColor, final String fontName, final Float fontSize, final Boolean bold, final Boolean italic) {
     styleTest(JasperTestUtils.getSubtotalLabelName(subtotal, 1), index, foreColor, backColor,
         fontName, fontSize, bold, italic);
   }
 
   // subtotal
-  protected void subtotalBorderTest(SubtotalBuilder<?, ?> subtotal, int index, Color topColor,
-      LineStyleEnum topLineStyle, float top, Color bottomColor, LineStyleEnum bottomLineStyle,
-      float bottom, Color leftColor, LineStyleEnum leftLineStyle, float left, Color rightColor,
-      LineStyleEnum rightLineStyle, float right) {
+  protected void subtotalBorderTest(final SubtotalBuilder<?, ?> subtotal, final int index, final Color topColor,
+      final LineStyleEnum topLineStyle, final float top, final Color bottomColor, final LineStyleEnum bottomLineStyle,
+      final float bottom, final Color leftColor, final LineStyleEnum leftLineStyle, final float left, final Color rightColor,
+      final LineStyleEnum rightLineStyle, final float right) {
     borderTest(JasperTestUtils.getSubtotalName(subtotal, 1), index, topColor, topLineStyle, top,
         bottomColor, bottomLineStyle, bottom, leftColor, leftLineStyle, left, rightColor,
         rightLineStyle, right);
   }
 
-  protected void subtotalPaddingTest(SubtotalBuilder<?, ?> subtotal, int index, Integer top,
-      Integer bottom, Integer left, Integer right) {
+  protected void subtotalPaddingTest(final SubtotalBuilder<?, ?> subtotal, final int index, final Integer top,
+      final Integer bottom, final Integer left, final Integer right) {
     paddingTest(JasperTestUtils.getSubtotalName(subtotal, 1), index, top, bottom, left, right);
   }
 
-  protected void subtotalStyleTest(SubtotalBuilder<?, ?> subtotal, int index, Color foreColor,
-      Color backColor, String fontName, Float fontSize, Boolean bold, Boolean italic) {
+  protected void subtotalStyleTest(final SubtotalBuilder<?, ?> subtotal, final int index, final Color foreColor,
+      final Color backColor, final String fontName, final Float fontSize, final Boolean bold, final Boolean italic) {
     styleTest(JasperTestUtils.getSubtotalName(subtotal, 1), index, foreColor, backColor, fontName,
         fontSize, bold, italic);
   }
 
   // group header title
-  protected void groupHeaderTitleStyleTest(GroupBuilder<?> group, int index, Color foreColor,
-      Color backColor, String fontName, Float fontSize, Boolean bold, Boolean italic) {
+  protected void groupHeaderTitleStyleTest(final GroupBuilder<?> group, final int index, final Color foreColor,
+      final Color backColor, final String fontName, final Float fontSize, final Boolean bold, final Boolean italic) {
     styleTest(JasperTestUtils.getHeaderTitleGroupName(group), index, foreColor, backColor, fontName,
         fontSize, bold, italic);
   }
 
   // group header
-  protected void groupHeaderStyleTest(GroupBuilder<?> group, int index, Color foreColor,
-      Color backColor, String fontName, Float fontSize, Boolean bold, Boolean italic) {
+  protected void groupHeaderStyleTest(final GroupBuilder<?> group, final int index, final Color foreColor,
+      final Color backColor, final String fontName, final Float fontSize, final Boolean bold, final Boolean italic) {
     styleTest(JasperTestUtils.getHeaderGroupName(group), index, foreColor, backColor, fontName,
         fontSize, bold, italic);
   }
 
-  protected void groupHeaderAlignmentTest(GroupBuilder<?> group, int index,
-      HorizontalTextAlignEnum horizontalAlignment) {
+  protected void groupHeaderAlignmentTest(final GroupBuilder<?> group, final int index,
+      final HorizontalTextAlignEnum horizontalAlignment) {
     horizontalAlignmentTest(JasperTestUtils.getHeaderGroupName(group), index, horizontalAlignment);
   }
 }

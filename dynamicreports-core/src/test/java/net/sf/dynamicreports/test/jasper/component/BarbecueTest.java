@@ -20,7 +20,13 @@
  */
 package net.sf.dynamicreports.test.jasper.component;
 
-import org.junit.Assert;
+import static net.sf.dynamicreports.report.builder.DynamicReports.bcode;
+import static net.sf.dynamicreports.report.builder.DynamicReports.exp;
+import static net.sf.dynamicreports.report.builder.DynamicReports.stl;
+import static net.sf.dynamicreports.report.builder.DynamicReports.template;
+
+import org.junit.jupiter.api.Assertions;
+
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.constant.BarcodeOrientation;
 import net.sf.dynamicreports.test.jasper.AbstractJasperTest;
@@ -28,18 +34,13 @@ import net.sf.jasperreports.components.barbecue.BarbecueComponent;
 import net.sf.jasperreports.engine.base.JRBaseComponentElement;
 import net.sf.jasperreports.engine.type.RotationEnum;
 
-import static net.sf.dynamicreports.report.builder.DynamicReports.bcode;
-import static net.sf.dynamicreports.report.builder.DynamicReports.exp;
-import static net.sf.dynamicreports.report.builder.DynamicReports.stl;
-import static net.sf.dynamicreports.report.builder.DynamicReports.template;
-
 /**
  * @author Ricardo Mariaca
  */
 public class BarbecueTest extends AbstractJasperTest {
 
     @Override
-    protected void configureReport(JasperReportBuilder rb) {
+    protected void configureReport(final JasperReportBuilder rb) {
         rb.setTemplate(template().setBarcodeHeight(20).setBarcodeStyle(stl.style(2)))
           .title(bcode.barbecue_2of7(exp.jasperSyntaxText("12345678")), bcode.barbecue_3of9(exp.jasperSyntaxText("12345678")), bcode.barbecue_bookland(exp.jasperSyntaxText("1234567890")),
                  bcode.barbecue_codabar(exp.jasperSyntaxText("12345678")), bcode.barbecue_code128(exp.jasperSyntaxText("12345678")), bcode.barbecue_code128A(exp.jasperSyntaxText("12345678")),
@@ -103,20 +104,20 @@ public class BarbecueTest extends AbstractJasperTest {
         testBarbecue(27, "USD4");
         testBarbecue(28, "USPS");
 
-        JRBaseComponentElement barcode = (JRBaseComponentElement) getJasperReport().getTitle().getElementByKey("title.barbecue29");
-        BarbecueComponent component = (BarbecueComponent) barcode.getComponent();
-        Assert.assertEquals("Barbecue application identifier", "\"1\"", component.getApplicationIdentifierExpression().getText());
-        Assert.assertTrue("Barbecue draw text", component.isDrawText());
-        Assert.assertTrue("Barbecue checksum required", component.isChecksumRequired());
-        Assert.assertEquals("Barbecue bar width", Integer.valueOf(2), component.getBarWidth());
-        Assert.assertEquals("Barbecue bar height", Integer.valueOf(5), component.getBarHeight());
-        Assert.assertEquals("Barbecue orientation", RotationEnum.RIGHT, component.getRotation());
+        final JRBaseComponentElement barcode = (JRBaseComponentElement) getJasperReport().getTitle().getElementByKey("title.barbecue29");
+        final BarbecueComponent component = (BarbecueComponent) barcode.getComponent();
+        Assertions.assertEquals("Barbecue application identifier", "\"1\"", component.getApplicationIdentifierExpression().getText());
+        Assertions.assertTrue(component.isDrawText(), "Barbecue draw text");
+        Assertions.assertTrue(component.isChecksumRequired(), "Barbecue checksum required");
+        Assertions.assertEquals(Integer.valueOf(2), component.getBarWidth(), "Barbecue bar width");
+        Assertions.assertEquals(Integer.valueOf(5), component.getBarHeight(), "Barbecue bar height");
+        Assertions.assertEquals(RotationEnum.RIGHT, component.getRotation(), "Barbecue orientation");
     }
 
-    private void testBarbecue(int index, String type) {
-        JRBaseComponentElement barcode = (JRBaseComponentElement) getJasperReport().getTitle().getElementByKey("title.barbecue" + index);
-        BarbecueComponent component = (BarbecueComponent) barcode.getComponent();
-        Assert.assertEquals("Barbecue type ", type, component.getType());
-        Assert.assertTrue("Barbecue code ", component.getCodeExpression().getText().contains("12345678"));
+    private void testBarbecue(final int index, final String type) {
+        final JRBaseComponentElement barcode = (JRBaseComponentElement) getJasperReport().getTitle().getElementByKey("title.barbecue" + index);
+        final BarbecueComponent component = (BarbecueComponent) barcode.getComponent();
+        Assertions.assertEquals(type, component.getType(), "Barbecue type ");
+        Assertions.assertTrue(component.getCodeExpression().getText().contains("12345678"), "Barbecue code ");
     }
 }

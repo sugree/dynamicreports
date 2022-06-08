@@ -20,7 +20,7 @@
  */
 package net.sf.dynamicreports.test.jasper.report;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.constant.WhenNoDataType;
 import net.sf.dynamicreports.test.jasper.AbstractJasperValueTest;
@@ -54,7 +54,7 @@ public class Report3Test extends AbstractJasperValueTest implements Serializable
         numberOfPagesTest(2);
 
         JasperPrint jasperPrint = getJasperPrint();
-        Assert.assertEquals("report1", jasperPrint.getName());
+        Assertions.assertEquals("report1", jasperPrint.getName());
 
         // page header
         elementCountTest("pageHeader.textField1", 2);

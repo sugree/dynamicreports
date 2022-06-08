@@ -33,7 +33,7 @@ import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
 import java.io.Serializable;
 import java.util.Locale;
@@ -97,9 +97,9 @@ public class PercentageChartDataTest extends AbstractJasperChartTest implements 
 
         JFreeChart chart = getChart("summary.chart1", 0);
         CategoryItemRenderer renderer1 = chart.getCategoryPlot().getRenderer();
-        Assert.assertNotNull(renderer1.getBaseItemLabelGenerator());
-        Assert.assertEquals("1.19", renderer1.getBaseItemLabelGenerator().generateLabel(categoryDataset, 0, 0));
-        Assert.assertTrue(renderer1.getBaseItemLabelsVisible());
+        Assertions.assertNotNull(renderer1.getBaseItemLabelGenerator());
+        Assertions.assertEquals("1.19", renderer1.getBaseItemLabelGenerator().generateLabel(categoryDataset, 0, 0));
+        Assertions.assertTrue(renderer1.getBaseItemLabelsVisible());
 
         chartCountTest("summary.chart2", 1);
         chartCategoryCountTest("summary.chart2", 0, 4);
@@ -108,9 +108,9 @@ public class PercentageChartDataTest extends AbstractJasperChartTest implements 
 
         chart = getChart("summary.chart2", 0);
         renderer1 = chart.getCategoryPlot().getRenderer();
-        Assert.assertNotNull(renderer1.getBaseItemLabelGenerator());
-        Assert.assertEquals("1.2", renderer1.getBaseItemLabelGenerator().generateLabel(categoryDataset, 0, 0));
-        Assert.assertTrue(renderer1.getBaseItemLabelsVisible());
+        Assertions.assertNotNull(renderer1.getBaseItemLabelGenerator());
+        Assertions.assertEquals("1.2", renderer1.getBaseItemLabelGenerator().generateLabel(categoryDataset, 0, 0));
+        Assertions.assertTrue(renderer1.getBaseItemLabelsVisible());
 
         chartCountTest("summary.chart3", 1);
         chartCategoryCountTest("summary.chart3", 0, 4);
@@ -145,11 +145,11 @@ public class PercentageChartDataTest extends AbstractJasperChartTest implements 
         chart = getChart("summary.chart9", 0);
         StandardPieSectionLabelGenerator labelGenerator = (StandardPieSectionLabelGenerator) ((PiePlot) chart.getPlot()).getLabelGenerator();
         String labelFormat = labelGenerator.getLabelFormat();
-        Assert.assertEquals("Label format", "{0} ({2})", labelFormat);
+        Assertions.assertEquals("Label format", "{0} ({2})", labelFormat);
         DefaultPieDataset dataset = new DefaultPieDataset();
         dataset.setValue("key1", 21);
         dataset.setValue("key2", 122);
-        Assert.assertEquals("key1 (14.7%)", labelGenerator.generateSectionLabel(dataset, "key1"));
+        Assertions.assertEquals("key1 (14.7%)", labelGenerator.generateSectionLabel(dataset, "key1"));
     }
 
     @Override

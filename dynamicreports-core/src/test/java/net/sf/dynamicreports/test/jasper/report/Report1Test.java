@@ -20,7 +20,17 @@
  */
 package net.sf.dynamicreports.test.jasper.report;
 
-import org.junit.Assert;
+import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
+import static net.sf.dynamicreports.report.builder.DynamicReports.col;
+import static net.sf.dynamicreports.report.builder.DynamicReports.exp;
+import static net.sf.dynamicreports.report.builder.DynamicReports.parameter;
+
+import java.math.BigDecimal;
+import java.util.ListResourceBundle;
+import java.util.Locale;
+
+import org.junit.jupiter.api.Assertions;
+
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.base.AbstractScriptlet;
 import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
@@ -36,15 +46,6 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.fonts.FontUtil;
 import net.sf.jasperreports.engine.type.OrientationEnum;
 
-import java.math.BigDecimal;
-import java.util.ListResourceBundle;
-import java.util.Locale;
-
-import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
-import static net.sf.dynamicreports.report.builder.DynamicReports.col;
-import static net.sf.dynamicreports.report.builder.DynamicReports.exp;
-import static net.sf.dynamicreports.report.builder.DynamicReports.parameter;
-
 /**
  * @author Ricardo Mariaca
  */
@@ -55,7 +56,7 @@ public class Report1Test extends AbstractJasperValueTest {
     private BigDecimal parameter2;
 
     @Override
-    protected void configureReport(JasperReportBuilder rb) {
+    protected void configureReport(final JasperReportBuilder rb) {
         rb.columns(column1 = col.column("Column1", "field1", Integer.class))
           .title(cmp.text(exp.jasperSyntax("$R{bundleKey3}", String.class)),
                  cmp.multiPageList(cmp.text(exp.jasperSyntax("$R{bundleKey3}", String.class)), cmp.text(exp.jasperSyntax("$R{bundleKey1}", String.class))))
@@ -81,16 +82,16 @@ public class Report1Test extends AbstractJasperValueTest {
         elementCountTest("title.textField1", 3);
         elementValueTest("title.textField1", "bundleKey3", "bundleKey3", "bundleValue");
 
-        FontUtil fontUtil = FontUtil.getInstance(DefaultJasperReportsContext.getInstance());
-        Assert.assertFalse("fonts", fontUtil.getFontFamilyNames().isEmpty());
+        final FontUtil fontUtil = FontUtil.getInstance(DefaultJasperReportsContext.getInstance());
+        Assertions.assertFalse(fontUtil.getFontFamilyNames().isEmpty(), "fonts");
 
-        JasperPrint jasperPrint = getJasperPrint();
-        Assert.assertEquals("Report", jasperPrint.getName());
-        Assert.assertEquals(OrientationEnum.LANDSCAPE, jasperPrint.getOrientationValue());
-        Assert.assertEquals(1190, jasperPrint.getPageWidth());
-        Assert.assertEquals(842, jasperPrint.getPageHeight());
+        final JasperPrint jasperPrint = getJasperPrint();
+        Assertions.assertEquals("Report", jasperPrint.getName());
+        Assertions.assertEquals(OrientationEnum.LANDSCAPE, jasperPrint.getOrientationValue());
+        Assertions.assertEquals(1190, jasperPrint.getPageWidth());
+        Assertions.assertEquals(842, jasperPrint.getPageHeight());
 
-        Assert.assertEquals(50, scriptlet.count);
+        Assertions.assertEquals(50, scriptlet.count);
     }
 
     @Override
@@ -100,7 +101,7 @@ public class Report1Test extends AbstractJasperValueTest {
 
     @Override
     protected JRDataSource createDataSource() {
-        DRDataSource dataSource = new DRDataSource("field1");
+        final DRDataSource dataSource = new DRDataSource("field1");
         for (int i = 0; i < 50; i++) {
             dataSource.add(i);
         }
@@ -119,18 +120,18 @@ public class Report1Test extends AbstractJasperValueTest {
         private int count;
 
         @Override
-        public void afterReportInit(ReportParameters reportParameters) {
+        public void afterReportInit(final ReportParameters reportParameters) {
             super.afterReportInit(reportParameters);
-            Assert.assertEquals(Locale.ENGLISH, reportParameters.getLocale());
-            Assert.assertEquals("bundleValue", reportParameters.getMessage("bundleKey1"));
-            Assert.assertEquals("bundleValue a - b", reportParameters.getMessage("bundleKey2", new Object[] {"a", "b"}));
-            Assert.assertEquals(parameter1, reportParameters.getValue("parameter1"));
-            Assert.assertEquals(parameter2, reportParameters.getValue("parameter2"));
-            Assert.assertEquals(this, reportParameters.getScriptlet(getName()));
+            Assertions.assertEquals(Locale.ENGLISH, reportParameters.getLocale());
+            Assertions.assertEquals("bundleValue", reportParameters.getMessage("bundleKey1"));
+            Assertions.assertEquals("bundleValue a - b", reportParameters.getMessage("bundleKey2", new Object[] {"a", "b"}));
+            Assertions.assertEquals(parameter1, reportParameters.getValue("parameter1"));
+            Assertions.assertEquals(parameter2, reportParameters.getValue("parameter2"));
+            Assertions.assertEquals(this, reportParameters.getScriptlet(getName()));
         }
 
         @Override
-        public void afterDetailEval(ReportParameters reportParameters) {
+        public void afterDetailEval(final ReportParameters reportParameters) {
             super.afterDetailEval(reportParameters);
             count++;
         }

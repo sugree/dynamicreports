@@ -20,7 +20,20 @@
  */
 package net.sf.dynamicreports.test.jasper.component;
 
-import org.junit.Assert;
+import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
+import static net.sf.dynamicreports.report.builder.DynamicReports.stl;
+
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.Serializable;
+import java.util.Arrays;
+
+import org.junit.jupiter.api.Assertions;
+
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.constant.ImageScale;
 import net.sf.dynamicreports.report.constant.WhenNoDataType;
@@ -33,18 +46,6 @@ import net.sf.jasperreports.engine.type.ScaleImageEnum;
 import net.sf.jasperreports.engine.util.JRImageLoader;
 import net.sf.jasperreports.renderers.SimpleDataRenderer;
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.Serializable;
-import java.util.Arrays;
-
-import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
-import static net.sf.dynamicreports.report.builder.DynamicReports.stl;
-
 /**
  * @author Ricardo Mariaca
  */
@@ -52,7 +53,7 @@ public class Image1Test extends AbstractJasperTest {
     private Image image;
 
     @Override
-    protected void configureReport(JasperReportBuilder rb) {
+    protected void configureReport(final JasperReportBuilder rb) {
         rb.setWhenNoDataType(WhenNoDataType.ALL_SECTIONS_NO_DETAIL)
           .setImageStyle(stl.style().setImageScale(ImageScale.CLIP))
           .title(cmp.image(image = new TestImage()), cmp.image(Image1Test.class.getResource("noimage")));
@@ -65,13 +66,13 @@ public class Image1Test extends AbstractJasperTest {
         numberOfPagesTest(1);
 
         try {
-            byte[] imageData = JRImageLoader.getInstance(DefaultJasperReportsContext.getInstance()).loadBytesFromAwtImage(image, ImageTypeEnum.JPEG);
-            JRPrintImage jrImage = (JRPrintImage) getElementAt("title.image1", 0);
-            Assert.assertTrue("image data", Arrays.equals(imageData, ((SimpleDataRenderer) jrImage.getRenderer()).getData(DefaultJasperReportsContext.getInstance())));
-            Assert.assertEquals("scale image", ScaleImageEnum.CLIP, jrImage.getScaleImageValue());
-        } catch (JRException e) {
+            final byte[] imageData = JRImageLoader.getInstance(DefaultJasperReportsContext.getInstance()).loadBytesFromAwtImage(image, ImageTypeEnum.JPEG);
+            final JRPrintImage jrImage = (JRPrintImage) getElementAt("title.image1", 0);
+            Assertions.assertTrue(Arrays.equals(imageData, ((SimpleDataRenderer) jrImage.getRenderer()).getData(DefaultJasperReportsContext.getInstance())), "image data");
+            Assertions.assertEquals(ScaleImageEnum.CLIP, jrImage.getScaleImageValue(), "scale image");
+        } catch (final JRException e) {
             e.printStackTrace();
-            Assert.fail(e.getMessage());
+            Assertions.fail(e.getMessage());
         }
     }
 
@@ -85,7 +86,7 @@ public class Image1Test extends AbstractJasperTest {
 
         public TestImage() {
             super(100, 100, BufferedImage.TYPE_INT_RGB);
-            Graphics2D g2d = createGraphics();
+            final Graphics2D g2d = createGraphics();
             g2d.setColor(Color.BLUE);
             g2d.setComposite(AlphaComposite.Src);
             g2d.fill(new Rectangle2D.Float(5, 5, 90, 90));
