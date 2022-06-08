@@ -1,7 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
@@ -10,7 +9,7 @@
 
     <groupId>net.sourceforge.dynamicreports</groupId>
     <artifactId>dynamicreports-parent</artifactId>
-    <version>6.12.2-SNAPSHOT</version>
+    <version>6.19.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>DynamicReports - parent</name>
@@ -40,8 +39,8 @@
     <properties>
         <!--Environment -->
         <encoding>UTF-8</encoding>
-        <sourceVersion>1.8</sourceVersion>
-        <targetVersion>1.8</targetVersion>
+        <sourceVersion>11</sourceVersion>
+        <targetVersion>11</targetVersion>
 
         <!--Dependencies -->
         <barcode4jVersion>2.1</barcode4jVersion>
@@ -50,11 +49,6 @@
         <commonslang3Version>3.11</commonslang3Version>
         <groovyVersion>2.4.19</groovyVersion>
         <hsqldbVersion>2.5.1</hsqldbVersion>
-        <jasperreportsVersion>6.12.2</jasperreportsVersion>
-        <jaxb-apiVersion>2.4.0-b180830.0359</jaxb-apiVersion>
-        <jaxb-coreVersion>2.3.0.1</jaxb-coreVersion>
-        <jaxb-implVersion>2.4.0-b180830.0438</jaxb-implVersion>
-        <jaxbVersion>2.3.0.1</jaxbVersion>
         <jsonVersion>20200518</jsonVersion>
         <jul-to-slf4jVersion>1.7.25</jul-to-slf4jVersion>
         <junitVersion>4.13.2</junitVersion>
@@ -108,7 +102,7 @@
             <dependency>
                 <groupId>net.sf.jasperreports</groupId>
                 <artifactId>jasperreports</artifactId>
-                <version>${jasperreportsVersion}</version>
+                <version>6.19.1</version>
                 <exclusions>
                     <exclusion>
                         <groupId>bouncycastle</groupId>
@@ -144,6 +138,23 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
+            <dependency>
+  <groupId>javax.xml.bind</groupId>
+  <artifactId>jaxb-api</artifactId>
+  <version>2.3.0</version>
+</dependency>
+<dependency>
+  <groupId>com.sun.xml.bind</groupId>
+  <artifactId>jaxb-core</artifactId>
+  <version>2.3.0</version>
+</dependency>
+<dependency>
+  <groupId>com.sun.xml.bind</groupId>
+  <artifactId>jaxb-impl</artifactId>
+  <version>2.3.0</version>
+</dependency>
+
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-text</artifactId>
@@ -418,7 +429,7 @@
                 <plugin>
                     <groupId>org.jvnet.jaxb2.maven2</groupId>
                     <artifactId>maven-jaxb2-plugin</artifactId>
-                    <version>0.14.0</version>
+                    <version>0.15.1</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -461,119 +472,6 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>
-
-        <profile>
-            <id>java9</id>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-compiler-plugin</artifactId>
-                            <version>3.8.1</version>
-                            <configuration>
-                                <source>1.8</source>
-                                <target>1.8</target>
-                                <encoding>${encoding}</encoding>
-                            </configuration>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>${maven-source-plugin-version}</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>${maven-javadoc-plugin-version}</version>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <additionalparam>${javadoc.opts}</additionalparam>
-                            <doclint>none</doclint>
-                            <nosince>false</nosince>
-                            <failOnError>false</failOnError>
-                            <doclint>none</doclint>
-                            <defaultVersion>${project.version}</defaultVersion>
-                            <defaultSince>${project.version}</defaultSince>
-                            <javadocExecutable>${env.JAVA_10_HOME}\bin\javadoc.exe</javadocExecutable>
-                        </configuration>
-                    </plugin>
-                    <!--To ensure consistent API for java 9 usage-->
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>animal-sniffer-maven-plugin</artifactId>
-                        <version>1.18</version>
-                        <executions>
-                            <execution>
-                                <phase>test</phase>
-                                <goals>
-                                    <goal>check</goal>
-                                </goals>
-                                <configuration>
-                                    <signature>
-                                        <groupId>org.codehaus.mojo.signature</groupId>
-                                        <!--We are "trying" to be jre 8 compatible-->
-                                        <artifactId>java18</artifactId>
-                                        <version>1.0</version>
-                                    </signature>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-            <dependencies>
-                <dependency>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>animal-sniffer-maven-plugin</artifactId>
-                    <version>1.16</version>
-                    <optional>true</optional>
-                    <scope>provided</scope>
-                </dependency>
-                <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
-                <dependency>
-                    <groupId>javax.xml.bind</groupId>
-                    <artifactId>jaxb-api</artifactId>
-                    <version>${jaxb-apiVersion}</version>
-                </dependency>
-                <!-- https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-core -->
-                <dependency>
-                    <groupId>com.sun.xml.bind</groupId>
-                    <artifactId>jaxb-core</artifactId>
-                    <version>${jaxb-coreVersion}</version>
-                </dependency>
-                <!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-core -->
-                <dependency>
-                    <groupId>org.glassfish.jaxb</groupId>
-                    <artifactId>jaxb-core</artifactId>
-                    <version>${jaxb-coreVersion}</version>
-                </dependency>
-                <!-- https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-impl -->
-                <dependency>
-                    <groupId>com.sun.xml.bind</groupId>
-                    <artifactId>jaxb-impl</artifactId>
-                    <version>${jaxb-implVersion}</version>
-                </dependency>
-            </dependencies>
         </profile>
 
         <profile>
@@ -709,17 +607,6 @@
                 </plugins>
             </build>
         </profile>
-
-        <profile>
-            <id>java8-doclint-disabled</id>
-            <activation>
-                <jdk>[1.8,)</jdk>
-            </activation>
-            <properties>
-                <javadoc.opts>-Xdoclint:none</javadoc.opts>
-            </properties>
-        </profile>
-
     </profiles>
 
     <repositories>
