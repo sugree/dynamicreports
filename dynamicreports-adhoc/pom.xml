@@ -5,7 +5,7 @@
     <parent>
         <groupId>net.sourceforge.dynamicreports</groupId>
         <artifactId>dynamicreports-parent</artifactId>
-        <version>6.12.2-SNAPSHOT</version>
+        <version>6.19.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>dynamicreports-adhoc</artifactId>
@@ -48,7 +48,6 @@
             <plugin>
                 <groupId>org.jvnet.jaxb2.maven2</groupId>
                 <artifactId>maven-jaxb2-plugin</artifactId>
-                <version>0.13.1</version>
                 <configuration>
                     <schemaIncludes>
                         <schemaInclude>**/adhocconfiguration.xsd</schemaInclude>
@@ -89,7 +88,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${maven-checkstyle-plugin.version}</version>
                 <executions>
                     <execution>
                         <!--Could run with mvn clean verify-->
@@ -129,7 +127,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>${maven-source-plugin-version}</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -142,7 +139,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven-javadoc-plugin-version}</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -160,19 +156,6 @@
                     </sourceFileExcludes>
                 </configuration>
             </plugin>
-            <!--//TODO fix "commandline was too long error"-->
-            <!--<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jdeps-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            &lt;!&ndash;<goal>jdkinternals</goal>&ndash;&gt; &lt;!&ndash; verify main classes &ndash;&gt;
-                            <goal>test-jdkinternals</goal> &lt;!&ndash; verify test classes &ndash;&gt;
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>-->
         </plugins>
     </build>
 
@@ -395,29 +378,13 @@
                 </plugins>
             </build>
             <dependencies>
-                <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
                 <dependency>
                     <groupId>javax.xml.bind</groupId>
                     <artifactId>jaxb-api</artifactId>
-                    <version>${jaxb-apiVersion}</version>
                 </dependency>
-                <!-- https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-core -->
-                <dependency>
-                    <groupId>com.sun.xml.bind</groupId>
-                    <artifactId>jaxb-core</artifactId>
-                    <version>${jaxb-coreVersion}</version>
-                </dependency>
-                <!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-core -->
-                <dependency>
-                    <groupId>org.glassfish.jaxb</groupId>
-                    <artifactId>jaxb-core</artifactId>
-                    <version>${jaxb-coreVersion}</version>
-                </dependency>
-                <!-- https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-impl -->
                 <dependency>
                     <groupId>com.sun.xml.bind</groupId>
                     <artifactId>jaxb-impl</artifactId>
-                    <version>${jaxb-implVersion}</version>
                 </dependency>
             </dependencies>
         </profile>
