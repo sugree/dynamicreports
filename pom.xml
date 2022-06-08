@@ -361,29 +361,26 @@
 
     <profiles>
         <profile>
-            <id>distribution</id>
-            <modules>
-                <module>dynamicreports-distribution</module>
-            </modules>
-        </profile>
-
-        <profile>
             <id>license</id>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>com.mycila</groupId>
                         <artifactId>license-maven-plugin</artifactId>
-                        <version>${license-maven-plugin-version}</version>
+                        <version>4.1</version>
                         <configuration>
-                            <header>${license.header.location}</header>
-                            <headerDefinitions>${license.header.definition}</headerDefinitions>
                             <properties>
                                 <owner>${license.maven.owner}</owner>
                             </properties>
-                            <includes>
-                                <include>**/*.java</include>
-                            </includes>
+                            <licenseSets>
+                                <licenseSet>
+                                    <header>${license.header.location}</header>
+                                    <headerDefinitions>${license.header.definition}</headerDefinitions>
+                                    <includes>
+                                        <include>**/*.java</include>
+                                    </includes>
+                                </licenseSet>
+                            </licenseSets>
                         </configuration>
                         <executions>
                             <execution>
