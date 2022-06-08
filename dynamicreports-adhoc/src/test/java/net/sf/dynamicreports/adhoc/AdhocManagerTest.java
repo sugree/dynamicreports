@@ -20,23 +20,24 @@
  */
 package net.sf.dynamicreports.adhoc;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 import net.sf.dynamicreports.adhoc.transformation.AdhocToXmlTransform;
 import net.sf.dynamicreports.adhoc.transformation.XmlToAdhocTransform;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 public class AdhocManagerTest {
 
     private AdhocManager adhocManager;
 
-    @Before
+    @BeforeAll
     public void setUp() throws Exception {
 
         adhocManager = AdhocManager.getInstance(new AdhocToXmlTransform(), new XmlToAdhocTransform());
     }
 
-    @After
+    @AfterAll
     public void tearDown() throws Exception {
     }
 

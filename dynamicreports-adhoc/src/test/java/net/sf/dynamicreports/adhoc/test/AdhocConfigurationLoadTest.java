@@ -20,6 +20,14 @@
  */
 package net.sf.dynamicreports.adhoc.test;
 
+import java.awt.Color;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import net.sf.dynamicreports.adhoc.configuration.AdhocChart;
 import net.sf.dynamicreports.adhoc.configuration.AdhocConfiguration;
 import net.sf.dynamicreports.adhoc.configuration.AdhocGroup;
@@ -53,13 +61,6 @@ import net.sf.dynamicreports.report.constant.VerticalTextAlignment;
 import net.sf.dynamicreports.report.definition.chart.dataset.DRICategoryChartSerie;
 import net.sf.dynamicreports.report.definition.style.DRIStyle;
 import net.sf.dynamicreports.report.exception.DRException;
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.awt.Color;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Ricardo Mariaca
@@ -69,191 +70,191 @@ public class AdhocConfigurationLoadTest extends AdhocTests {
     @Test
     public void test() {
         try {
-            InputStream is = AdhocConfigurationLoadTest.class.getResourceAsStream("adhocconfiguration1.xml");
-            AdhocConfiguration adhocConfiguration = adhocManager.loadConfiguration(is);
+            final InputStream is = AdhocConfigurationLoadTest.class.getResourceAsStream("adhocconfiguration1.xml");
+            final AdhocConfiguration adhocConfiguration = adhocManager.loadConfiguration(is);
             testConfiguration(adhocConfiguration);
-        } catch (DRException e) {
+        } catch (final DRException e) {
             e.printStackTrace();
-            Assert.fail(e.getMessage());
+            Assertions.fail(e.getMessage());
         }
     }
 
-    private void testConfiguration(AdhocConfiguration adhocConfiguration) {
+    private void testConfiguration(final AdhocConfiguration adhocConfiguration) {
         DRReport report = null;
-        ReportCustomizer customizer = new ReportCustomizer();
+        final ReportCustomizer customizer = new ReportCustomizer();
         try {
-            JasperReportBuilder reportBuilder = adhocManager.createReport(adhocConfiguration.getReport(), customizer);
+            final JasperReportBuilder reportBuilder = adhocManager.createReport(adhocConfiguration.getReport(), customizer);
             report = reportBuilder.getReport();
-        } catch (DRException e) {
+        } catch (final DRException e) {
             e.printStackTrace();
-            Assert.fail(e.getMessage());
+            Assertions.fail(e.getMessage());
         }
 
-        Assert.assertNotNull("text style", report.getTextStyle());
-        Assert.assertNotNull("column style", report.getColumnStyle());
-        Assert.assertNotNull("column title style", report.getColumnTitleStyle());
-        Assert.assertNotNull("group style", report.getGroupStyle());
-        Assert.assertNotNull("group title style", report.getGroupTitleStyle());
-        Assert.assertNotNull("subtotal style", report.getSubtotalStyle());
-        Assert.assertNotNull("detail odd row style", report.getDetailOddRowStyle());
-        Assert.assertTrue("highlight detail odd rows", report.getHighlightDetailOddRows());
-        Assert.assertNotNull("detail even row style", report.getDetailEvenRowStyle());
-        Assert.assertTrue("highlight detail even rows", report.getHighlightDetailEvenRows());
+        Assertions.assertNotNull(report.getTextStyle());
+        Assertions.assertNotNull(report.getColumnStyle());
+        Assertions.assertNotNull(report.getColumnTitleStyle());
+        Assertions.assertNotNull(report.getGroupStyle());
+        Assertions.assertNotNull(report.getGroupTitleStyle());
+        Assertions.assertNotNull(report.getSubtotalStyle());
+        Assertions.assertNotNull(report.getDetailOddRowStyle());
+        Assertions.assertTrue(report.getHighlightDetailOddRows());
+        Assertions.assertNotNull(report.getDetailEvenRowStyle());
+        Assertions.assertTrue(report.getHighlightDetailEvenRows());
 
-        DRIStyle style = (DRIStyle) report.getTextStyle();
-        Assert.assertEquals("font name", "a", style.getFont().getFontName());
-        Assert.assertEquals("font size", Integer.valueOf(5), style.getFont().getFontSize());
-        Assert.assertTrue("bold", style.getFont().getBold());
-        Assert.assertTrue("italic", style.getFont().getItalic());
-        Assert.assertTrue("underline", style.getFont().getUnderline());
-        Assert.assertTrue("strike through", style.getFont().getStrikeThrough());
-        Assert.assertNotNull("top border", style.getBorder().getTopPen());
-        Assert.assertNotNull("left border", style.getBorder().getLeftPen());
-        Assert.assertNotNull("bottom border", style.getBorder().getBottomPen());
-        Assert.assertNotNull("right border", style.getBorder().getRightPen());
-        Assert.assertEquals("pen line width", 2f, style.getBorder().getTopPen().getLineWidth(),0);
-        Assert.assertEquals("pen line color", Color.CYAN, style.getBorder().getTopPen().getLineColor());
-        Assert.assertEquals("foreground color", Color.WHITE, style.getForegroundColor());
-        Assert.assertEquals("background color", Color.DARK_GRAY, style.getBackgroundColor());
-        Assert.assertEquals("horizontal alignment", HorizontalTextAlignment.CENTER, style.getHorizontalTextAlignment());
-        Assert.assertEquals("vertical alignment", VerticalTextAlignment.MIDDLE, style.getVerticalTextAlignment());
-        Assert.assertEquals("pattern", "#,###.00", style.getPattern());
+        final DRIStyle style = (DRIStyle) report.getTextStyle();
+        Assertions.assertEquals("a", style.getFont().getFontName());
+        Assertions.assertEquals(Integer.valueOf(5), style.getFont().getFontSize());
+        Assertions.assertTrue(style.getFont().getBold());
+        Assertions.assertTrue(style.getFont().getItalic());
+        Assertions.assertTrue(style.getFont().getUnderline());
+        Assertions.assertTrue(style.getFont().getStrikeThrough());
+        Assertions.assertNotNull(style.getBorder().getTopPen());
+        Assertions.assertNotNull(style.getBorder().getLeftPen());
+        Assertions.assertNotNull(style.getBorder().getBottomPen());
+        Assertions.assertNotNull(style.getBorder().getRightPen());
+        Assertions.assertEquals(2f, style.getBorder().getTopPen().getLineWidth(),0);
+        Assertions.assertEquals(Color.CYAN, style.getBorder().getTopPen().getLineColor());
+        Assertions.assertEquals(Color.WHITE, style.getForegroundColor());
+        Assertions.assertEquals(Color.DARK_GRAY, style.getBackgroundColor());
+        Assertions.assertEquals(HorizontalTextAlignment.CENTER, style.getHorizontalTextAlignment());
+        Assertions.assertEquals(VerticalTextAlignment.MIDDLE, style.getVerticalTextAlignment());
+        Assertions.assertEquals("#,###.00", style.getPattern());
 
-        DRPage page = report.getPage();
-        Assert.assertEquals("page width", Integer.valueOf(100), page.getWidth());
-        Assert.assertEquals("page height", Integer.valueOf(200), page.getHeight());
-        Assert.assertEquals("page orientation", PageOrientation.PORTRAIT, page.getOrientation());
-        Assert.assertEquals("top margin", 1, page.getMargin().getTop());
-        Assert.assertEquals("bottom margin", 2, page.getMargin().getBottom());
-        Assert.assertEquals("left margin", 3, page.getMargin().getLeft());
-        Assert.assertEquals("right margin", 4, page.getMargin().getRight());
-        Assert.assertTrue("ignore page width", page.getIgnorePageWidth());
+        final DRPage page = report.getPage();
+        Assertions.assertEquals(Integer.valueOf(100), page.getWidth());
+        Assertions.assertEquals(Integer.valueOf(200), page.getHeight());
+        Assertions.assertEquals(PageOrientation.PORTRAIT, page.getOrientation());
+        Assertions.assertEquals(1, page.getMargin().getTop());
+        Assertions.assertEquals(2, page.getMargin().getBottom());
+        Assertions.assertEquals(3, page.getMargin().getLeft());
+        Assertions.assertEquals(4, page.getMargin().getRight());
+        Assertions.assertTrue(page.getIgnorePageWidth());
 
-        Assert.assertEquals("columns", 3, report.getColumns().size());
+        Assertions.assertEquals(3, report.getColumns().size());
         DRColumn<?> column = report.getColumns().get(0);
-        Assert.assertEquals("column name", "field1", column.getName());
-        Assert.assertNotNull("column title", column.getTitleExpression());
-        Assert.assertNotNull("column style", column.getComponent().getStyle());
-        Assert.assertNotNull("column title style", column.getTitleStyle());
-        Assert.assertEquals("column width", Integer.valueOf(50), ((DRDimensionComponent) column.getComponent()).getWidth());
-        Assert.assertEquals("column width type", ComponentDimensionType.FIXED, ((DRDimensionComponent) column.getComponent()).getWidthType());
+        Assertions.assertEquals("field1", column.getName());
+        Assertions.assertNotNull(column.getTitleExpression());
+        Assertions.assertNotNull(column.getComponent().getStyle());
+        Assertions.assertNotNull(column.getTitleStyle());
+        Assertions.assertEquals(Integer.valueOf(50), ((DRDimensionComponent) column.getComponent()).getWidth());
+        Assertions.assertEquals(ComponentDimensionType.FIXED, ((DRDimensionComponent) column.getComponent()).getWidthType());
 
         column = report.getColumns().get(2);
-        Assert.assertEquals("column name", "field3", column.getName());
-        Assert.assertNotNull("column title", column.getTitleExpression());
-        Assert.assertNull("column style", column.getComponent().getStyle());
-        Assert.assertNull("column title style", column.getTitleStyle());
-        Assert.assertNull("column width", ((DRDimensionComponent) column.getComponent()).getWidth());
-        Assert.assertNull("column width type", ((DRDimensionComponent) column.getComponent()).getWidthType());
+        Assertions.assertEquals("field3", column.getName());
+        Assertions.assertNotNull(column.getTitleExpression());
+        Assertions.assertNull(column.getComponent().getStyle());
+        Assertions.assertNull(column.getTitleStyle());
+        Assertions.assertNull(((DRDimensionComponent) column.getComponent()).getWidth());
+        Assertions.assertNull(((DRDimensionComponent) column.getComponent()).getWidthType());
 
-        Assert.assertEquals("groups", 2, report.getGroups().size());
+        Assertions.assertEquals(2, report.getGroups().size());
         DRGroup group = report.getGroups().get(0);
-        Assert.assertTrue("group start in new page", group.getStartInNewPage());
-        Assert.assertEquals("group header layout", GroupHeaderLayout.TITLE_AND_VALUE, group.getHeaderLayout());
-        Assert.assertNotNull("group style", group.getValueField().getStyle());
-        Assert.assertNotNull("group title style", group.getTitleStyle());
+        Assertions.assertTrue(group.getStartInNewPage());
+        Assertions.assertEquals(GroupHeaderLayout.TITLE_AND_VALUE, group.getHeaderLayout());
+        Assertions.assertNotNull(group.getValueField().getStyle());
+        Assertions.assertNotNull(group.getTitleStyle());
 
         group = report.getGroups().get(1);
-        Assert.assertNull("group start in new page", group.getStartInNewPage());
-        Assert.assertNull("group header layout", group.getHeaderLayout());
-        Assert.assertNull("group style", group.getValueField().getStyle());
-        Assert.assertNull("group title style", group.getTitleStyle());
+        Assertions.assertNull(group.getStartInNewPage());
+        Assertions.assertNull(group.getHeaderLayout());
+        Assertions.assertNull(group.getValueField().getStyle());
+        Assertions.assertNull(group.getTitleStyle());
 
-        Assert.assertEquals("sorts", 2, report.getSorts().size());
-        DRSort sort = report.getSorts().get(0);
-        Assert.assertNotNull("sort name", sort.getExpression());
-        Assert.assertEquals("sort order", OrderType.DESCENDING, sort.getOrderType());
+        Assertions.assertEquals(2, report.getSorts().size());
+        final DRSort sort = report.getSorts().get(0);
+        Assertions.assertNotNull(sort.getExpression());
+        Assertions.assertEquals(OrderType.DESCENDING, sort.getOrderType());
 
-        Assert.assertEquals("subtotals", 2, report.getSubtotals().size());
+        Assertions.assertEquals(2, report.getSubtotals().size());
         DRSubtotal<?> subtotal = report.getSubtotals().get(0);
-        Assert.assertNotNull("subtotal label", subtotal.getLabelExpression());
-        Assert.assertNotNull("subtotal style", subtotal.getValueField().getStyle());
-        Assert.assertNotNull("subtotal label style", subtotal.getLabelStyle());
+        Assertions.assertNotNull(subtotal.getLabelExpression());
+        Assertions.assertNotNull(subtotal.getValueField().getStyle());
+        Assertions.assertNotNull(subtotal.getLabelStyle());
         subtotal = report.getSubtotals().get(1);
-        Assert.assertNull("subtotal label", subtotal.getLabelExpression());
-        Assert.assertNull("subtotal style", subtotal.getValueField().getStyle());
-        Assert.assertNull("subtotal label style", subtotal.getLabelStyle());
+        Assertions.assertNull(subtotal.getLabelExpression());
+        Assertions.assertNull(subtotal.getValueField().getStyle());
+        Assertions.assertNull(subtotal.getLabelStyle());
 
-        Assert.assertEquals("components", 3, customizer.getComponents().size());
-        Assert.assertTrue("component", adhocConfiguration.getReport().getComponent("textField") instanceof AdhocTextField);
-        Assert.assertTrue("component", adhocConfiguration.getReport().getComponent("chart1") instanceof AdhocChart);
-        Assert.assertTrue("component", adhocConfiguration.getReport().getComponent("chart2") instanceof AdhocChart);
+        Assertions.assertEquals(3, customizer.getComponents().size());
+        Assertions.assertTrue(adhocConfiguration.getReport().getComponent("textField") instanceof AdhocTextField);
+        Assertions.assertTrue(adhocConfiguration.getReport().getComponent("chart1") instanceof AdhocChart);
+        Assertions.assertTrue(adhocConfiguration.getReport().getComponent("chart2") instanceof AdhocChart);
 
-        DRComponent component = customizer.getComponents().get(0).getComponent();
-        Assert.assertEquals("component key", adhocConfiguration.getReport().getComponents().get(0), adhocConfiguration.getReport().getComponent("textField"));
-        Assert.assertNotNull("component style", component.getStyle());
-        Assert.assertEquals("component width", Integer.valueOf(150), ((DRDimensionComponent) component).getWidth());
-        Assert.assertEquals("component width type", ComponentDimensionType.FIXED, ((DRDimensionComponent) component).getWidthType());
-        Assert.assertEquals("component height", Integer.valueOf(200), ((DRDimensionComponent) component).getHeight());
-        Assert.assertEquals("component height type", ComponentDimensionType.FIXED, ((DRDimensionComponent) component).getHeightType());
-        DRTextField<?> textField = (DRTextField<?>) component;
-        Assert.assertNotNull("textField text", textField.getValueExpression());
+        final DRComponent component = customizer.getComponents().get(0).getComponent();
+        Assertions.assertEquals(adhocConfiguration.getReport().getComponents().get(0), adhocConfiguration.getReport().getComponent("textField"));
+        Assertions.assertNotNull(component.getStyle());
+        Assertions.assertEquals(Integer.valueOf(150), ((DRDimensionComponent) component).getWidth());
+        Assertions.assertEquals(ComponentDimensionType.FIXED, ((DRDimensionComponent) component).getWidthType());
+        Assertions.assertEquals(Integer.valueOf(200), ((DRDimensionComponent) component).getHeight());
+        Assertions.assertEquals(ComponentDimensionType.FIXED, ((DRDimensionComponent) component).getHeightType());
+        final DRTextField<?> textField = (DRTextField<?>) component;
+        Assertions.assertNotNull(textField.getValueExpression());
 
         DRChart chart = (DRChart) customizer.getComponents().get(1).getComponent();
-        Assert.assertEquals("component key", adhocConfiguration.getReport().getComponents().get(1), adhocConfiguration.getReport().getComponent("chart1"));
-        Assert.assertEquals("chart type", ChartType.AREA, chart.getChartType());
-        Assert.assertNotNull("chart title", chart.getTitle().getTitle());
-        Assert.assertNotNull("chart title font", chart.getTitle().getFont());
-        Assert.assertEquals("chart title color", Color.MAGENTA, chart.getTitle().getColor());
-        Assert.assertTrue("chart show legend", chart.getLegend().getShowLegend());
-        Assert.assertNotNull("chart category", ((DRCategoryDataset) chart.getDataset()).getValueExpression());
+        Assertions.assertEquals(adhocConfiguration.getReport().getComponents().get(1), adhocConfiguration.getReport().getComponent("chart1"));
+        Assertions.assertEquals(ChartType.AREA, chart.getChartType());
+        Assertions.assertNotNull(chart.getTitle().getTitle());
+        Assertions.assertNotNull(chart.getTitle().getFont());
+        Assertions.assertEquals(Color.MAGENTA, chart.getTitle().getColor());
+        Assertions.assertTrue(chart.getLegend().getShowLegend());
+        Assertions.assertNotNull(((DRCategoryDataset) chart.getDataset()).getValueExpression());
         DRICategoryChartSerie chartSerie = (DRICategoryChartSerie) ((DRCategoryDataset) chart.getDataset()).getSeries().get(0);
-        Assert.assertNotNull("chart serie series", chartSerie.getSeriesExpression());
-        Assert.assertNotNull("chart serie value", chartSerie.getValueExpression());
-        Assert.assertNotNull("chart serie label", chartSerie.getLabelExpression());
-        Assert.assertEquals("chart series color", Color.LIGHT_GRAY, ((DRAxisPlot) chart.getPlot()).getSeriesColors().get(0));
-        Assert.assertNotNull("chart category axis format", ((DRAxisPlot) chart.getPlot()).getXAxisFormat());
-        Assert.assertNotNull("chart value axis format", ((DRAxisPlot) chart.getPlot()).getYAxisFormat());
-        Assert.assertNotNull("axis format label", ((DRAxisPlot) chart.getPlot()).getXAxisFormat().getLabelExpression());
-        Assert.assertNotNull("axis format label font", ((DRAxisPlot) chart.getPlot()).getXAxisFormat().getLabelFont());
-        Assert.assertEquals("axis format label color", Color.BLUE, ((DRAxisPlot) chart.getPlot()).getXAxisFormat().getLabelColor());
-        Assert.assertEquals("chart orientation", Orientation.VERTICAL, ((DRAxisPlot) chart.getPlot()).getOrientation());
-        Assert.assertTrue("chart use series as category", ((DRCategoryDataset) chart.getDataset()).getUseSeriesAsCategory());
+        Assertions.assertNotNull(chartSerie.getSeriesExpression());
+        Assertions.assertNotNull(chartSerie.getValueExpression());
+        Assertions.assertNotNull(chartSerie.getLabelExpression());
+        Assertions.assertEquals(Color.LIGHT_GRAY, ((DRAxisPlot) chart.getPlot()).getSeriesColors().get(0));
+        Assertions.assertNotNull(((DRAxisPlot) chart.getPlot()).getXAxisFormat());
+        Assertions.assertNotNull(((DRAxisPlot) chart.getPlot()).getYAxisFormat());
+        Assertions.assertNotNull(((DRAxisPlot) chart.getPlot()).getXAxisFormat().getLabelExpression());
+        Assertions.assertNotNull(((DRAxisPlot) chart.getPlot()).getXAxisFormat().getLabelFont());
+        Assertions.assertEquals(Color.BLUE, ((DRAxisPlot) chart.getPlot()).getXAxisFormat().getLabelColor());
+        Assertions.assertEquals(Orientation.VERTICAL, ((DRAxisPlot) chart.getPlot()).getOrientation());
+        Assertions.assertTrue(((DRCategoryDataset) chart.getDataset()).getUseSeriesAsCategory());
 
         chart = (DRChart) customizer.getComponents().get(2).getComponent();
-        Assert.assertEquals("component key", adhocConfiguration.getReport().getComponents().get(2), adhocConfiguration.getReport().getComponent("chart2"));
-        Assert.assertNull("component style", chart.getStyle());
-        Assert.assertNull("component width", chart.getWidth());
-        Assert.assertNull("component width type", chart.getWidthType());
-        Assert.assertNull("component height", chart.getHeight());
-        Assert.assertNull("component height type", chart.getHeightType());
-        Assert.assertNull("chart title", chart.getTitle().getTitle());
-        Assert.assertNull("chart title font", chart.getTitle().getFont());
-        Assert.assertNull("chart title color", chart.getTitle().getColor());
-        Assert.assertNull("chart show legend", chart.getLegend().getShowLegend());
-        Assert.assertNotNull("chart category", ((DRCategoryDataset) chart.getDataset()).getValueExpression());
+        Assertions.assertEquals(adhocConfiguration.getReport().getComponents().get(2), adhocConfiguration.getReport().getComponent("chart2"));
+        Assertions.assertNull(chart.getStyle());
+        Assertions.assertNull(chart.getWidth());
+        Assertions.assertNull(chart.getWidthType());
+        Assertions.assertNull(chart.getHeight());
+        Assertions.assertNull(chart.getHeightType());
+        Assertions.assertNull(chart.getTitle().getTitle());
+        Assertions.assertNull(chart.getTitle().getFont());
+        Assertions.assertNull(chart.getTitle().getColor());
+        Assertions.assertNull(chart.getLegend().getShowLegend());
+        Assertions.assertNotNull(((DRCategoryDataset) chart.getDataset()).getValueExpression());
         chartSerie = (DRICategoryChartSerie) ((DRCategoryDataset) chart.getDataset()).getSeries().get(0);
-        Assert.assertNull("chart serie series", chartSerie.getSeriesExpression());
-        Assert.assertNotNull("chart serie value", chartSerie.getValueExpression());
-        Assert.assertNotNull("chart serie label", chartSerie.getLabelExpression());
-        Assert.assertEquals("chart series color", 0, ((DRAxisPlot) chart.getPlot()).getSeriesColors().size());
-        Assert.assertNull("axis format label", ((DRAxisPlot) chart.getPlot()).getXAxisFormat().getLabelExpression());
-        Assert.assertNull("axis format label font", ((DRAxisPlot) chart.getPlot()).getXAxisFormat().getLabelFont());
-        Assert.assertNull("axis format label color", ((DRAxisPlot) chart.getPlot()).getXAxisFormat().getLabelColor());
-        Assert.assertNull("chart orientation", ((DRAxisPlot) chart.getPlot()).getOrientation());
-        Assert.assertNull("chart use series as category", ((DRCategoryDataset) chart.getDataset()).getUseSeriesAsCategory());
+        Assertions.assertNull(chartSerie.getSeriesExpression());
+        Assertions.assertNotNull(chartSerie.getValueExpression());
+        Assertions.assertNotNull(chartSerie.getLabelExpression());
+        Assertions.assertEquals(0, ((DRAxisPlot) chart.getPlot()).getSeriesColors().size());
+        Assertions.assertNull(((DRAxisPlot) chart.getPlot()).getXAxisFormat().getLabelExpression());
+        Assertions.assertNull(((DRAxisPlot) chart.getPlot()).getXAxisFormat().getLabelFont());
+        Assertions.assertNull(((DRAxisPlot) chart.getPlot()).getXAxisFormat().getLabelColor());
+        Assertions.assertNull(((DRAxisPlot) chart.getPlot()).getOrientation());
+        Assertions.assertNull(((DRCategoryDataset) chart.getDataset()).getUseSeriesAsCategory());
 
-        AdhocGroup adhocGroup = adhocConfiguration.getReport().getGroups().get(1);
-        Assert.assertEquals("property", "value<a>&&</a>1", adhocGroup.getProperty("key1"));
-        Assert.assertEquals("property", "value<a>&&</a>2", adhocGroup.getProperty("key2"));
+        final AdhocGroup adhocGroup = adhocConfiguration.getReport().getGroups().get(1);
+        Assertions.assertEquals("value<a>&&</a>1", adhocGroup.getProperty("key1"));
+        Assertions.assertEquals("value<a>&&</a>2",adhocGroup.getProperty("key2"));
 
-        Assert.assertEquals("restrictions", 2, adhocConfiguration.getFilter().getRestrictions().size());
-        AdhocRestriction adhocRestriction = adhocConfiguration.getFilter().getRestrictions().get(0);
-        Assert.assertEquals("restriction key", adhocRestriction, adhocConfiguration.getFilter().getRestriction("restriction1"));
-        Assert.assertEquals("restriction key", "restriction1", adhocRestriction.getKey());
-        Assert.assertEquals("restriction property", "value", adhocRestriction.getProperty("key"));
-        Assert.assertNull("restriction property", adhocRestriction.getProperty("key_empty"));
-        Assert.assertTrue("restriction property", (Boolean) adhocRestriction.getProperty("key_boolean"));
-        Assert.assertEquals("restriction property", Integer.valueOf(100), adhocRestriction.getProperty("key_int"));
+        Assertions.assertEquals(2, adhocConfiguration.getFilter().getRestrictions().size());
+        final AdhocRestriction adhocRestriction = adhocConfiguration.getFilter().getRestrictions().get(0);
+        Assertions.assertEquals(adhocRestriction, adhocConfiguration.getFilter().getRestriction("restriction1"));
+        Assertions.assertEquals("restriction1", adhocRestriction.getKey());
+        Assertions.assertEquals("value", adhocRestriction.getProperty("key"));
+        Assertions.assertNull(adhocRestriction.getProperty("key_empty"));
+        Assertions.assertTrue((Boolean) adhocRestriction.getProperty("key_boolean"));
+        Assertions.assertEquals(Integer.valueOf(100), adhocRestriction.getProperty("key_int"));
 
-        AdhocValueRestriction adhocValueRestriction = (AdhocValueRestriction) adhocConfiguration.getFilter().getRestrictions().get(1);
-        Assert.assertEquals("restriction key", adhocValueRestriction, adhocConfiguration.getFilter().getRestriction("restriction2"));
-        Assert.assertEquals("restriction key", "restriction2", adhocValueRestriction.getKey());
-        Assert.assertTrue("restriction property", adhocValueRestriction.getProperties().isEmpty());
-        Assert.assertEquals("restriction name", "aa", adhocValueRestriction.getName());
-        Assert.assertEquals("restriction operator", AdhocValueOperator.IN, adhocValueRestriction.getOperator());
-        Assert.assertEquals("restriction value", "value1", adhocValueRestriction.getValues().get(0));
-        Assert.assertEquals("restriction value", "value2", adhocValueRestriction.getValues().get(1));
+        final AdhocValueRestriction adhocValueRestriction = (AdhocValueRestriction) adhocConfiguration.getFilter().getRestrictions().get(1);
+        Assertions.assertEquals(adhocValueRestriction, adhocConfiguration.getFilter().getRestriction("restriction2"));
+        Assertions.assertEquals("restriction2", adhocValueRestriction.getKey());
+        Assertions.assertTrue(adhocValueRestriction.getProperties().isEmpty());
+        Assertions.assertEquals("aa", adhocValueRestriction.getName());
+        Assertions.assertEquals(AdhocValueOperator.IN, adhocValueRestriction.getOperator());
+        Assertions.assertEquals("value1",adhocValueRestriction.getValues().get(0));
+        Assertions.assertEquals("value2",adhocValueRestriction.getValues().get(1));
     }
 
     private class ReportCustomizer extends DefaultAdhocReportCustomizer {
