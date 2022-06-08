@@ -42,32 +42,6 @@
         <sourceVersion>11</sourceVersion>
         <targetVersion>11</targetVersion>
 
-        <!--Dependencies -->
-        <barcode4jVersion>2.1</barcode4jVersion>
-        <barbecueVersion>1.5-beta1</barbecueVersion>
-        <batikbridgeVersion>1.12</batikbridgeVersion>
-        <commonslang3Version>3.11</commonslang3Version>
-        <groovyVersion>2.4.19</groovyVersion>
-        <hsqldbVersion>2.5.1</hsqldbVersion>
-        <jsonVersion>20200518</jsonVersion>
-        <jul-to-slf4jVersion>1.7.25</jul-to-slf4jVersion>
-        <junitVersion>4.13.2</junitVersion>
-        <log4j-to-slf4jVersion>2.13.3</log4j-to-slf4jVersion>
-        <logback-classicVersion>1.2.3</logback-classicVersion>
-        <poiVersion>4.1.2</poiVersion>
-        <springframeworkVersion>5.2.5.RELEASE</springframeworkVersion>
-        <velocityVersion>1.7</velocityVersion>
-        <xalanVersion>2.7.2</xalanVersion>
-        <xmlgraphicscommonsVersion>2.4</xmlgraphicscommonsVersion>
-
-        <!--Plugins -->
-        <jdeps-maven-plugin-version>0.5.1</jdeps-maven-plugin-version>
-        <lifecycle-mapping-plugin-version>1.0.0</lifecycle-mapping-plugin-version>
-        <maven-project-info-reports-plugin>2.9</maven-project-info-reports-plugin>
-
-        <!--Profile Plugins-->
-        <license-maven-plugin-version>3.0</license-maven-plugin-version>
-
         <!--Mycila License plugin configuration-->
         <license.header.location>${project.basedir}/src/etc/license_header.txt</license.header.location>
         <license.header.definition>${project.basedir}/src/etc/header_definition.xml</license.header.definition>
@@ -138,26 +112,24 @@
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
-                <version>${commonslang3Version}</version>
+                <version>3.12.0</version>
             </dependency>
             <dependency>
                 <groupId>net.sf.barcode4j</groupId>
                 <artifactId>barcode4j</artifactId>
-                <version>${barcode4jVersion}</version>
+                <version>2.1</version>
                 <scope>runtime</scope>
                 <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>net.sourceforge.barbecue</groupId>
                 <artifactId>barbecue</artifactId>
-                <version>${barbecueVersion}</version>
-                <scope>runtime</scope>
-                <optional>true</optional>
+                <version>1.5-beta1</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.xmlgraphics</groupId>
                 <artifactId>batik-bridge</artifactId>
-                <version>${batikbridgeVersion}</version>
+                <version>1.14</version>
                 <scope>runtime</scope>
                 <optional>true</optional>
                 <exclusions>
@@ -170,7 +142,7 @@
             <dependency>
                 <groupId>org.apache.xmlgraphics</groupId>
                 <artifactId>xmlgraphics-commons</artifactId>
-                <version>${xmlgraphicscommonsVersion}</version>
+                <version>2.7</version>
                 <scope>runtime</scope>
                 <optional>true</optional>
                 <exclusions>
@@ -183,49 +155,49 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-core</artifactId>
-                <version>${springframeworkVersion}</version>
+                <version>5.3.20</version>
                 <scope>runtime</scope>
                 <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-beans</artifactId>
-                <version>${springframeworkVersion}</version>
+                <version>5.3.20</version>
                 <scope>runtime</scope>
                 <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi</artifactId>
-                <version>${poiVersion}</version>
+                <version>5.2.2</version>
                 <scope>runtime</scope>
                 <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>org.hsqldb</groupId>
                 <artifactId>hsqldb</artifactId>
-                <version>${hsqldbVersion}</version>
+                <version>2.6.1</version>
                 <scope>runtime</scope>
                 <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>xalan</groupId>
                 <artifactId>xalan</artifactId>
-                <version>${xalanVersion}</version>
+                <version>2.7.2</version>
                 <scope>runtime</scope>
                 <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>org.codehaus.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
-                <version>${groovyVersion}</version>
+                <version>2.4.21</version>
                 <scope>runtime</scope>
                 <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>org.apache.velocity</groupId>
                 <artifactId>velocity</artifactId>
-                <version>${velocityVersion}</version>
+                <version>1.7</version>
                 <scope>runtime</scope>
                 <optional>true</optional>
                 <exclusions>
@@ -238,31 +210,31 @@
             <dependency>
                 <groupId>org.json</groupId>
                 <artifactId>json</artifactId>
-                <version>${jsonVersion}</version>
+                <version>20220320</version>
                 <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
-                <version>${junitVersion}</version>
+                <version>4.13.2</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>${logback-classicVersion}</version>
+                <version>1.2.11</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-to-slf4j</artifactId>
-                <version>${log4j-to-slf4jVersion}</version>
+                <version>2.17.2</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>jul-to-slf4j</artifactId>
-                <version>${jul-to-slf4jVersion}</version>
+                <version>1.7.36</version>
                 <scope>compile</scope>
             </dependency>
         </dependencies>
@@ -423,7 +395,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
-                        <version>${maven-source-plugin-version}</version>
+                        <version>3.2.1</version>
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
