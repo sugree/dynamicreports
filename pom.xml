@@ -45,7 +45,6 @@
         <!--Mycila License plugin configuration-->
         <license.header.location>${project.basedir}/src/etc/license_header.txt</license.header.location>
         <license.header.definition>${project.basedir}/src/etc/header_definition.xml</license.header.definition>
-        <license.maven.owner>Ricardo Mariaca and the DynamicReports Contributors</license.maven.owner>
 
         <!--Configuration for Modernizer-maven-plugin-->
         <modernizer-failOnViolations>true</modernizer-failOnViolations>
@@ -369,9 +368,6 @@
                         <artifactId>license-maven-plugin</artifactId>
                         <version>4.1</version>
                         <configuration>
-                            <properties>
-                                <owner>${license.maven.owner}</owner>
-                            </properties>
                             <licenseSets>
                                 <licenseSet>
                                     <header>${license.header.location}</header>
