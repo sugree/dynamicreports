@@ -67,6 +67,7 @@ public class AdhocChartTest extends AdhocTests {
     @BeforeEach
     public void init() {
         adhocConfiguration = new AdhocConfiguration();
+
         final AdhocReport adhocReport = new AdhocReport();
         adhocConfiguration.setReport(adhocReport);
 

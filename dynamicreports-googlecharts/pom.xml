@@ -5,7 +5,7 @@
     <parent>
         <groupId>net.sourceforge.dynamicreports</groupId>
         <artifactId>dynamicreports-parent</artifactId>
-        <version>6.19.0-SNAPSHOT</version>
+        <version>6.21.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>dynamicreports-googlecharts</artifactId>
@@ -26,9 +26,9 @@
             <artifactId>velocity</artifactId>
             <scope>compile</scope>
         </dependency>
-         <dependency>
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
+            <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

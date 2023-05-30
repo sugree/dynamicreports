@@ -33,10 +33,12 @@ import org.junit.jupiter.api.Test;
 import net.sf.dynamicreports.jasper.builder.JasperConcatenatedReportBuilder;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.exception.DRException;
+import org.junit.jupiter.api.TestInstance;
 
 /**
  * @author Ricardo Mariaca
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ConcatenatedReport1Test {
     JasperConcatenatedReportBuilder concatenatedReport;
 
@@ -55,17 +57,17 @@ public class ConcatenatedReport1Test {
         try {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             concatenatedReport.toCsv(bos);
-            Assertions.assertEquals("concatenated report ", "text1\n1\ntext2\n1\ntext3\n1\n", new String(bos.toByteArray()));
+            Assertions.assertEquals("text1\n1\ntext2\n1\ntext3\n1\n", new String(bos.toByteArray()), "concatenated report ");
 
             concatenatedReport.continuousPageNumbering();
             bos = new ByteArrayOutputStream();
             concatenatedReport.toCsv(bos);
-            Assertions.assertEquals("concatenated report ", "text1\n1\ntext2\n2\ntext3\n3\n", new String(bos.toByteArray()));
+            Assertions.assertEquals("text1\n1\ntext2\n2\ntext3\n3\n", new String(bos.toByteArray()), "concatenated report ");
 
             concatenatedReport.setContinuousPageNumbering(false);
             bos = new ByteArrayOutputStream();
             concatenatedReport.toCsv(bos);
-            Assertions.assertEquals("concatenated report ", "text1\n1\ntext2\n1\ntext3\n1\n", new String(bos.toByteArray()));
+            Assertions.assertEquals("text1\n1\ntext2\n1\ntext3\n1\n", new String(bos.toByteArray()), "concatenated report ");
         } catch (final DRException e) {
             e.printStackTrace();
             Assertions.fail(e.getMessage());

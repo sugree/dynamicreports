@@ -36,10 +36,12 @@ import net.sf.dynamicreports.jasper.constant.ImageType;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.report.exception.DRException;
 import net.sf.jasperreports.engine.JRDataSource;
+import org.junit.jupiter.api.TestInstance;
 
 /**
  * @author Ricardo Mariaca
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ExportTest {
     JasperReportBuilder report;
     JasperConcatenatedReportBuilder concatenatedReport;

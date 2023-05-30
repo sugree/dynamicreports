@@ -26,7 +26,9 @@ import org.junit.jupiter.api.Test;
 
 import net.sf.dynamicreports.adhoc.transformation.AdhocToXmlTransform;
 import net.sf.dynamicreports.adhoc.transformation.XmlToAdhocTransform;
+import org.junit.jupiter.api.TestInstance;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AdhocManagerTest {
 
     private AdhocManager adhocManager;

@@ -47,10 +47,12 @@ import net.sf.jasperreports.engine.JRPrintText;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRStyledTextUtil;
+import org.junit.jupiter.api.TestInstance;
 
 /**
  * @author Ricardo Mariaca
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class AbstractJasperTest extends AdhocTests {
     private JasperReportBuilder reportBuilder;
     private JasperReport jasperReport;

@@ -37,10 +37,12 @@ import net.sf.dynamicreports.report.exception.DRException;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRField;
+import org.junit.jupiter.api.TestInstance;
 
 /**
  * @author Ricardo Mariaca
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ConcatenatedReport5Test {
     JasperConcatenatedReportBuilder concatenatedReport;
 
@@ -59,11 +61,11 @@ public class ConcatenatedReport5Test {
         try {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             concatenatedReport.toCsv(bos);
-            Assertions.assertEquals("concatenated report ", "text1\ntext2\ntext3\n", new String(bos.toByteArray()));
+            Assertions.assertEquals("text1\ntext2\ntext3\n", new String(bos.toByteArray()), "concatenated report ");
 
             bos = new ByteArrayOutputStream();
             concatenatedReport.toCsv(bos);
-            Assertions.assertEquals("concatenated report ", "text1\ntext2\ntext3\n", new String(bos.toByteArray()));
+            Assertions.assertEquals("text1\ntext2\ntext3\n", new String(bos.toByteArray()), "concatenated report ");
         } catch (final DRException e) {
             e.printStackTrace();
             Assertions.fail(e.getMessage());

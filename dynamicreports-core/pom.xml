@@ -5,7 +5,7 @@
     <parent>
         <groupId>net.sourceforge.dynamicreports</groupId>
         <artifactId>dynamicreports-parent</artifactId>
-        <version>6.20.0-j17-fork-SNAPSHOT</version>
+        <version>6.21.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>dynamicreports-core</artifactId>
@@ -72,7 +72,7 @@
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
+            <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -134,6 +134,9 @@
 
     <build>
         <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>com.helger.maven</groupId>
                 <artifactId>jaxb40-maven-plugin</artifactId>

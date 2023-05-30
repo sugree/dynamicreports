@@ -126,7 +126,7 @@ public class DataTypeTest {
     }
 
     private <U, T extends U> void valueConversionTest(final String name, final DRIDataType<U, T> dataType, final U value, final String stringValue) {
-        Assertions.assertEquals(name + " valueToString", stringValue, dataType.valueToString(value, Locale.ENGLISH));
+        Assertions.assertEquals(stringValue, dataType.valueToString(value, Locale.ENGLISH), name + " valueToString");
 
         try {
             final String stringResult = dataType.valueToString(value, Locale.ENGLISH);

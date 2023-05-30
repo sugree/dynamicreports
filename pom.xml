@@ -9,7 +9,7 @@
 
     <groupId>net.sourceforge.dynamicreports</groupId>
     <artifactId>dynamicreports-parent</artifactId>
-    <version>6.20.0-j17-fork-SNAPSHOT</version>
+    <version>6.21.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>DynamicReports - parent</name>
@@ -31,9 +31,9 @@
 
     <modules>
         <module>dynamicreports-core</module>
-<!--        <module>dynamicreports-adhoc</module>-->
-<!--        <module>dynamicreports-googlecharts</module>-->
-<!--        <module>dynamicreports-examples</module>-->
+        <module>dynamicreports-adhoc</module>
+        <module>dynamicreports-googlecharts</module>
+        <module>dynamicreports-examples</module>
     </modules>
 
     <properties>
@@ -97,7 +97,6 @@
                 <groupId>jakarta.xml.bind</groupId>
                 <artifactId>jakarta.xml.bind-api</artifactId>
                 <version>4.0.0</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.glassfish.jaxb</groupId>
@@ -213,10 +212,10 @@
                 <version>20220320</version>
                 <optional>true</optional>
             </dependency>
-           <dependency>
+            <dependency>
                 <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-api</artifactId>
-                <version>5.8.2</version>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>5.9.2</version>
             </dependency>
             <dependency>
                 <groupId>ch.qos.logback</groupId>
@@ -354,6 +353,10 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
                     <version>2.11.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.22.2</version>
                 </plugin>
             </plugins>
         </pluginManagement>
