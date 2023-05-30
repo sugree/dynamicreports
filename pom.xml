@@ -9,7 +9,7 @@
 
     <groupId>net.sourceforge.dynamicreports</groupId>
     <artifactId>dynamicreports-parent</artifactId>
-    <version>6.19.0-SNAPSHOT</version>
+    <version>6.20.0-j17-fork-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>DynamicReports - parent</name>
@@ -31,16 +31,16 @@
 
     <modules>
         <module>dynamicreports-core</module>
-        <!--<module>dynamicreports-adhoc</module>-->
-        <module>dynamicreports-googlecharts</module>
-        <module>dynamicreports-examples</module>
+<!--        <module>dynamicreports-adhoc</module>-->
+<!--        <module>dynamicreports-googlecharts</module>-->
+<!--        <module>dynamicreports-examples</module>-->
     </modules>
 
     <properties>
         <!--Environment -->
         <encoding>UTF-8</encoding>
-        <sourceVersion>11</sourceVersion>
-        <targetVersion>11</targetVersion>
+        <sourceVersion>17</sourceVersion>
+        <targetVersion>17</targetVersion>
 
         <!--Mycila License plugin configuration-->
         <license.header.location>${project.basedir}/src/etc/license_header.txt</license.header.location>
@@ -94,14 +94,15 @@
                 </exclusions>
             </dependency>
             <dependency>
-                <groupId>javax.xml.bind</groupId>
-                <artifactId>jaxb-api</artifactId>
-                <version>2.3.1</version>
+                <groupId>jakarta.xml.bind</groupId>
+                <artifactId>jakarta.xml.bind-api</artifactId>
+                <version>4.0.0</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>com.sun.xml.bind</groupId>
-                <artifactId>jaxb-impl</artifactId>
-                <version>2.3.6</version>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>jaxb-runtime</artifactId>
+                <version>4.0.2</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -345,9 +346,9 @@
                     <version>3.0.0</version>
                 </plugin>
                 <plugin>
-                    <groupId>org.jvnet.jaxb2.maven2</groupId>
-                    <artifactId>maven-jaxb2-plugin</artifactId>
-                    <version>0.15.1</version>
+                    <groupId>com.helger.maven</groupId>
+                    <artifactId>jaxb40-maven-plugin</artifactId>
+                    <version>0.16.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
