@@ -25,6 +25,8 @@ import java.io.InputStream;
 import java.util.Locale;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import net.sf.dynamicreports.adhoc.configuration.AdhocConfiguration;
@@ -43,6 +45,7 @@ public class AdhocReportLoadTest extends AbstractJasperTest {
     private AdhocConfiguration adhocConfiguration;
     private String groupName;
 
+    @BeforeEach
     @Override
     public void init() {
         try {

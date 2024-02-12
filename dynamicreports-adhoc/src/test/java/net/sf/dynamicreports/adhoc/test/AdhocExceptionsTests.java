@@ -2,6 +2,7 @@ package net.sf.dynamicreports.adhoc.test;
 
 import java.io.ByteArrayOutputStream;
 
+import net.sf.dynamicreports.adhoc.exception.ConfigurationUnMarshallerException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -49,7 +50,7 @@ public class AdhocExceptionsTests
         throws DRException
     {
 
-        Assertions.assertThrows(ConfigurationMarshallerException.class, () -> {
+        Assertions.assertThrows(ConfigurationUnMarshallerException.class, () -> {
             adhocMan.loadConfiguration(null);
         });
 

@@ -32,9 +32,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.exception.DRException;
@@ -47,7 +45,6 @@ import net.sf.jasperreports.engine.JRPrintText;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRStyledTextUtil;
-import org.junit.jupiter.api.TestInstance;
 
 /**
  * @author Ricardo Mariaca
@@ -58,7 +55,7 @@ public abstract class AbstractJasperTest extends AdhocTests {
     private JasperReport jasperReport;
     private JasperPrint jasperPrint;
 
-    @BeforeAll
+    @BeforeEach
     public void init() {
         try {
             reportBuilder = createReport();
