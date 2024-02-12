@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -20,7 +20,7 @@
  */
 package net.sf.dynamicreports.test.jasper.component;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.style.StyleBuilder;
 import net.sf.dynamicreports.test.jasper.AbstractJasperStyleTest;
@@ -72,8 +72,8 @@ public class ComponentStyleTest extends AbstractJasperStyleTest {
     }
 
     private void penTest(JRPen pen, Float width, Color color, LineStyleEnum style) {
-        Assert.assertEquals(width, pen.getLineWidth());
-        Assert.assertEquals(color, pen.getLineColor());
-        Assert.assertEquals(style, pen.getLineStyleValue());
+        Assertions.assertEquals(width, pen.getLineWidth());
+        Assertions.assertEquals(color, pen.getLineColor());
+        Assertions.assertEquals(style, pen.getLineStyleValue());
     }
 }

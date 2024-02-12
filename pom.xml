@@ -1,7 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
@@ -32,6 +31,8 @@
 
     <modules>
         <module>dynamicreports-core</module>
+        <module>dynamicreports-adhoc</module>
+        <module>dynamicreports-googlecharts</module>
         <module>dynamicreports-examples</module>
     </modules>
 
@@ -48,10 +49,6 @@
         <groovyVersion>2.4.21</groovyVersion>
         <hsqldbVersion>2.7.2</hsqldbVersion>
         <jasperreportsVersion>6.20.6</jasperreportsVersion>
-        <jaxb-apiVersion>2.4.0-b180830.0359</jaxb-apiVersion>
-        <jaxb-coreVersion>2.3.0.1</jaxb-coreVersion>
-        <jaxb-implVersion>2.4.0-b180830.0438</jaxb-implVersion>
-        <jaxbVersion>2.3.0.1</jaxbVersion>
         <jsonVersion>20231013</jsonVersion>
         <jul-to-slf4jVersion>2.0.11</jul-to-slf4jVersion>
         <junitVersion>4.13.2</junitVersion>
@@ -91,6 +88,11 @@
         <checkstyle.config.includeTestResources>false</checkstyle.config.includeTestResources>
         <checkstyle.config.includeTestSourceDirectory>false</checkstyle.config.includeTestSourceDirectory>
         <linkXRef>false</linkXRef>
+
+        <!--Configuration for Modernizer-maven-plugin-->
+        <modernizer-failOnViolations>true</modernizer-failOnViolations>
+        <modernizer-javaVersion>${sourceVersion}</modernizer-javaVersion>
+        <modernizer-skip>false</modernizer-skip>
     </properties>
 
     <dependencyManagement>
@@ -98,7 +100,7 @@
             <dependency>
                 <groupId>net.sf.jasperreports</groupId>
                 <artifactId>jasperreports</artifactId>
-                <version>${jasperreportsVersion}</version>
+                <version>6.19.1</version>
                 <exclusions>
                     <exclusion>
                         <groupId>bouncycastle</groupId>
@@ -135,6 +137,16 @@
                 </exclusions>
             </dependency>
             <dependency>
+                <groupId>jakarta.xml.bind</groupId>
+                <artifactId>jakarta.xml.bind-api</artifactId>
+                <version>4.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>jaxb-runtime</artifactId>
+                <version>4.0.2</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-text</artifactId>
                 <version>1.11.0</version>
@@ -142,26 +154,24 @@
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
-                <version>${commonslang3Version}</version>
+                <version>3.12.0</version>
             </dependency>
             <dependency>
                 <groupId>net.sf.barcode4j</groupId>
                 <artifactId>barcode4j</artifactId>
-                <version>${barcode4jVersion}</version>
+                <version>2.1</version>
                 <scope>runtime</scope>
                 <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>net.sourceforge.barbecue</groupId>
                 <artifactId>barbecue</artifactId>
-                <version>${barbecueVersion}</version>
-                <scope>runtime</scope>
-                <optional>true</optional>
+                <version>1.5-beta1</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.xmlgraphics</groupId>
                 <artifactId>batik-bridge</artifactId>
-                <version>${batikbridgeVersion}</version>
+                <version>1.14</version>
                 <scope>runtime</scope>
                 <optional>true</optional>
                 <exclusions>
@@ -174,7 +184,7 @@
             <dependency>
                 <groupId>org.apache.xmlgraphics</groupId>
                 <artifactId>xmlgraphics-commons</artifactId>
-                <version>${xmlgraphicscommonsVersion}</version>
+                <version>2.7</version>
                 <scope>runtime</scope>
                 <optional>true</optional>
                 <exclusions>
@@ -187,42 +197,49 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-core</artifactId>
-                <version>${springframeworkVersion}</version>
+                <version>5.3.20</version>
                 <scope>runtime</scope>
                 <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-beans</artifactId>
-                <version>${springframeworkVersion}</version>
+                <version>5.3.20</version>
                 <scope>runtime</scope>
                 <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi</artifactId>
-                <version>${poiVersion}</version>
+                <version>5.2.2</version>
                 <scope>runtime</scope>
                 <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>org.hsqldb</groupId>
                 <artifactId>hsqldb</artifactId>
-                <version>${hsqldbVersion}</version>
+                <version>2.6.1</version>
+                <scope>runtime</scope>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>xalan</groupId>
+                <artifactId>xalan</artifactId>
+                <version>2.7.2</version>
                 <scope>runtime</scope>
                 <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>org.codehaus.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
-                <version>${groovyVersion}</version>
+                <version>2.4.21</version>
                 <scope>runtime</scope>
                 <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>org.apache.velocity</groupId>
                 <artifactId>velocity</artifactId>
-                <version>${velocityVersion}</version>
+                <version>1.7</version>
                 <scope>runtime</scope>
                 <optional>true</optional>
                 <exclusions>
@@ -235,7 +252,7 @@
             <dependency>
                 <groupId>org.json</groupId>
                 <artifactId>json</artifactId>
-                <version>${jsonVersion}</version>
+                <version>20220320</version>
                 <optional>true</optional>
             </dependency>
             <dependency>
@@ -244,27 +261,33 @@
                 <version>1.2.0</version>
             </dependency>
             <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junitVersion}</version>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>5.9.2</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>${logback-classicVersion}</version>
+                <version>1.2.11</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-to-slf4j</artifactId>
-                <version>${log4j-to-slf4jVersion}</version>
+                <version>2.17.2</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.36</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>jul-to-slf4j</artifactId>
-                <version>${jul-to-slf4jVersion}</version>
+                <version>1.7.36</version>
                 <scope>compile</scope>
             </dependency>
         </dependencies>
@@ -288,7 +311,7 @@
                     <configuration>
                         <rules>
                             <requireJavaVersion>
-                                <version>[1.8,)</version>
+                                <version>[11,)</version>
                             </requireJavaVersion>
                             <requireMavenVersion>
                                 <version>[3.3.9,)</version>
@@ -328,7 +351,7 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>${jacoco-maven-plugin-version}</version>
+                    <version>0.8.8</version>
                     <executions>
                         <execution>
                             <goals>
@@ -365,17 +388,17 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>${maven-source-plugin-version}</version>
+                    <version>3.2.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>${maven-javadoc-plugin-version}</version>
+                    <version>3.4.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>${maven-checkstyle-plugin.version}</version>
+                    <version>3.1.2</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -386,6 +409,9 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>3.3.0</version>
+                    <configuration>
+                        <classifier>jakarta</classifier>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -398,9 +424,28 @@
                     <version>3.5.0</version>
                 </plugin>
                 <plugin>
-                    <groupId>org.jvnet.jaxb2.maven2</groupId>
-                    <artifactId>maven-jaxb23-plugin</artifactId>
-                    <version>0.15.3</version>
+                    <groupId>com.helger.maven</groupId>
+                    <artifactId>jaxb40-maven-plugin</artifactId>
+                    <version>0.16.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <version>2.11.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.22.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.gaul</groupId>
+                    <artifactId>modernizer-maven-plugin</artifactId>
+                    <version>2.7.0</version>
+                    <configuration>
+                        <skip>${modernizer-skip}</skip>
+                        <javaVersion>${modernizer-javaVersion}</javaVersion>
+                        <failOnViolations>${modernizer-failOnViolations}</failOnViolations>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -414,16 +459,17 @@
                     <plugin>
                         <groupId>com.mycila</groupId>
                         <artifactId>license-maven-plugin</artifactId>
-                        <version>${license-maven-plugin-version}</version>
+                        <version>4.1</version>
                         <configuration>
-                            <header>${license.header.location}</header>
-                            <headerDefinitions>${license.header.definition}</headerDefinitions>
-                            <properties>
-                                <owner>${license.maven.owner}</owner>
-                            </properties>
-                            <includes>
-                                <include>**/*.java</include>
-                            </includes>
+                            <licenseSets>
+                                <licenseSet>
+                                    <header>${license.header.location}</header>
+                                    <headerDefinitions>${license.header.definition}</headerDefinitions>
+                                    <includes>
+                                        <include>**/*.java</include>
+                                    </includes>
+                                </licenseSet>
+                            </licenseSets>
                         </configuration>
                         <executions>
                             <execution>
@@ -482,14 +528,14 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <additionalparam>${javadoc.opts}</additionalparam>
+                            <additionalOptions>${javadoc.opts}</additionalOptions>
                             <doclint>none</doclint>
                             <nosince>false</nosince>
                             <failOnError>false</failOnError>
                             <doclint>none</doclint>
                             <defaultVersion>${project.version}</defaultVersion>
                             <defaultSince>${project.version}</defaultSince>
-                            <javadocExecutable>${env.JAVA_10_HOME}\bin\javadoc.exe</javadocExecutable>
+                            <javadocExecutable>${env.JAVA_HOME}\bin\javadoc.exe</javadocExecutable>
                         </configuration>
                     </plugin>
                     <!--To ensure consistent API for java 9 usage-->
@@ -524,30 +570,6 @@
                     <optional>true</optional>
                     <scope>provided</scope>
                 </dependency>
-                <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
-                <dependency>
-                    <groupId>javax.xml.bind</groupId>
-                    <artifactId>jaxb-api</artifactId>
-                    <version>${jaxb-apiVersion}</version>
-                </dependency>
-                <!-- https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-core -->
-                <dependency>
-                    <groupId>com.sun.xml.bind</groupId>
-                    <artifactId>jaxb-core</artifactId>
-                    <version>${jaxb-coreVersion}</version>
-                </dependency>
-                <!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-core -->
-                <dependency>
-                    <groupId>org.glassfish.jaxb</groupId>
-                    <artifactId>jaxb-core</artifactId>
-                    <version>${jaxb-coreVersion}</version>
-                </dependency>
-                <!-- https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-impl -->
-                <dependency>
-                    <groupId>com.sun.xml.bind</groupId>
-                    <artifactId>jaxb-impl</artifactId>
-                    <version>${jaxb-implVersion}</version>
-                </dependency>
             </dependencies>
         </profile>
 
@@ -558,7 +580,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
-                        <version>${maven-source-plugin-version}</version>
+                        <version>3.2.1</version>
                         <executions>
                             <execution>
                                 <id>attach-sources</id>

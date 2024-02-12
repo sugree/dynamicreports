@@ -1,31 +1,35 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
- * DynamicReports is free software: you can redistribute it and/or modify it under the terms of the
- * GNU Lesser General Public License as published by the Free Software Foundation, either version 3
- * of the License, or (at your option) any later version.
+ * DynamicReports is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * DynamicReports is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * DynamicReports is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License along with
- * DynamicReports. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with DynamicReports. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package net.sf.dynamicreports.test.base;
 
 import java.io.InputStream;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import net.sf.dynamicreports.report.base.datatype.DRDataType;
 import net.sf.dynamicreports.report.base.style.DRFont;
@@ -34,27 +38,24 @@ import net.sf.dynamicreports.report.defaults.Default;
 import net.sf.dynamicreports.report.defaults.DefaultBinder;
 import net.sf.dynamicreports.report.defaults.xml.XmlDynamicReports;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 /**
  * Defaults tests.
- * 
+ *
  * @author Ricardo Mariaca
  */
 public class DefaultsTest {
 
   private Default load() {
-    InputStream is = DefaultsTest.class.getResourceAsStream("dynamicreports-defaults.xml");
+    final InputStream is = DefaultsTest.class.getResourceAsStream("dynamicreports-defaults.xml");
     try {
-      Unmarshaller unmarshaller =
+      final Unmarshaller unmarshaller =
           JAXBContext.newInstance(XmlDynamicReports.class).createUnmarshaller();
-      JAXBElement<XmlDynamicReports> root =
+      final JAXBElement<XmlDynamicReports> root =
           unmarshaller.unmarshal(new StreamSource(is), XmlDynamicReports.class);
       return DefaultBinder.bind(root.getValue());
-    } catch (JAXBException e) {
+    } catch (final JAXBException e) {
       e.printStackTrace();
-      Assert.fail(e.getMessage());
+      Assertions.fail(e.getMessage());
     }
     return null;
   }
@@ -62,14 +63,14 @@ public class DefaultsTest {
   @Test
   public void test() {
     DefaultBinder.bind(null);
-    Default defaults = load();
+    final Default defaults = load();
 
-    DRFont font = defaults.getFont();
-    Assert.assertEquals("Font name", "Arimo", font.getFontName());
-    Assert.assertEquals("Font size", Integer.valueOf(15), font.getFontSize());
-    Assert.assertEquals("Pdf font name", "Arimo", font.getPdfFontName());
-    Assert.assertEquals("Pdf encoding", "Identity-H", font.getPdfEncoding());
-    Assert.assertTrue("Pdf embedded", font.getPdfEmbedded());
+    final DRFont font = defaults.getFont();
+    Assertions.assertEquals("Arimo", font.getFontName(), "Font name");
+    Assertions.assertEquals(Integer.valueOf(15), font.getFontSize(), "Font size");
+    Assertions.assertEquals("Arimo", font.getPdfFontName(), "Pdf font name");
+    Assertions.assertEquals("Identity-H", font.getPdfEncoding(), "Pdf encoding");
+    Assertions.assertTrue(font.getPdfEmbedded(), "Pdf embedded");
 
     testDataType("BigDecimal", defaults.getBigDecimalType(), "#,###.00#",
         HorizontalTextAlignment.LEFT);
@@ -107,10 +108,10 @@ public class DefaultsTest {
     testDataType("String", defaults.getStringType(), null, HorizontalTextAlignment.RIGHT);
   }
 
-  private void testDataType(String name, DRDataType<?, ?> dataType, String pattern,
-      HorizontalTextAlignment horizontalTextAlignment) {
-    Assert.assertEquals(name + " pattern", pattern, dataType.getPattern());
-    Assert.assertEquals(name + " horizontal alignment", horizontalTextAlignment,
-        dataType.getHorizontalTextAlignment());
+  private void testDataType(final String name, final DRDataType<?, ?> dataType, final String pattern,
+      final HorizontalTextAlignment horizontalTextAlignment) {
+    Assertions.assertEquals(pattern, dataType.getPattern(), name + " pattern");
+    Assertions.assertEquals(horizontalTextAlignment,
+        dataType.getHorizontalTextAlignment(), name + " horizontal alignment");
   }
 }

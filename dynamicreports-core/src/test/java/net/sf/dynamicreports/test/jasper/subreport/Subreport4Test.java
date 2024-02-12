@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -20,7 +20,7 @@
  */
 package net.sf.dynamicreports.test.jasper.subreport;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.component.SubreportBuilder;
 import net.sf.dynamicreports.report.exception.DRException;
@@ -95,7 +95,7 @@ public class Subreport4Test extends AbstractJasperValueTest {
             return JasperCompileManager.compileReport(is);
         } catch (JRException e) {
             e.printStackTrace();
-            Assert.fail(e.getMessage());
+            Assertions.fail(e.getMessage());
             return null;
         }
     }

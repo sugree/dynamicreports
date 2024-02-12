@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -20,33 +20,36 @@
  */
 package net.sf.dynamicreports.test.jasper.report;
 
-import org.junit.Assert;
-import net.sf.dynamicreports.jasper.builder.JasperConcatenatedReportBuilder;
-import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
-import net.sf.dynamicreports.report.datasource.DRDataSource;
-import net.sf.dynamicreports.report.exception.DRException;
-import net.sf.jasperreports.engine.JRDataSource;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.io.ByteArrayOutputStream;
-
 import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
 import static net.sf.dynamicreports.report.builder.DynamicReports.col;
 import static net.sf.dynamicreports.report.builder.DynamicReports.concatenatedReport;
 import static net.sf.dynamicreports.report.builder.DynamicReports.report;
 
+import java.io.ByteArrayOutputStream;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import net.sf.dynamicreports.jasper.builder.JasperConcatenatedReportBuilder;
+import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
+import net.sf.dynamicreports.report.datasource.DRDataSource;
+import net.sf.dynamicreports.report.exception.DRException;
+import net.sf.jasperreports.engine.JRDataSource;
+import org.junit.jupiter.api.TestInstance;
+
 /**
  * @author Ricardo Mariaca
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ConcatenatedReport2Test {
     JasperConcatenatedReportBuilder concatenatedReport;
 
-    @Before
+    @BeforeAll
     public void init() {
-        JasperReportBuilder report1 = report().columns(col.column("field1", String.class)).pageFooter(cmp.pageNumber()).setDataSource(createDataSource("text1"));
-        JasperReportBuilder report2 = report().columns(col.column("field1", String.class)).pageFooter(cmp.pageNumber()).setDataSource(createDataSource("text2"));
-        JasperReportBuilder report3 = report().columns(col.column("field1", String.class)).pageFooter(cmp.pageNumber()).setDataSource(createDataSource("text3"));
+        final JasperReportBuilder report1 = report().columns(col.column("field1", String.class)).pageFooter(cmp.pageNumber()).setDataSource(createDataSource("text1"));
+        final JasperReportBuilder report2 = report().columns(col.column("field1", String.class)).pageFooter(cmp.pageNumber()).setDataSource(createDataSource("text2"));
+        final JasperReportBuilder report3 = report().columns(col.column("field1", String.class)).pageFooter(cmp.pageNumber()).setDataSource(createDataSource("text3"));
 
         concatenatedReport = concatenatedReport();
         concatenatedReport.concatenate(report1, report2, report3);
@@ -57,25 +60,25 @@ public class ConcatenatedReport2Test {
         try {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             concatenatedReport.toCsv(bos);
-            Assert.assertEquals("concatenated report ", "text1\n1\ntext2\n1\ntext3\n1\n", new String(bos.toByteArray()));
+            Assertions.assertEquals("text1\n1\ntext2\n1\ntext3\n1\n", new String(bos.toByteArray()), "concatenated report ");
 
             concatenatedReport.continuousPageNumbering();
             bos = new ByteArrayOutputStream();
             concatenatedReport.toCsv(bos);
-            Assert.assertEquals("concatenated report ", "text1\n1\ntext2\n2\ntext3\n3\n", new String(bos.toByteArray()));
+            Assertions.assertEquals("text1\n1\ntext2\n2\ntext3\n3\n", new String(bos.toByteArray()), "concatenated report ");
 
             concatenatedReport.setContinuousPageNumbering(false);
             bos = new ByteArrayOutputStream();
             concatenatedReport.toCsv(bos);
-            Assert.assertEquals("concatenated report ", "text1\n1\ntext2\n1\ntext3\n1\n", new String(bos.toByteArray()));
-        } catch (DRException e) {
+            Assertions.assertEquals("text1\n1\ntext2\n1\ntext3\n1\n", new String(bos.toByteArray()), "concatenated report ");
+        } catch (final DRException e) {
             e.printStackTrace();
-            Assert.fail(e.getMessage());
+            Assertions.fail(e.getMessage());
         }
     }
 
-    private JRDataSource createDataSource(String text) {
-        DRDataSource dataSource = new DRDataSource("field1");
+    private JRDataSource createDataSource(final String text) {
+        final DRDataSource dataSource = new DRDataSource("field1");
         dataSource.add(text);
         return dataSource;
     }

@@ -20,19 +20,6 @@
  */
 package net.sf.dynamicreports.googlecharts.test;
 
-import junit.framework.Assert;
-import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
-import net.sf.dynamicreports.report.builder.DynamicReports;
-import net.sf.dynamicreports.report.exception.DRException;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JRPrintElement;
-import net.sf.jasperreports.engine.JRPrintFrame;
-import net.sf.jasperreports.engine.JRPrintPage;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import org.apache.commons.lang3.StringUtils;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -46,6 +33,21 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
+import net.sf.dynamicreports.report.builder.DynamicReports;
+import net.sf.dynamicreports.report.exception.DRException;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRPrintElement;
+import net.sf.jasperreports.engine.JRPrintFrame;
+import net.sf.jasperreports.engine.JRPrintPage;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+
 /**
  * @author Ricardo Mariaca
  */
@@ -55,7 +57,7 @@ public abstract class AbstractJasperTest {
     private JasperPrint jasperPrint;
     private String html;
 
-    @Before
+    @BeforeAll
     public void init() {
         try {
             reportBuilder = DynamicReports.report();
@@ -63,21 +65,21 @@ public abstract class AbstractJasperTest {
             if (serializableTest()) {
                 reportBuilder = serializableTest(reportBuilder);
             }
-            JRDataSource dataSource = createDataSource();
+            final JRDataSource dataSource = createDataSource();
             if (dataSource != null) {
                 reportBuilder.setDataSource(dataSource);
             }
             build();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
-            Assert.fail(e.getMessage());
+            Assertions.fail(e.getMessage());
         }
     }
 
     protected void build() throws DRException {
         jasperReport = reportBuilder.toJasperReport();
         jasperPrint = reportBuilder.toJasperPrint();
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream bos = new ByteArrayOutputStream();
         reportBuilder.toHtml(bos);
         html = bos.toString();
     }
@@ -90,15 +92,15 @@ public abstract class AbstractJasperTest {
         return true;
     }
 
-    private JasperReportBuilder serializableTest(JasperReportBuilder report) throws IOException, ClassNotFoundException {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(bos);
+    private JasperReportBuilder serializableTest(final JasperReportBuilder report) throws IOException, ClassNotFoundException {
+        final ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        final ObjectOutputStream oos = new ObjectOutputStream(bos);
         oos.writeObject(report);
         oos.flush();
         oos.close();
 
-        InputStream stream = new ByteArrayInputStream(bos.toByteArray());
-        ObjectInputStream ois = new ObjectInputStream(stream);
+        final InputStream stream = new ByteArrayInputStream(bos.toByteArray());
+        final ObjectInputStream ois = new ObjectInputStream(stream);
         return (JasperReportBuilder) ois.readObject();
     }
 
@@ -114,53 +116,53 @@ public abstract class AbstractJasperTest {
         return jasperPrint;
     }
 
-    protected void numberOfPagesTest(int expectedNumberOfPages) {
-        Assert.assertEquals("pages", expectedNumberOfPages, getNumberOfPages());
+    protected void numberOfPagesTest(final int expectedNumberOfPages) {
+        Assertions.assertEquals(expectedNumberOfPages, getNumberOfPages(), "pages");
     }
 
     private int getNumberOfPages() {
         return jasperPrint.getPages().size();
     }
 
-    protected void containsHtml(String message, String text) {
-        Assert.assertTrue(message, StringUtils.contains(html, text));
+    protected void containsHtml(final String message, final String text) {
+        Assertions.assertTrue(StringUtils.contains(html, text), message);
     }
 
-    protected JRPrintElement getElementAt(String key, int index) {
-        List<JRPrintElement> elements = findElement(key);
+    protected JRPrintElement getElementAt(final String key, final int index) {
+        final List<JRPrintElement> elements = findElement(key);
         if (elements.size() - 1 < index) {
-            Assert.fail("Element " + key + " at index " + index + " not found");
+            Assertions.fail("Element " + key + " at index " + index + " not found");
             return null;
         }
         return elements.get(index);
     }
 
-    protected List<JRPrintElement> findElement(String key) {
-        List<JRPrintElement> elements = new ArrayList<JRPrintElement>();
-        for (Iterator<?> iterator = jasperPrint.getPages().iterator(); iterator.hasNext(); ) {
-            JRPrintPage page = (JRPrintPage) iterator.next();
-            for (Iterator<?> iterator2 = page.getElements().iterator(); iterator2.hasNext(); ) {
-                JRPrintElement element = (JRPrintElement) iterator2.next();
+    protected List<JRPrintElement> findElement(final String key) {
+        final List<JRPrintElement> elements = new ArrayList<JRPrintElement>();
+        for (final Iterator<?> iterator = jasperPrint.getPages().iterator(); iterator.hasNext(); ) {
+            final JRPrintPage page = (JRPrintPage) iterator.next();
+            for (final Iterator<?> iterator2 = page.getElements().iterator(); iterator2.hasNext(); ) {
+                final JRPrintElement element = (JRPrintElement) iterator2.next();
                 findElement(key, elements, element);
             }
         }
         return elements;
     }
 
-    private void findElement(String key, List<JRPrintElement> elements, JRPrintElement element) {
+    private void findElement(final String key, final List<JRPrintElement> elements, final JRPrintElement element) {
         if (key.equals(element.getKey())) {
             elements.add(element);
         }
         if (element instanceof JRPrintFrame) {
-            for (Iterator<?> iterator = ((JRPrintFrame) element).getElements().iterator(); iterator.hasNext(); ) {
-                JRPrintElement element2 = (JRPrintElement) iterator.next();
+            for (final Iterator<?> iterator = ((JRPrintFrame) element).getElements().iterator(); iterator.hasNext(); ) {
+                final JRPrintElement element2 = (JRPrintElement) iterator.next();
                 findElement(key, elements, element2);
             }
         }
     }
 
-    protected Date toDate(int year, int month, int day) {
-        Calendar c = Calendar.getInstance();
+    protected Date toDate(final int year, final int month, final int day) {
+        final Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month - 1);
         c.set(Calendar.DAY_OF_MONTH, day);

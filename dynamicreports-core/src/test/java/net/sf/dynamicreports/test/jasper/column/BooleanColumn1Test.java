@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -29,7 +29,7 @@ import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRPrintImage;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
 import java.io.Serializable;
 import java.util.Locale;
@@ -99,7 +99,7 @@ public class BooleanColumn1Test extends AbstractJasperValueTest implements Seria
 
         testImage("detail.column_field111", 0);
         testImage("detail.column_field111", 1);
-        Assert.assertNull((((JRPrintImage) getElementAt("detail.column_field111", 2)).getRenderer()));
+        Assertions.assertNull((((JRPrintImage) getElementAt("detail.column_field111", 2)).getRenderer()));
 
     }
 
@@ -107,9 +107,9 @@ public class BooleanColumn1Test extends AbstractJasperValueTest implements Seria
         CustomBatikRenderer batikRenderer = ((CustomBatikRenderer) ((JRPrintImage) getElementAt(name, index)).getRenderer());
         try {
             byte[] data = batikRenderer.getData(DefaultJasperReportsContext.getInstance());
-            Assert.assertNotNull(data);
+            Assertions.assertNotNull(data);
         } catch (JRException e) {
-            Assert.fail(e.getMessage());
+            Assertions.fail(e.getMessage());
         }
     }
 

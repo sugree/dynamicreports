@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -20,7 +20,7 @@
  */
 package net.sf.dynamicreports.test.jasper.style;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.style.TemplateStylesBuilder;
 import net.sf.dynamicreports.report.constant.WhenNoDataType;
@@ -58,7 +58,7 @@ public class TemplateStyle5Test extends AbstractJasperStyleTest implements Seria
         numberOfPagesTest(1);
 
         JasperPrint jasperPrint = getJasperPrint();
-        Assert.assertEquals("templatedesign6", jasperPrint.getName());
+        Assertions.assertEquals("templatedesign6", jasperPrint.getName());
 
         styleTest("templateDesign.title1", 0, Color.BLACK, Color.LIGHT_GRAY, "SansSerif", null, true, null);
         borderTest("templateDesign.title1", 0, Color.BLACK, LineStyleEnum.SOLID, 2, Color.BLACK, LineStyleEnum.SOLID, 2, Color.BLACK, LineStyleEnum.SOLID, 2, Color.BLACK, LineStyleEnum.SOLID, 2);

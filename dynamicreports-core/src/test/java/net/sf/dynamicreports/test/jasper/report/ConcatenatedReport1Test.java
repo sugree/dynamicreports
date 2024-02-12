@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -20,30 +20,33 @@
  */
 package net.sf.dynamicreports.test.jasper.report;
 
-import org.junit.Assert;
-import net.sf.dynamicreports.jasper.builder.JasperConcatenatedReportBuilder;
-import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
-import net.sf.dynamicreports.report.exception.DRException;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.io.ByteArrayOutputStream;
-
 import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
 import static net.sf.dynamicreports.report.builder.DynamicReports.concatenatedReport;
 import static net.sf.dynamicreports.report.builder.DynamicReports.report;
 
+import java.io.ByteArrayOutputStream;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import net.sf.dynamicreports.jasper.builder.JasperConcatenatedReportBuilder;
+import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
+import net.sf.dynamicreports.report.exception.DRException;
+import org.junit.jupiter.api.TestInstance;
+
 /**
  * @author Ricardo Mariaca
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ConcatenatedReport1Test {
     JasperConcatenatedReportBuilder concatenatedReport;
 
-    @Before
+    @BeforeAll
     public void init() {
-        JasperReportBuilder report1 = report().title(cmp.text("text1")).pageFooter(cmp.pageNumber());
-        JasperReportBuilder report2 = report().title(cmp.text("text2")).pageFooter(cmp.pageNumber());
-        JasperReportBuilder report3 = report().title(cmp.text("text3")).pageFooter(cmp.pageNumber());
+        final JasperReportBuilder report1 = report().title(cmp.text("text1")).pageFooter(cmp.pageNumber());
+        final JasperReportBuilder report2 = report().title(cmp.text("text2")).pageFooter(cmp.pageNumber());
+        final JasperReportBuilder report3 = report().title(cmp.text("text3")).pageFooter(cmp.pageNumber());
 
         concatenatedReport = concatenatedReport();
         concatenatedReport.concatenate(report1, report2, report3);
@@ -54,20 +57,20 @@ public class ConcatenatedReport1Test {
         try {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             concatenatedReport.toCsv(bos);
-            Assert.assertEquals("concatenated report ", "text1\n1\ntext2\n1\ntext3\n1\n", new String(bos.toByteArray()));
+            Assertions.assertEquals("text1\n1\ntext2\n1\ntext3\n1\n", new String(bos.toByteArray()), "concatenated report ");
 
             concatenatedReport.continuousPageNumbering();
             bos = new ByteArrayOutputStream();
             concatenatedReport.toCsv(bos);
-            Assert.assertEquals("concatenated report ", "text1\n1\ntext2\n2\ntext3\n3\n", new String(bos.toByteArray()));
+            Assertions.assertEquals("text1\n1\ntext2\n2\ntext3\n3\n", new String(bos.toByteArray()), "concatenated report ");
 
             concatenatedReport.setContinuousPageNumbering(false);
             bos = new ByteArrayOutputStream();
             concatenatedReport.toCsv(bos);
-            Assert.assertEquals("concatenated report ", "text1\n1\ntext2\n1\ntext3\n1\n", new String(bos.toByteArray()));
-        } catch (DRException e) {
+            Assertions.assertEquals("text1\n1\ntext2\n1\ntext3\n1\n", new String(bos.toByteArray()), "concatenated report ");
+        } catch (final DRException e) {
             e.printStackTrace();
-            Assert.fail(e.getMessage());
+            Assertions.fail(e.getMessage());
         }
     }
 }

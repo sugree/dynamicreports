@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -20,7 +20,7 @@
  */
 package net.sf.dynamicreports.test.jasper.report;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
 import net.sf.dynamicreports.report.builder.component.SubreportBuilder;
@@ -62,7 +62,7 @@ public class Report5Test extends AbstractJasperValueTest {
         elementValueTest("title.textField1", "bundleValue1", "bundleValue1", "bundleValue1");
 
         JasperPrint jasperPrint = getJasperPrint();
-        Assert.assertEquals(Locale.ENGLISH.getLanguage(), jasperPrint.getLocaleCode());
+        Assertions.assertEquals(Locale.ENGLISH.getLanguage(), jasperPrint.getLocaleCode());
     }
 
     @Override

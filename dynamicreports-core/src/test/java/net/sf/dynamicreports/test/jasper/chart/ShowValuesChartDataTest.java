@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -36,7 +36,7 @@ import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.xy.DefaultXYDataset;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -99,96 +99,96 @@ public class ShowValuesChartDataTest extends AbstractJasperChartTest implements 
 
         JFreeChart chart = getChart("summary.chart1", 0);
         CategoryItemRenderer renderer1 = chart.getCategoryPlot().getRenderer();
-        Assert.assertNotNull(renderer1.getBaseItemLabelGenerator());
-        Assert.assertEquals("1.19", renderer1.getBaseItemLabelGenerator().generateLabel(categoryDataset, 0, 0));
-        Assert.assertEquals(5.775d, chart.getCategoryPlot().getRangeAxis().getRange().getUpperBound(), 0);
-        Assert.assertTrue(renderer1.getBaseItemLabelsVisible());
+        Assertions.assertNotNull(renderer1.getBaseItemLabelGenerator());
+        Assertions.assertEquals("1.19", renderer1.getBaseItemLabelGenerator().generateLabel(categoryDataset, 0, 0));
+        Assertions.assertEquals(5.775d, chart.getCategoryPlot().getRangeAxis().getRange().getUpperBound(), 0);
+        Assertions.assertTrue(renderer1.getBaseItemLabelsVisible());
 
         chart = getChart("summary.chart2", 0);
         renderer1 = chart.getCategoryPlot().getRenderer();
-        Assert.assertNotNull(renderer1.getBaseItemLabelGenerator());
-        Assert.assertEquals("1.2", renderer1.getBaseItemLabelGenerator().generateLabel(categoryDataset, 0, 0));
-        Assert.assertEquals(6d, chart.getCategoryPlot().getRangeAxis().getRange().getUpperBound(), 0);
-        Assert.assertTrue(renderer1.getBaseItemLabelsVisible());
+        Assertions.assertNotNull(renderer1.getBaseItemLabelGenerator());
+        Assertions.assertEquals("1.2", renderer1.getBaseItemLabelGenerator().generateLabel(categoryDataset, 0, 0));
+        Assertions.assertEquals(6d, chart.getCategoryPlot().getRangeAxis().getRange().getUpperBound(), 0);
+        Assertions.assertTrue(renderer1.getBaseItemLabelsVisible());
 
         chart = getChart("summary.chart3", 0);
         renderer1 = chart.getCategoryPlot().getRenderer();
-        Assert.assertNotNull(renderer1.getBaseItemLabelGenerator());
-        Assert.assertTrue(renderer1.getBaseItemLabelsVisible());
+        Assertions.assertNotNull(renderer1.getBaseItemLabelGenerator());
+        Assertions.assertTrue(renderer1.getBaseItemLabelsVisible());
 
         chart = getChart("summary.chart4", 0);
         renderer1 = chart.getCategoryPlot().getRenderer();
-        Assert.assertNotNull(renderer1.getBaseItemLabelGenerator());
-        Assert.assertTrue(renderer1.getBaseItemLabelsVisible());
+        Assertions.assertNotNull(renderer1.getBaseItemLabelGenerator());
+        Assertions.assertTrue(renderer1.getBaseItemLabelsVisible());
 
         chart = getChart("summary.chart5", 0);
         renderer1 = chart.getCategoryPlot().getRenderer();
-        Assert.assertNotNull(renderer1.getBaseItemLabelGenerator());
-        Assert.assertTrue(renderer1.getBaseItemLabelsVisible());
+        Assertions.assertNotNull(renderer1.getBaseItemLabelGenerator());
+        Assertions.assertTrue(renderer1.getBaseItemLabelsVisible());
 
         chart = getChart("summary.chart6", 0);
         renderer1 = chart.getCategoryPlot().getRenderer();
-        Assert.assertNotNull(renderer1.getBaseItemLabelGenerator());
-        Assert.assertTrue(renderer1.getBaseItemLabelsVisible());
+        Assertions.assertNotNull(renderer1.getBaseItemLabelGenerator());
+        Assertions.assertTrue(renderer1.getBaseItemLabelsVisible());
 
         chart = getChart("summary.chart7", 0);
         renderer1 = chart.getCategoryPlot().getRenderer();
-        Assert.assertNotNull(renderer1.getBaseItemLabelGenerator());
-        Assert.assertTrue(renderer1.getBaseItemLabelsVisible());
+        Assertions.assertNotNull(renderer1.getBaseItemLabelGenerator());
+        Assertions.assertTrue(renderer1.getBaseItemLabelsVisible());
 
         chart = getChart("summary.chart8", 0);
         String labelFormat = ((StandardPieSectionLabelGenerator) ((PiePlot) chart.getPlot()).getLabelGenerator()).getLabelFormat();
-        Assert.assertEquals("Label format", "{0} = {1}", labelFormat);
+        Assertions.assertEquals("Label format", "{0} = {1}", labelFormat);
 
         chart = getChart("summary.chart9", 0);
         StandardPieSectionLabelGenerator labelGenerator = (StandardPieSectionLabelGenerator) ((PiePlot) chart.getPlot()).getLabelGenerator();
         labelFormat = labelGenerator.getLabelFormat();
-        Assert.assertEquals("Label format", "{0} = {1}", labelFormat);
+        Assertions.assertEquals("Label format", "{0} = {1}", labelFormat);
         DefaultPieDataset dataset = new DefaultPieDataset();
         dataset.setValue("key1", 1.192);
-        Assert.assertEquals("key1 = 1.2", labelGenerator.generateSectionLabel(dataset, "key1"));
+        Assertions.assertEquals("key1 = 1.2", labelGenerator.generateSectionLabel(dataset, "key1"));
 
         DefaultXYDataset xyDataset = new DefaultXYDataset();
         xyDataset.addSeries("key", new double[][] {new double[] {1d}, new double[] {1.191d}});
 
         chart = getChart("summary.chart10", 0);
         XYItemRenderer renderer2 = chart.getXYPlot().getRenderer();
-        Assert.assertNotNull(renderer2.getBaseItemLabelGenerator());
-        Assert.assertEquals("1.19", renderer2.getBaseItemLabelGenerator().generateLabel(xyDataset, 0, 0));
-        Assert.assertTrue(renderer2.getBaseItemLabelsVisible());
+        Assertions.assertNotNull(renderer2.getBaseItemLabelGenerator());
+        Assertions.assertEquals("1.19", renderer2.getBaseItemLabelGenerator().generateLabel(xyDataset, 0, 0));
+        Assertions.assertTrue(renderer2.getBaseItemLabelsVisible());
 
         chart = getChart("summary.chart11", 0);
         renderer2 = chart.getXYPlot().getRenderer();
-        Assert.assertNotNull(renderer2.getBaseItemLabelGenerator());
-        Assert.assertEquals("1.2", renderer2.getBaseItemLabelGenerator().generateLabel(xyDataset, 0, 0));
-        Assert.assertTrue(renderer2.getBaseItemLabelsVisible());
+        Assertions.assertNotNull(renderer2.getBaseItemLabelGenerator());
+        Assertions.assertEquals("1.2", renderer2.getBaseItemLabelGenerator().generateLabel(xyDataset, 0, 0));
+        Assertions.assertTrue(renderer2.getBaseItemLabelsVisible());
 
         chart = getChart("summary.chart12", 0);
         renderer2 = chart.getXYPlot().getRenderer();
-        Assert.assertNotNull(renderer2.getBaseItemLabelGenerator());
-        Assert.assertTrue(renderer2.getBaseItemLabelsVisible());
+        Assertions.assertNotNull(renderer2.getBaseItemLabelGenerator());
+        Assertions.assertTrue(renderer2.getBaseItemLabelsVisible());
 
         chart = getChart("summary.chart13", 0);
         renderer2 = chart.getXYPlot().getRenderer();
-        Assert.assertNotNull(renderer2.getBaseItemLabelGenerator());
-        Assert.assertTrue(renderer2.getBaseItemLabelsVisible());
+        Assertions.assertNotNull(renderer2.getBaseItemLabelGenerator());
+        Assertions.assertTrue(renderer2.getBaseItemLabelsVisible());
 
         chart = getChart("summary.chart14", 0);
         renderer2 = chart.getXYPlot().getRenderer();
-        Assert.assertNotNull(renderer2.getBaseItemLabelGenerator());
-        Assert.assertTrue(renderer2.getBaseItemLabelsVisible());
+        Assertions.assertNotNull(renderer2.getBaseItemLabelGenerator());
+        Assertions.assertTrue(renderer2.getBaseItemLabelsVisible());
 
         chart = getChart("summary.chart15", 0);
         renderer2 = chart.getXYPlot().getRenderer();
-        Assert.assertNotNull(renderer2.getBaseItemLabelGenerator());
-        Assert.assertEquals("1.2", renderer2.getBaseItemLabelGenerator().generateLabel(xyDataset, 0, 0));
-        Assert.assertTrue(renderer2.getBaseItemLabelsVisible());
+        Assertions.assertNotNull(renderer2.getBaseItemLabelGenerator());
+        Assertions.assertEquals("1.2", renderer2.getBaseItemLabelGenerator().generateLabel(xyDataset, 0, 0));
+        Assertions.assertTrue(renderer2.getBaseItemLabelsVisible());
 
         chart = getChart("summary.chart16", 0);
         renderer1 = chart.getCategoryPlot().getRenderer();
-        Assert.assertNotNull(renderer1.getBaseItemLabelGenerator());
-        Assert.assertEquals("1.2", renderer1.getBaseItemLabelGenerator().generateLabel(categoryDataset, 0, 0));
-        Assert.assertTrue(renderer1.getBaseItemLabelsVisible());
+        Assertions.assertNotNull(renderer1.getBaseItemLabelGenerator());
+        Assertions.assertEquals("1.2", renderer1.getBaseItemLabelGenerator().generateLabel(categoryDataset, 0, 0));
+        Assertions.assertTrue(renderer1.getBaseItemLabelsVisible());
     }
 
     @Override

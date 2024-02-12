@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -20,7 +20,16 @@
  */
 package net.sf.dynamicreports.test.jasper.report;
 
-import org.junit.Assert;
+import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
+import static net.sf.dynamicreports.report.builder.DynamicReports.concatenatedReport;
+import static net.sf.dynamicreports.report.builder.DynamicReports.report;
+
+import java.io.ByteArrayOutputStream;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 import net.sf.dynamicreports.jasper.builder.JasperConcatenatedReportBuilder;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.constant.WhenNoDataType;
@@ -28,26 +37,20 @@ import net.sf.dynamicreports.report.exception.DRException;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRField;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.io.ByteArrayOutputStream;
-
-import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
-import static net.sf.dynamicreports.report.builder.DynamicReports.concatenatedReport;
-import static net.sf.dynamicreports.report.builder.DynamicReports.report;
+import org.junit.jupiter.api.TestInstance;
 
 /**
  * @author Ricardo Mariaca
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ConcatenatedReport5Test {
     JasperConcatenatedReportBuilder concatenatedReport;
 
-    @Before
+    @BeforeAll
     public void init() {
-        JasperReportBuilder report1 = report().title(cmp.text("text1")).setWhenNoDataType(WhenNoDataType.BLANK_PAGE).setDataSource(new DataSource());
-        JasperReportBuilder report2 = report().title(cmp.text("text2")).setWhenNoDataType(WhenNoDataType.BLANK_PAGE).setDataSource(new DataSource());
-        JasperReportBuilder report3 = report().title(cmp.text("text3")).setWhenNoDataType(WhenNoDataType.BLANK_PAGE).setDataSource(new DataSource());
+        final JasperReportBuilder report1 = report().title(cmp.text("text1")).setWhenNoDataType(WhenNoDataType.BLANK_PAGE).setDataSource(new DataSource());
+        final JasperReportBuilder report2 = report().title(cmp.text("text2")).setWhenNoDataType(WhenNoDataType.BLANK_PAGE).setDataSource(new DataSource());
+        final JasperReportBuilder report3 = report().title(cmp.text("text3")).setWhenNoDataType(WhenNoDataType.BLANK_PAGE).setDataSource(new DataSource());
 
         concatenatedReport = concatenatedReport();
         concatenatedReport.concatenate(report1, report2, report3);
@@ -58,14 +61,14 @@ public class ConcatenatedReport5Test {
         try {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             concatenatedReport.toCsv(bos);
-            Assert.assertEquals("concatenated report ", "text1\ntext2\ntext3\n", new String(bos.toByteArray()));
+            Assertions.assertEquals("text1\ntext2\ntext3\n", new String(bos.toByteArray()), "concatenated report ");
 
             bos = new ByteArrayOutputStream();
             concatenatedReport.toCsv(bos);
-            Assert.assertEquals("concatenated report ", "text1\ntext2\ntext3\n", new String(bos.toByteArray()));
-        } catch (DRException e) {
+            Assertions.assertEquals("text1\ntext2\ntext3\n", new String(bos.toByteArray()), "concatenated report ");
+        } catch (final DRException e) {
             e.printStackTrace();
-            Assert.fail(e.getMessage());
+            Assertions.fail(e.getMessage());
         }
     }
 
@@ -82,7 +85,7 @@ public class ConcatenatedReport5Test {
         }
 
         @Override
-        public Object getFieldValue(JRField jrField) throws JRException {
+        public Object getFieldValue(final JRField jrField) throws JRException {
             return null;
         }
 

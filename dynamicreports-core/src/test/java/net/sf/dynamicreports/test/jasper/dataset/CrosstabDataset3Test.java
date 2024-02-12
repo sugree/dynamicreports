@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -20,7 +20,7 @@
  */
 package net.sf.dynamicreports.test.jasper.dataset;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
 import net.sf.dynamicreports.report.builder.crosstab.CrosstabBuilder;
@@ -138,13 +138,13 @@ public class CrosstabDataset3Test extends AbstractJasperCrosstabValueTest implem
 
         @Override
         public Double evaluate(ReportParameters reportParameters) {
-            Assert.assertNotNull(reportParameters.getMasterParameters());
+            Assertions.assertNotNull(reportParameters.getMasterParameters());
             try {
                 reportParameters.getValue("parameter");
-                Assert.fail("parameter is not null");
+                Assertions.fail("parameter is not null");
             } catch (Exception e) {
             }
-            Assert.assertEquals("parameter_value", reportParameters.getMasterParameters().getValue("parameter"));
+            Assertions.assertEquals("parameter_value", reportParameters.getMasterParameters().getValue("parameter"));
             Integer value1 = reportParameters.getValue("field3");
             Integer value2 = reportParameters.getValue("field4");
             return value1.doubleValue() / value2.doubleValue();
@@ -156,13 +156,13 @@ public class CrosstabDataset3Test extends AbstractJasperCrosstabValueTest implem
 
         @Override
         public Double evaluate(ReportParameters reportParameters) {
-            Assert.assertNotNull(reportParameters.getMasterParameters());
+            Assertions.assertNotNull(reportParameters.getMasterParameters());
             try {
                 reportParameters.getValue("parameter");
-                Assert.fail("parameter is not null");
+                Assertions.fail("parameter is not null");
             } catch (Exception e) {
             }
-            Assert.assertEquals("parameter_value", reportParameters.getMasterParameters().getValue("parameter"));
+            Assertions.assertEquals("parameter_value", reportParameters.getMasterParameters().getValue("parameter"));
             Integer value1 = reportParameters.getValue(measure1);
             Integer value2 = reportParameters.getValue(variable1);
             return value1.doubleValue() / value2.doubleValue();

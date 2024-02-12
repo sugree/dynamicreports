@@ -1,22 +1,23 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
- * DynamicReports is free software: you can redistribute it and/or modify it under the terms of the
- * GNU Lesser General Public License as published by the Free Software Foundation, either version 3
- * of the License, or (at your option) any later version.
+ * DynamicReports is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * DynamicReports is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * DynamicReports is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License along with
- * DynamicReports. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with DynamicReports. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package net.sf.dynamicreports.test.jasper.chart;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.cht;
@@ -26,6 +27,13 @@ import static net.sf.dynamicreports.report.builder.DynamicReports.exp;
 import java.awt.Color;
 import java.util.Locale;
 
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.Axis;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.renderer.xy.XYBubbleRenderer;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.junit.jupiter.api.Assertions;
+
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
 import net.sf.dynamicreports.report.constant.ScaleType;
@@ -33,22 +41,15 @@ import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.test.jasper.AbstractJasperChartTest;
 import net.sf.jasperreports.engine.JRDataSource;
 
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.Axis;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.renderer.xy.XYBubbleRenderer;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
-import org.junit.Assert;
-
 /**
  * Bubble chart tests.
- * 
+ *
  * @author Ricardo Mariaca
  */
 public class BubbleChartTest extends AbstractJasperChartTest {
 
   @Override
-  protected void configureReport(JasperReportBuilder rb) {
+  protected void configureReport(final JasperReportBuilder rb) {
     TextColumnBuilder<Integer> column1;
     TextColumnBuilder<Integer> column2;
     TextColumnBuilder<Double> column3;
@@ -81,10 +82,10 @@ public class BubbleChartTest extends AbstractJasperChartTest {
     numberOfPagesTest(1);
 
     JFreeChart chart = getChart("summary.chart1", 0);
-    XYItemRenderer renderer = chart.getXYPlot().getRenderer();
-    Assert.assertEquals("renderer", XYBubbleRenderer.class, renderer.getClass());
-    Assert.assertEquals("scale type", XYBubbleRenderer.SCALE_ON_BOTH_AXES,
-        ((XYBubbleRenderer) renderer).getScaleType());
+    final XYItemRenderer renderer = chart.getXYPlot().getRenderer();
+    Assertions.assertEquals(XYBubbleRenderer.class, renderer.getClass(), "renderer");
+    Assertions.assertEquals(XYBubbleRenderer.SCALE_ON_BOTH_AXES,
+        ((XYBubbleRenderer) renderer).getScaleType(), "scale type");
     xyzChartDataTest(chart, 0, "a",
         new Number[][] {{1d, 2d, 0.25}, {2d, 3d, 0.5}, {3d, 4d, 0.75}, {4d, 5d, 1d}});
     xyzChartDataTest(chart, 1, "serie1",
@@ -92,30 +93,30 @@ public class BubbleChartTest extends AbstractJasperChartTest {
 
     chart = getChart("summary.chart2", 0);
     Axis axis = chart.getXYPlot().getDomainAxis();
-    Assert.assertEquals("category label", "category", axis.getLabel());
-    Assert.assertEquals("category label color", Color.BLUE, axis.getLabelPaint());
-    Assert.assertEquals("category label font", ARIMO_BOLD_AWT, axis.getLabelFont());
-    Assert.assertEquals("tick label color", Color.CYAN, axis.getTickLabelPaint());
-    Assert.assertEquals("tick label font", ARIMO_ITALIC_AWT, axis.getTickLabelFont());
-    Assert.assertEquals("line color", Color.LIGHT_GRAY, axis.getAxisLinePaint());
+    Assertions.assertEquals("category", axis.getLabel(), "category label");
+    Assertions.assertEquals(Color.BLUE, axis.getLabelPaint(), "category label color");
+    Assertions.assertEquals(ARIMO_BOLD_AWT, axis.getLabelFont(), "category label font");
+    Assertions.assertEquals(Color.CYAN, axis.getTickLabelPaint(), "tick label color");
+    Assertions.assertEquals(ARIMO_ITALIC_AWT, axis.getTickLabelFont(), "tick label font");
+    Assertions.assertEquals(Color.LIGHT_GRAY, axis.getAxisLinePaint(), "line color");
 
     chart = getChart("summary.chart3", 0);
     axis = chart.getXYPlot().getRangeAxis();
-    Assert.assertEquals("value label", "value", axis.getLabel());
-    Assert.assertEquals("value label color", Color.BLUE, axis.getLabelPaint());
-    Assert.assertEquals("value label font", ARIMO_BOLD_AWT, axis.getLabelFont());
-    Assert.assertEquals("tick label color", Color.CYAN, axis.getTickLabelPaint());
-    Assert.assertEquals("tick label font", ARIMO_ITALIC_AWT, axis.getTickLabelFont());
-    Assert.assertEquals("tick label mask", "10.00",
-        ((NumberAxis) axis).getNumberFormatOverride().format(10));
-    Assert.assertEquals("line color", Color.LIGHT_GRAY, axis.getAxisLinePaint());
+    Assertions.assertEquals("value", axis.getLabel(), "value label");
+    Assertions.assertEquals(Color.BLUE, axis.getLabelPaint(), "value label color");
+    Assertions.assertEquals(ARIMO_BOLD_AWT, axis.getLabelFont(), "value label font");
+    Assertions.assertEquals(Color.CYAN, axis.getTickLabelPaint(), "tick label color");
+    Assertions.assertEquals(ARIMO_ITALIC_AWT, axis.getTickLabelFont(), "tick label font");
+    Assertions.assertEquals("10.00",
+        ((NumberAxis) axis).getNumberFormatOverride().format(10), "tick label mask");
+    Assertions.assertEquals(Color.LIGHT_GRAY, axis.getAxisLinePaint(), "line color");
   }
 
   @Override
   protected JRDataSource createDataSource() {
-    DRDataSource dataSource = new DRDataSource("field1", "field2", "field3");
+    final DRDataSource dataSource = new DRDataSource("field1", "field2", "field3");
     for (int i = 0; i < 4; i++) {
-      dataSource.add(i + 1, i + 2, (i * 0.25 + 0.25));
+      dataSource.add(i + 1, i + 2, i * 0.25 + 0.25);
     }
     return dataSource;
   }

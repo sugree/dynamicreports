@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -20,7 +20,7 @@
  */
 package net.sf.dynamicreports.test.jasper;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import net.sf.dynamicreports.report.base.DRSubtotal;
 import net.sf.dynamicreports.report.builder.column.ColumnBuilder;
 import net.sf.dynamicreports.report.builder.crosstab.AbstractCrosstabGroupBuilder;
@@ -82,7 +82,7 @@ public class JasperTestUtils {
                 band = "summary";
                 break;
             default:
-                Assert.fail("Subtotal position " + subtl.getPosition().name() + " not found");
+                Assertions.fail("Subtotal position " + subtl.getPosition().name() + " not found");
                 return null;
         }
         return band + ".column_" + subtl.getShowInColumn().getName() + ".subtotal";

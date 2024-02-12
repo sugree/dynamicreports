@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -20,22 +20,6 @@
  */
 package net.sf.dynamicreports.test.jasper;
 
-import org.junit.Assert;
-import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
-import net.sf.dynamicreports.report.builder.DynamicReports;
-import net.sf.dynamicreports.report.exception.DRException;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRPrintElement;
-import net.sf.jasperreports.engine.JRPrintFrame;
-import net.sf.jasperreports.engine.JRPrintPage;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.engine.util.JRSaver;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -49,15 +33,34 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
+import net.sf.dynamicreports.report.builder.DynamicReports;
+import net.sf.dynamicreports.report.exception.DRException;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRPrintElement;
+import net.sf.jasperreports.engine.JRPrintFrame;
+import net.sf.jasperreports.engine.JRPrintPage;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.util.JRSaver;
+import org.junit.jupiter.api.TestInstance;
+
 /**
  * @author Ricardo Mariaca
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class AbstractJasperTest {
     private JasperReportBuilder reportBuilder;
     private JasperReport jasperReport;
     private JasperPrint jasperPrint;
 
-    @Before
+    @BeforeAll
     public void init() {
         try {
             reportBuilder = DynamicReports.report();
@@ -66,7 +69,7 @@ public abstract class AbstractJasperTest {
                 reportBuilder = serializableReportTest(reportBuilder);
                 serializableParametersTest(reportBuilder.getJasperParameters());
             }
-            JRDataSource dataSource = createDataSource();
+            final JRDataSource dataSource = createDataSource();
             if (dataSource != null) {
                 reportBuilder.setDataSource(dataSource);
             }
@@ -74,9 +77,9 @@ public abstract class AbstractJasperTest {
             if (serializableJrPrintTest()) {
                 jasperPrint = serializableTest(jasperPrint);
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
-            Assert.fail(e.getMessage());
+            Assertions.fail(e.getMessage());
         }
     }
 
@@ -97,38 +100,38 @@ public abstract class AbstractJasperTest {
         return true;
     }
 
-    private JasperReportBuilder serializableReportTest(JasperReportBuilder report) throws IOException, ClassNotFoundException {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(bos);
+    private JasperReportBuilder serializableReportTest(final JasperReportBuilder report) throws IOException, ClassNotFoundException {
+        final ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        final ObjectOutputStream oos = new ObjectOutputStream(bos);
         oos.writeObject(report);
         oos.flush();
         oos.close();
 
-        InputStream stream = new ByteArrayInputStream(bos.toByteArray());
-        ObjectInputStream ois = new ObjectInputStream(stream);
+        final InputStream stream = new ByteArrayInputStream(bos.toByteArray());
+        final ObjectInputStream ois = new ObjectInputStream(stream);
         return (JasperReportBuilder) ois.readObject();
     }
 
     @SuppressWarnings("unchecked")
-    private Map<String, Object> serializableParametersTest(Map<String, Object> parameters) throws IOException, ClassNotFoundException {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(bos);
+    private Map<String, Object> serializableParametersTest(final Map<String, Object> parameters) throws IOException, ClassNotFoundException {
+        final ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        final ObjectOutputStream oos = new ObjectOutputStream(bos);
         oos.writeObject(parameters);
         oos.flush();
         oos.close();
 
-        InputStream stream = new ByteArrayInputStream(bos.toByteArray());
-        ObjectInputStream ois = new ObjectInputStream(stream);
+        final InputStream stream = new ByteArrayInputStream(bos.toByteArray());
+        final ObjectInputStream ois = new ObjectInputStream(stream);
         return (Map<String, Object>) ois.readObject();
     }
 
-    private JasperPrint serializableTest(JasperPrint jasperPrint) throws IOException, JRException {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    private JasperPrint serializableTest(final JasperPrint jasperPrint) throws IOException, JRException {
+        final ByteArrayOutputStream bos = new ByteArrayOutputStream();
         JRSaver.saveObject(jasperPrint, bos);
         bos.flush();
         bos.close();
 
-        InputStream stream = new ByteArrayInputStream(bos.toByteArray());
+        final InputStream stream = new ByteArrayInputStream(bos.toByteArray());
         return (JasperPrint) JRLoader.loadObject(stream);
     }
 
@@ -144,65 +147,65 @@ public abstract class AbstractJasperTest {
         return jasperPrint;
     }
 
-    protected void numberOfPagesTest(int expectedNumberOfPages) {
-        Assert.assertEquals("pages", expectedNumberOfPages, getNumberOfPages());
+    protected void numberOfPagesTest(final int expectedNumberOfPages) {
+        Assertions.assertEquals(expectedNumberOfPages, getNumberOfPages(), "pages");
     }
 
     private int getNumberOfPages() {
         return jasperPrint.getPages().size();
     }
 
-    protected JRPrintElement getElementAt(String key, int index) {
-        List<JRPrintElement> elements = findElement(key);
+    protected JRPrintElement getElementAt(final String key, final int index) {
+        final List<JRPrintElement> elements = findElement(key);
         if (elements.size() - 1 < index) {
-            Assert.fail("Element " + key + " at index " + index + " not found");
+            Assertions.fail("Element " + key + " at index " + index + " not found");
             return null;
         }
         return elements.get(index);
     }
 
-    protected List<JRPrintElement> findElement(String key) {
-        List<JRPrintElement> elements = new ArrayList<JRPrintElement>();
+    protected List<JRPrintElement> findElement(final String key) {
+        final List<JRPrintElement> elements = new ArrayList<JRPrintElement>();
         for (
-            Iterator<?> iterator = jasperPrint.getPages().iterator(); iterator.hasNext(); ) {
-            JRPrintPage page = (JRPrintPage) iterator.next();
+            final Iterator<?> iterator = jasperPrint.getPages().iterator(); iterator.hasNext(); ) {
+            final JRPrintPage page = (JRPrintPage) iterator.next();
             for (
-                Iterator<?> iterator2 = page.getElements().iterator(); iterator2.hasNext(); ) {
-                JRPrintElement element = (JRPrintElement) iterator2.next();
+                final Iterator<?> iterator2 = page.getElements().iterator(); iterator2.hasNext(); ) {
+                final JRPrintElement element = (JRPrintElement) iterator2.next();
                 findElement(key, elements, element);
             }
         }
         return elements;
     }
 
-    protected void findElement(String key, List<JRPrintElement> elements, JRPrintElement element) {
+    protected void findElement(final String key, final List<JRPrintElement> elements, final JRPrintElement element) {
         if (key.equals(element.getKey())) {
             elements.add(element);
         }
         if (element instanceof JRPrintFrame) {
             for (
-                Iterator<?> iterator = ((JRPrintFrame) element).getElements().iterator(); iterator.hasNext(); ) {
-                JRPrintElement element2 = (JRPrintElement) iterator.next();
+                final Iterator<?> iterator = ((JRPrintFrame) element).getElements().iterator(); iterator.hasNext(); ) {
+                final JRPrintElement element2 = (JRPrintElement) iterator.next();
                 findElement(key, elements, element2);
             }
         }
     }
 
-    protected void containsElement(String key, int pageIndex) {
-        List<JRPrintElement> elements = new ArrayList<JRPrintElement>();
-        JRPrintPage page = getJasperPrint().getPages().get(pageIndex);
+    protected void containsElement(final String key, final int pageIndex) {
+        final List<JRPrintElement> elements = new ArrayList<JRPrintElement>();
+        final JRPrintPage page = getJasperPrint().getPages().get(pageIndex);
         for (
-            Iterator<?> iterator = page.getElements().iterator(); iterator.hasNext(); ) {
-            JRPrintElement element = (JRPrintElement) iterator.next();
+            final Iterator<?> iterator = page.getElements().iterator(); iterator.hasNext(); ) {
+            final JRPrintElement element = (JRPrintElement) iterator.next();
             findElement(key, elements, element);
         }
         if (elements.isEmpty()) {
-            Assert.fail("Element " + key + " at page index " + pageIndex + " not found");
+            Assertions.fail("Element " + key + " at page index " + pageIndex + " not found");
         }
     }
 
-    protected Date toDate(int year, int month, int day) {
-        Calendar c = Calendar.getInstance();
+    protected Date toDate(final int year, final int month, final int day) {
+        final Calendar c = Calendar.getInstance();
         c.clear();
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month - 1);

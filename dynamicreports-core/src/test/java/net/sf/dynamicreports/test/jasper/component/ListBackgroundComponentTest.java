@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -27,7 +27,7 @@ import static net.sf.dynamicreports.report.builder.DynamicReports.template;
 
 import java.util.List;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.ReportTemplateBuilder;
@@ -45,7 +45,7 @@ public class ListBackgroundComponentTest extends AbstractJasperPositionTest {
     private TextColumnBuilder<String> column;
 
     @Override
-    protected void configureReport(JasperReportBuilder rb) {
+    protected void configureReport(final JasperReportBuilder rb) {
         final RectangleBuilder background = cmp.rectangle();
         final ReportTemplateBuilder template = template().setDetailBackgroundComponent(background);
 
@@ -74,11 +74,11 @@ public class ListBackgroundComponentTest extends AbstractJasperPositionTest {
         elementPositionTest("detail.list1", 1, 10, 326, 575, 16);
         elementPositionTest("detail.list1.background", 1, 0, 0, 575, 16);
 
-        elementPositionTest("summary.list1", 0, 10, 342, 575, 85);
-        elementPositionTest("summary.list1.background", 0, 0, 0, 575, 85);
-        elementPositionTest("summary.list2", 0, 0, 27, 575, 16);
+        elementPositionTest("summary.list1", 0, 10, 342, 575, 84);
+        elementPositionTest("summary.list1.background", 0, 0, 0, 575, 84);
+        elementPositionTest("summary.list2", 0, 0, 26, 575, 16);
         final List<JRPrintElement> elements = findElement("summary.list2.background");
-        Assert.assertTrue("list background", elements.isEmpty());
+        Assertions.assertTrue(elements.isEmpty(), "list background");
         elementPositionTest("summary.list3", 0, 143, 0, 288, 16);
         elementPositionTest("summary.list3.background", 0, 0, 0, 288, 16);
         elementPositionTest("summary.list4", 0, 0, 43, 575, 42);

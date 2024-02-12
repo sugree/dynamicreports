@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -33,7 +33,7 @@ import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
 import java.io.Serializable;
 import java.util.Locale;
@@ -81,23 +81,23 @@ public class ValueChartDataTest extends AbstractJasperChartTest implements Seria
 
         JFreeChart chart = getChart("summary.chart1", 0);
         CategoryItemRenderer renderer1 = chart.getCategoryPlot().getRenderer();
-        Assert.assertNotNull(renderer1.getBaseItemLabelGenerator());
-        Assert.assertEquals("1.19", renderer1.getBaseItemLabelGenerator().generateLabel(categoryDataset, 0, 0));
+        Assertions.assertNotNull(renderer1.getBaseItemLabelGenerator());
+        Assertions.assertEquals("1.19", renderer1.getBaseItemLabelGenerator().generateLabel(categoryDataset, 0, 0));
 
         chart = getChart("summary.chart2", 0);
         renderer1 = chart.getCategoryPlot().getRenderer();
-        Assert.assertNotNull(renderer1.getBaseItemLabelGenerator());
-        Assert.assertEquals("1.191", renderer1.getBaseItemLabelGenerator().generateLabel(categoryDataset, 0, 0));
+        Assertions.assertNotNull(renderer1.getBaseItemLabelGenerator());
+        Assertions.assertEquals("1.191", renderer1.getBaseItemLabelGenerator().generateLabel(categoryDataset, 0, 0));
 
         chart = getChart("summary.chart3", 0);
         renderer1 = chart.getCategoryPlot().getRenderer();
-        Assert.assertNotNull(renderer1.getBaseItemLabelGenerator());
-        Assert.assertEquals("1.19", renderer1.getBaseItemLabelGenerator().generateLabel(categoryDataset, 0, 0));
+        Assertions.assertNotNull(renderer1.getBaseItemLabelGenerator());
+        Assertions.assertEquals("1.19", renderer1.getBaseItemLabelGenerator().generateLabel(categoryDataset, 0, 0));
 
         chart = getChart("summary.chart4", 0);
         renderer1 = chart.getCategoryPlot().getRenderer();
-        Assert.assertNotNull(renderer1.getBaseItemLabelGenerator());
-        Assert.assertEquals("1.2", renderer1.getBaseItemLabelGenerator().generateLabel(categoryDataset, 0, 0));
+        Assertions.assertNotNull(renderer1.getBaseItemLabelGenerator());
+        Assertions.assertEquals("1.2", renderer1.getBaseItemLabelGenerator().generateLabel(categoryDataset, 0, 0));
 
         DefaultPieDataset dataset = new DefaultPieDataset();
         dataset.setValue("key1", 1.191);
@@ -105,11 +105,11 @@ public class ValueChartDataTest extends AbstractJasperChartTest implements Seria
 
         chart = getChart("summary.chart5", 0);
         StandardPieSectionLabelGenerator labelGenerator = (StandardPieSectionLabelGenerator) ((PiePlot) chart.getPlot()).getLabelGenerator();
-        Assert.assertEquals("key1 = 1.19 (0.97%)", labelGenerator.generateSectionLabel(dataset, "key1"));
+        Assertions.assertEquals("key1 = 1.19 (0.97%)", labelGenerator.generateSectionLabel(dataset, "key1"));
 
         chart = getChart("summary.chart6", 0);
         labelGenerator = (StandardPieSectionLabelGenerator) ((PiePlot) chart.getPlot()).getLabelGenerator();
-        Assert.assertEquals("key1 = 1.2 (0.967%)", labelGenerator.generateSectionLabel(dataset, "key1"));
+        Assertions.assertEquals("key1 = 1.2 (0.967%)", labelGenerator.generateSectionLabel(dataset, "key1"));
     }
 
     @Override

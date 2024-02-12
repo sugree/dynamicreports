@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -21,8 +21,8 @@
 package net.sf.dynamicreports.test.jasper.component;
 
 import net.sf.dynamicreports.report.exception.DRException;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
 import static net.sf.dynamicreports.report.builder.DynamicReports.report;
@@ -36,31 +36,31 @@ public class PageNumber6Test {
     public void test() {
         try {
             report().summary(cmp.pageXofY().setFormatExpression("{1} {0}")).toJasperPrint();
-            Assert.fail("Wrong page number");
+            Assertions.fail("Wrong page number");
         } catch (DRException e) {
         }
 
         try {
             report().summary(cmp.pageXofY().setFormatExpression("{1} {1}")).toJasperPrint();
-            Assert.fail("Wrong page number");
+            Assertions.fail("Wrong page number");
         } catch (DRException e) {
         }
 
         try {
             report().summary(cmp.pageXofY().setFormatExpression("{0} {0}")).toJasperPrint();
-            Assert.fail("Wrong page number");
+            Assertions.fail("Wrong page number");
         } catch (DRException e) {
         }
 
         try {
             report().summary(cmp.pageXofY().setFormatExpression("{0}")).toJasperPrint();
-            Assert.fail("Wrong page number");
+            Assertions.fail("Wrong page number");
         } catch (DRException e) {
         }
 
         try {
             report().summary(cmp.pageXofY().setFormatExpression("{1}")).toJasperPrint();
-            Assert.fail("Wrong page number");
+            Assertions.fail("Wrong page number");
         } catch (DRException e) {
         }
     }

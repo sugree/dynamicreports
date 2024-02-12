@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -20,20 +20,21 @@
  */
 package net.sf.dynamicreports.test.jasper.report;
 
-import org.junit.Assert;
+import static net.sf.dynamicreports.report.builder.DynamicReports.col;
+import static net.sf.dynamicreports.report.builder.DynamicReports.exp;
+
+import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
+
+import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.Assertions;
+
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.report.exception.DRException;
 import net.sf.dynamicreports.test.jasper.AbstractJasperValueTest;
 import net.sf.jasperreports.engine.JRDataSource;
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.ByteArrayOutputStream;
-import java.io.Serializable;
-
-import static net.sf.dynamicreports.report.builder.DynamicReports.col;
-import static net.sf.dynamicreports.report.builder.DynamicReports.exp;
 
 /**
  * @author Ricardo Mariaca
@@ -46,7 +47,7 @@ public class JasperExpressionTest extends AbstractJasperValueTest implements Ser
     private TextColumnBuilder<Integer> column3;
 
     @Override
-    protected void configureReport(JasperReportBuilder rb) {
+    protected void configureReport(final JasperReportBuilder rb) {
         rb.columns(column1 = col.column("field1", Integer.class).setTitle(exp.jasperSyntaxText("Column1\n\"Column1\"")),
                    column2 = col.column("field2", Integer.class).setTitle(exp.jasperSyntax("\"Column2\"", String.class)),
                    column3 = col.column(exp.jasperSyntax("$F{field1} - $F{field2}", Integer.class)));
@@ -67,18 +68,18 @@ public class JasperExpressionTest extends AbstractJasperValueTest implements Ser
         columnDetailValueTest(column3, "0", "8", "3");
 
         try {
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            final ByteArrayOutputStream bos = new ByteArrayOutputStream();
             getReportBuilder().toJrXml(bos);
-            String jrxml = new String(bos.toByteArray());
-            Assert.assertFalse("jrxml contains dependency to dynamicreports", StringUtils.contains(jrxml, "net.sf.dynamicreports"));
-        } catch (DRException e) {
-            Assert.fail(e.getMessage());
+            final String jrxml = new String(bos.toByteArray());
+            Assertions.assertFalse(StringUtils.contains(jrxml, "net.sf.dynamicreports"), "jrxml contains dependency to dynamicreports");
+        } catch (final DRException e) {
+            Assertions.fail(e.getMessage());
         }
     }
 
     @Override
     protected JRDataSource createDataSource() {
-        DRDataSource dataSource = new DRDataSource("field1", "field2");
+        final DRDataSource dataSource = new DRDataSource("field1", "field2");
         dataSource.add(1, 1);
         dataSource.add(10, 2);
         dataSource.add(5, 2);

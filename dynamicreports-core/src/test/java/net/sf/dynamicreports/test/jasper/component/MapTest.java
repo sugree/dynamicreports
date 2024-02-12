@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -20,14 +20,15 @@
  */
 package net.sf.dynamicreports.test.jasper.component;
 
-import org.junit.Assert;
-import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
-import net.sf.dynamicreports.test.jasper.AbstractJasperChartTest;
-import net.sf.jasperreports.engine.fill.JRTemplateGenericPrintElement;
+import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
 
 import java.io.Serializable;
 
-import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
+import org.junit.jupiter.api.Assertions;
+
+import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
+import net.sf.dynamicreports.test.jasper.AbstractJasperChartTest;
+import net.sf.jasperreports.engine.fill.JRTemplateGenericPrintElement;
 
 /**
  * @author Ricardo Mariaca
@@ -36,7 +37,7 @@ public class MapTest extends AbstractJasperChartTest implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected void configureReport(JasperReportBuilder rb) {
+    protected void configureReport(final JasperReportBuilder rb) {
         rb.title(cmp.map(40.7f, -74f, 12));
     }
 
@@ -46,9 +47,9 @@ public class MapTest extends AbstractJasperChartTest implements Serializable {
 
         numberOfPagesTest(1);
 
-        JRTemplateGenericPrintElement map = (JRTemplateGenericPrintElement) getJasperPrint().getPages().get(0).getElements().get(0);
-        Assert.assertEquals("latitude", map.getParameterValue("latitude"), 40.7f);
-        Assert.assertEquals("longitude", map.getParameterValue("longitude"), -74f);
-        Assert.assertEquals("zoom", map.getParameterValue("zoom"), 12);
+        final JRTemplateGenericPrintElement map = (JRTemplateGenericPrintElement) getJasperPrint().getPages().get(0).getElements().get(0);
+        Assertions.assertEquals(map.getParameterValue("latitude"), 40.7f, "latitude");
+        Assertions.assertEquals(map.getParameterValue("longitude"), -74f, "longitude");
+        Assertions.assertEquals(map.getParameterValue("zoom"), 12, "zoom");
     }
 }

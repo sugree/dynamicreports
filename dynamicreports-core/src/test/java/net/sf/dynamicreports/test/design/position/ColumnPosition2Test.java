@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -20,7 +20,7 @@
  */
 package net.sf.dynamicreports.test.design.position;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import net.sf.dynamicreports.design.base.DRDesignBand;
 import net.sf.dynamicreports.design.base.component.DRDesignComponent;
 import net.sf.dynamicreports.design.base.component.DRDesignList;
@@ -49,34 +49,34 @@ public class ColumnPosition2Test extends ColumnPosition1Test {
     @Override
     protected void testBand(DRDesignBand band) {
         DRDesignComponent component = band.getBandComponent();
-        Assert.assertTrue(component instanceof DRDesignList);
+        Assertions.assertTrue(component instanceof DRDesignList);
         DRDesignList list1 = (DRDesignList) component;
-        Assert.assertEquals(ListType.HORIZONTAL, list1.getType());
-        Assert.assertEquals(2, list1.getComponents().size());
+        Assertions.assertEquals(ListType.HORIZONTAL, list1.getType());
+        Assertions.assertEquals(2, list1.getComponents().size());
         componentPositionTest(list1, 0, 0, 575, 32);
-        Assert.assertTrue(list1.getComponents().get(0) instanceof DRDesignTextField);
-        Assert.assertTrue(list1.getComponents().get(1) instanceof DRDesignList);
+        Assertions.assertTrue(list1.getComponents().get(0) instanceof DRDesignTextField);
+        Assertions.assertTrue(list1.getComponents().get(1) instanceof DRDesignList);
 
         DRDesignList list2 = (DRDesignList) list1.getComponents().get(1);
-        Assert.assertEquals(ListType.VERTICAL, list2.getType());
-        Assert.assertEquals(2, list2.getComponents().size());
+        Assertions.assertEquals(ListType.VERTICAL, list2.getType());
+        Assertions.assertEquals(2, list2.getComponents().size());
         componentPositionTest(list2, 191, 0, 384, 32);
-        Assert.assertTrue(list2.getComponents().get(0) instanceof DRDesignList);
-        Assert.assertTrue(list2.getComponents().get(1) instanceof DRDesignList);
+        Assertions.assertTrue(list2.getComponents().get(0) instanceof DRDesignList);
+        Assertions.assertTrue(list2.getComponents().get(1) instanceof DRDesignList);
 
         DRDesignList list3 = (DRDesignList) list2.getComponents().get(0);
-        Assert.assertEquals(ListType.HORIZONTAL, list3.getType());
-        Assert.assertEquals(2, list3.getComponents().size());
+        Assertions.assertEquals(ListType.HORIZONTAL, list3.getType());
+        Assertions.assertEquals(2, list3.getComponents().size());
         componentPositionTest(list3, 191, 0, 384, 16);
-        Assert.assertTrue(list3.getComponents().get(0) instanceof DRDesignTextField);
-        Assert.assertTrue(list3.getComponents().get(1) instanceof DRDesignTextField);
+        Assertions.assertTrue(list3.getComponents().get(0) instanceof DRDesignTextField);
+        Assertions.assertTrue(list3.getComponents().get(1) instanceof DRDesignTextField);
 
         DRDesignList list4 = (DRDesignList) list2.getComponents().get(1);
-        Assert.assertEquals(ListType.HORIZONTAL, list4.getType());
-        Assert.assertEquals(2, list4.getComponents().size());
+        Assertions.assertEquals(ListType.HORIZONTAL, list4.getType());
+        Assertions.assertEquals(2, list4.getComponents().size());
         componentPositionTest(list4, 191, 16, 384, 16);
-        Assert.assertTrue(list4.getComponents().get(0) instanceof DRDesignTextField);
-        Assert.assertTrue(list4.getComponents().get(1) instanceof DRDesignTextField);
+        Assertions.assertTrue(list4.getComponents().get(0) instanceof DRDesignTextField);
+        Assertions.assertTrue(list4.getComponents().get(1) instanceof DRDesignTextField);
 
         // column1
         componentPositionTest(list1.getComponents().get(0), 0, 0, 191, 32);

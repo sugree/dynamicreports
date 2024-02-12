@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -20,7 +20,7 @@
  */
 package net.sf.dynamicreports.test.jasper.report;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
 import net.sf.dynamicreports.report.definition.ReportParameters;
@@ -60,16 +60,16 @@ public class ParametersTest extends AbstractJasperValueTest implements Serializa
             getReportBuilder().setParameter("title", "1");
             build();
             elementValueTest("title.textField1", "1");
-            Assert.assertSame(jasperReport, getJasperReport());
-            Assert.assertNotSame(jasperPrint, getJasperPrint());
+            Assertions.assertSame(jasperReport, getJasperReport());
+            Assertions.assertNotSame(jasperPrint, getJasperPrint());
 
             jasperReport = getJasperReport();
             jasperPrint = getJasperPrint();
             getReportBuilder().setParameter("title", "2");
             build();
             elementValueTest("title.textField1", "2");
-            Assert.assertSame(jasperReport, getJasperReport());
-            Assert.assertNotSame(jasperPrint, getJasperPrint());
+            Assertions.assertSame(jasperReport, getJasperReport());
+            Assertions.assertNotSame(jasperPrint, getJasperPrint());
 
             jasperReport = getJasperReport();
             jasperPrint = getJasperPrint();
@@ -78,11 +78,11 @@ public class ParametersTest extends AbstractJasperValueTest implements Serializa
             getReportBuilder().setParameters(parameters);
             build();
             elementValueTest("title.textField1", "3");
-            Assert.assertSame(jasperReport, getJasperReport());
-            Assert.assertNotSame(jasperPrint, getJasperPrint());
+            Assertions.assertSame(jasperReport, getJasperReport());
+            Assertions.assertNotSame(jasperPrint, getJasperPrint());
         } catch (DRException e) {
             e.printStackTrace();
-            Assert.fail(e.getMessage());
+            Assertions.fail(e.getMessage());
         }
     }
 

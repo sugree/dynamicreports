@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -20,7 +20,7 @@
  */
 package net.sf.dynamicreports.test.design.position;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import net.sf.dynamicreports.design.base.DRDesignBand;
 import net.sf.dynamicreports.design.base.component.DRDesignComponent;
 import net.sf.dynamicreports.design.base.component.DRDesignList;
@@ -53,13 +53,13 @@ public class ColumnPosition1Test extends AbstractBandTest {
 
     protected void testBand(DRDesignBand band) {
         DRDesignComponent component = band.getBandComponent();
-        Assert.assertTrue(component instanceof DRDesignList);
+        Assertions.assertTrue(component instanceof DRDesignList);
         DRDesignList list = (DRDesignList) component;
-        Assert.assertEquals(ListType.HORIZONTAL, list.getType());
-        Assert.assertEquals(2, list.getComponents().size());
+        Assertions.assertEquals(ListType.HORIZONTAL, list.getType());
+        Assertions.assertEquals(2, list.getComponents().size());
         componentPositionTest(list, 0, 0, 575, 16);
-        Assert.assertTrue(list.getComponents().get(0) instanceof DRDesignTextField);
-        Assert.assertTrue(list.getComponents().get(1) instanceof DRDesignTextField);
+        Assertions.assertTrue(list.getComponents().get(0) instanceof DRDesignTextField);
+        Assertions.assertTrue(list.getComponents().get(1) instanceof DRDesignTextField);
 
         // column1
         componentPositionTest(list.getComponents().get(0), 0, 0, 287, 16);

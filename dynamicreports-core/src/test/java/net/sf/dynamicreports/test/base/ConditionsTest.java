@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -20,19 +20,21 @@
  */
 package net.sf.dynamicreports.test.base;
 
-import org.junit.Assert;
+
+import static net.sf.dynamicreports.report.builder.DynamicReports.cnd;
+import static net.sf.dynamicreports.report.builder.DynamicReports.field;
+
+import java.sql.Connection;
+import java.util.Locale;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import net.sf.dynamicreports.report.builder.FieldBuilder;
 import net.sf.dynamicreports.report.definition.DRIScriptlet;
 import net.sf.dynamicreports.report.definition.DRIValue;
 import net.sf.dynamicreports.report.definition.ReportParameters;
 import net.sf.dynamicreports.report.definition.expression.DRISimpleExpression;
-import org.junit.Test;
-
-import java.sql.Connection;
-import java.util.Locale;
-
-import static net.sf.dynamicreports.report.builder.DynamicReports.cnd;
-import static net.sf.dynamicreports.report.builder.DynamicReports.field;
 
 /**
  * @author Ricardo Mariaca
@@ -42,7 +44,7 @@ public class ConditionsTest {
     @Test
     public void test() {
         // equal
-        FieldBuilder<Integer> value = field("name", Integer.class);
+        final FieldBuilder<Integer> value = field("name", Integer.class);
         //conditionTrue("equal", cnd.equal(value, 5, 10, 20));
         //conditionFalse("equal", cnd.equal(value, 5, 20));
 
@@ -85,7 +87,7 @@ public class ConditionsTest {
         conditionTrue("notBetween", cnd.notBetween(value, 11, 20));
 
         // equal object
-        FieldBuilder<Object> value2 = field("name", Object.class);
+        final FieldBuilder<Object> value2 = field("name", Object.class);
         conditionTrue("equal", cnd.equal(value2, Type.A, Type.C, Type.F), Type.C);
         conditionFalse("equal", cnd.equal(value2, Type.B, Type.C), Type.E);
 
@@ -94,20 +96,20 @@ public class ConditionsTest {
         conditionTrue("unequal", cnd.unEqual(value2, Type.B, Type.C), Type.E);
     }
 
-    private void conditionTrue(String name, DRISimpleExpression<Boolean> condition) {
-        Assert.assertTrue(name + " condition", condition.evaluate(new TestReportParameters(10)));
+    private void conditionTrue(final String name, final DRISimpleExpression<Boolean> condition) {
+        Assertions.assertTrue(condition.evaluate(new TestReportParameters(10)), name + " condition");
     }
 
-    private void conditionFalse(String name, DRISimpleExpression<Boolean> condition) {
-        Assert.assertFalse(name + " condition", condition.evaluate(new TestReportParameters(10)));
+    private void conditionFalse(final String name, final DRISimpleExpression<Boolean> condition) {
+        Assertions.assertFalse(condition.evaluate(new TestReportParameters(10)), name + " condition");
     }
 
-    private void conditionTrue(String name, DRISimpleExpression<Boolean> condition, Object actualValue) {
-        Assert.assertTrue(name + " condition", condition.evaluate(new TestReportParameters(actualValue)));
+    private void conditionTrue(final String name, final DRISimpleExpression<Boolean> condition, final Object actualValue) {
+        Assertions.assertTrue(condition.evaluate(new TestReportParameters(actualValue)), name + " condition");
     }
 
-    private void conditionFalse(String name, DRISimpleExpression<Boolean> condition, Object actualValue) {
-        Assert.assertFalse(name + " condition", condition.evaluate(new TestReportParameters(actualValue)));
+    private void conditionFalse(final String name, final DRISimpleExpression<Boolean> condition, final Object actualValue) {
+        Assertions.assertFalse(condition.evaluate(new TestReportParameters(actualValue)), name + " condition");
     }
 
     private enum Type {
@@ -115,9 +117,9 @@ public class ConditionsTest {
     }
 
     private class TestReportParameters implements ReportParameters {
-        private Object value;
+        private final Object value;
 
-        public TestReportParameters(Object value) {
+        public TestReportParameters(final Object value) {
             this.value = value;
         }
 
@@ -137,7 +139,7 @@ public class ConditionsTest {
         }
 
         @Override
-        public Integer getGroupCount(String groupName) {
+        public Integer getGroupCount(final String groupName) {
             return null;
         }
 
@@ -147,12 +149,12 @@ public class ConditionsTest {
         }
 
         @Override
-        public String getMessage(String key) {
+        public String getMessage(final String key) {
             return null;
         }
 
         @Override
-        public String getMessage(String key, Object[] arguments) {
+        public String getMessage(final String key, final Object[] arguments) {
             return null;
         }
 
@@ -177,18 +179,18 @@ public class ConditionsTest {
         }
 
         @Override
-        public DRIScriptlet getScriptlet(String name) {
+        public DRIScriptlet getScriptlet(final String name) {
             return null;
         }
 
         @Override
-        public <T> T getValue(String name) {
+        public <T> T getValue(final String name) {
             return null;
         }
 
         @Override
         @SuppressWarnings("unchecked")
-        public <T> T getValue(DRIValue<T> value) {
+        public <T> T getValue(final DRIValue<T> value) {
             return (T) this.value;
         }
 
@@ -203,17 +205,17 @@ public class ConditionsTest {
         }
 
         @Override
-        public <T> T getFieldValue(String name) {
+        public <T> T getFieldValue(final String name) {
             return null;
         }
 
         @Override
-        public <T> T getVariableValue(String name) {
+        public <T> T getVariableValue(final String name) {
             return null;
         }
 
         @Override
-        public <T> T getParameterValue(String name) {
+        public <T> T getParameterValue(final String name) {
             return null;
         }
     }

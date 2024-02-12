@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -25,7 +25,7 @@ import static net.sf.dynamicreports.report.builder.DynamicReports.stl;
 
 import java.io.Serializable;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.style.StyleBuilder;
@@ -66,17 +66,17 @@ public class Style7Test extends AbstractJasperStyleTest implements Serializable 
         numberOfPagesTest(1);
 
         final JRStyle style = getElementAt("title.textField1", 0).getStyle();
-        Assert.assertEquals("line spacing", LineSpacingEnum.DOUBLE, style.getParagraph().getLineSpacing());
-        Assert.assertEquals("line spacing size", Float.valueOf(2), style.getParagraph().getLineSpacingSize());
-        Assert.assertEquals("first line indent", Integer.valueOf(10), style.getParagraph().getFirstLineIndent());
-        Assert.assertEquals("left indent", Integer.valueOf(15), style.getParagraph().getLeftIndent());
-        Assert.assertEquals("right indent", Integer.valueOf(20), style.getParagraph().getRightIndent());
-        Assert.assertEquals("spacing before", Integer.valueOf(5), style.getParagraph().getSpacingBefore());
-        Assert.assertEquals("spacing after", Integer.valueOf(6), style.getParagraph().getSpacingAfter());
-        Assert.assertEquals("tab stop width", Integer.valueOf(9), style.getParagraph().getTabStopWidth());
+        Assertions.assertEquals(LineSpacingEnum.DOUBLE, style.getParagraph().getLineSpacing(), "line spacing");
+        Assertions.assertEquals(Float.valueOf(2), style.getParagraph().getLineSpacingSize(), "line spacing size");
+        Assertions.assertEquals(Integer.valueOf(10), style.getParagraph().getFirstLineIndent(), "first line indent");
+        Assertions.assertEquals(Integer.valueOf(15), style.getParagraph().getLeftIndent(), "left indent");
+        Assertions.assertEquals(Integer.valueOf(20), style.getParagraph().getRightIndent(), "right indent");
+        Assertions.assertEquals(Integer.valueOf(5), style.getParagraph().getSpacingBefore(), "spacing before");
+        Assertions.assertEquals(Integer.valueOf(6), style.getParagraph().getSpacingAfter(), "spacing after");
+        Assertions.assertEquals(Integer.valueOf(9), style.getParagraph().getTabStopWidth(), "tab stop width");
         final TabStop[] tabStops = style.getParagraph().getTabStops();
-        Assert.assertNotNull("tab stops", tabStops);
-        Assert.assertEquals("tab stop position", 12, tabStops[0].getPosition());
-        Assert.assertEquals("tab stop alignment", TabStopAlignEnum.CENTER, tabStops[0].getAlignment());
+        Assertions.assertNotNull(tabStops, "tab stops");
+        Assertions.assertEquals(12, tabStops[0].getPosition(), "tab stop position");
+        Assertions.assertEquals(TabStopAlignEnum.CENTER, tabStops[0].getAlignment(), "tab stop alignment");
     }
 }

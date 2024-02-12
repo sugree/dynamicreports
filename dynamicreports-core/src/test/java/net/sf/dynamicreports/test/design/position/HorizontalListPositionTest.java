@@ -1,7 +1,7 @@
 /*
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
- * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
+ * Copyright (C) 2010 - 2022 The Dynamic Reports Contributors
  *
  * This file is part of DynamicReports.
  *
@@ -20,7 +20,7 @@
  */
 package net.sf.dynamicreports.test.design.position;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import net.sf.dynamicreports.design.base.DRDesignBand;
 import net.sf.dynamicreports.design.base.component.DRDesignComponent;
 import net.sf.dynamicreports.design.base.component.DRDesignList;
@@ -49,13 +49,13 @@ public class HorizontalListPositionTest extends AbstractBandTest {
     @Override
     protected void titleBandTest(DRDesignBand band) {
         DRDesignComponent component = band.getBandComponent();
-        Assert.assertTrue(component instanceof DRDesignList);
+        Assertions.assertTrue(component instanceof DRDesignList);
         DRDesignList list = (DRDesignList) component;
-        Assert.assertEquals(ListType.HORIZONTAL, list.getType());
-        Assert.assertEquals(9, list.getComponents().size());
+        Assertions.assertEquals(ListType.HORIZONTAL, list.getType());
+        Assertions.assertEquals(9, list.getComponents().size());
         componentPositionTest(list, 0, 0, 1170, 23);
         for (int i = 0; i < 9; i++) {
-            Assert.assertTrue(list.getComponents().get(i) instanceof DRDesignTextField);
+            Assertions.assertTrue(list.getComponents().get(i) instanceof DRDesignTextField);
         }
 
         componentPositionTest(list.getComponents().get(0), 0, 0, 154, 23);
