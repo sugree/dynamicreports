@@ -5,7 +5,7 @@
     <parent>
         <groupId>net.sourceforge.dynamicreports</groupId>
         <artifactId>dynamicreports-parent</artifactId>
-        <version>7.0.6</version>
+        <version>7.0.7-SNAPSHOT</version>
     </parent>
 
     <artifactId>dynamicreports-core</artifactId>
