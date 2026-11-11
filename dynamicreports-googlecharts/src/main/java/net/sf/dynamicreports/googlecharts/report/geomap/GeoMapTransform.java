@@ -24,8 +24,6 @@ import net.sf.dynamicreports.design.base.DRDesignGroup;
 import net.sf.dynamicreports.design.constant.EvaluationTime;
 import net.sf.dynamicreports.design.constant.ResetType;
 import net.sf.dynamicreports.design.transformation.DesignTransformAccessor;
-import net.sf.dynamicreports.googlecharts.jasper.GoogleChartsExtensionsRegistryFactory;
-import net.sf.dynamicreports.googlecharts.jasper.geomap.GeoMapPrintElement;
 import net.sf.dynamicreports.googlecharts.jasper.geomap.StandardGeoMapComponent;
 import net.sf.dynamicreports.googlecharts.jasper.geomap.StandardGeoMapDataset;
 import net.sf.dynamicreports.jasper.transformation.ConstantTransform;
@@ -33,7 +31,6 @@ import net.sf.dynamicreports.jasper.transformation.JasperTransformAccessor;
 import net.sf.dynamicreports.report.component.CustomComponentTransform;
 import net.sf.dynamicreports.report.exception.DRException;
 import net.sf.jasperreports.engine.JRComponentElement;
-import net.sf.jasperreports.engine.component.ComponentKey;
 import net.sf.jasperreports.engine.design.JRDesignComponentElement;
 
 /**
@@ -112,7 +109,6 @@ public class GeoMapTransform implements CustomComponentTransform<DRIGeoMap, DRID
 
         JRDesignComponentElement jrComponent = new JRDesignComponentElement();
         jrComponent.setComponent(jrGeoMap);
-        jrComponent.setComponentKey(new ComponentKey(GoogleChartsExtensionsRegistryFactory.NAMESPACE, "jr", GeoMapPrintElement.GEOMAP_ELEMENT_NAME));
 
         return jrComponent;
     }
@@ -120,9 +116,9 @@ public class GeoMapTransform implements CustomComponentTransform<DRIGeoMap, DRID
     private void dataset(JasperTransformAccessor accessor, DRIDesignGeoMapDataset dataset, StandardGeoMapDataset jrDataset) {
         jrDataset.setDatasetRun(accessor.getDatasetTransform().datasetRun(dataset.getSubDataset()));
         ResetType resetType = dataset.getResetType();
-        jrDataset.setResetType(ConstantTransform.variableResetType(resetType));
+        jrDataset.setResetType(ConstantTransform.variableDatasetResetType(resetType));
         if (resetType.equals(ResetType.GROUP) && dataset.getResetGroup() != null) {
-            jrDataset.setResetGroup(accessor.getGroupTransform().getGroup(dataset.getResetGroup()));
+            jrDataset.setResetGroup(accessor.getGroupTransform().getGroup(dataset.getResetGroup()).getName());
         }
 
         accessor.transformToDataset(dataset.getSubDataset());

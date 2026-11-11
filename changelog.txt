@@ -4,6 +4,8 @@ DynamicReports Change Log
 Changes in version 7.1.1 (2026-11-11)
 ---------------------------------------------------
  - upgrade to JasperReports 7.1.1
+ - reintegrated dynamicreports-adhoc into reactor with Jakarta XML Binding and Java 17 support
+ - reintegrated dynamicreports-googlecharts into reactor with Velocity 2.4 and Java 17 support
  - dependency updates (jackson-bom 2.23.0, maven plugin updates)
  - verified OWASP dependency check
 

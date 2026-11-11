@@ -33,17 +33,16 @@ dynamicreports/
 │   ├── license_header.txt        # Required header for all source files
 │   └── header_definition.xml     # Mycila license plugin configuration
 ├── dynamicreports-core/          # [ACTIVE] Core reporting engine & builder API
-├── dynamicreports-examples/      # [ACTIVE] Example reports demonstrating library features
-├── dynamicreports-adhoc/         # [STANDALONE/LEGACY] Ad-hoc configuration module (v6.20.1)
-└── dynamicreports-googlecharts/  # [STANDALONE/LEGACY] Google Charts integration (v6.20.1)
+├── dynamicreports-adhoc/         # [ACTIVE] Ad-hoc report configuration module
+├── dynamicreports-googlecharts/  # [ACTIVE] Google Charts integration module
+└── dynamicreports-examples/      # [ACTIVE] Example reports demonstrating library features
 ```
 
 ### Active Reactor Modules (`pom.xml`)
 1. **`dynamicreports-core`**: The main library artifact containing the fluent builder API, intermediate design representations, JasperReports transformers, and export handlers.
-2. **`dynamicreports-examples`**: Comprehensive suite of runnable report examples (PDF, Excel, charts, crosstabs, barcodes, subreports).
-
-> [!NOTE]
-> `dynamicreports-adhoc` and `dynamicreports-googlecharts` were decoupled from the default Maven reactor during the JasperReports 7.0 upgrade and remain at version `6.20.1`. Do not add them back to root `pom.xml` unless instructed.
+2. **`dynamicreports-adhoc`**: Ad-hoc report configuration and transformation module supporting programmatic and XML serialization.
+3. **`dynamicreports-googlecharts`**: Google Charts integration module supporting dynamic chart components.
+4. **`dynamicreports-examples`**: Comprehensive suite of runnable report examples (PDF, Excel, charts, crosstabs, barcodes, subreports).
 
 ---
 

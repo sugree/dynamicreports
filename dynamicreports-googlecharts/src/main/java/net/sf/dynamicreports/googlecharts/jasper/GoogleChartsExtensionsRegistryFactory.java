@@ -25,13 +25,14 @@ import net.sf.dynamicreports.googlecharts.jasper.geomap.GeoMapComponent;
 import net.sf.dynamicreports.googlecharts.jasper.geomap.GeoMapElementHtmlHandler;
 import net.sf.dynamicreports.googlecharts.jasper.geomap.GeoMapFillFactory;
 import net.sf.dynamicreports.googlecharts.jasper.geomap.GeoMapPrintElement;
+import net.sf.dynamicreports.googlecharts.jasper.geomap.StandardGeoMapComponent;
 import net.sf.dynamicreports.googlecharts.report.geomap.GeoMapTransform;
 import net.sf.dynamicreports.report.component.CustomComponentTransform;
 import net.sf.jasperreports.engine.JRPropertiesMap;
+import net.sf.jasperreports.engine.component.Component;
 import net.sf.jasperreports.engine.component.ComponentManager;
 import net.sf.jasperreports.engine.component.ComponentsBundle;
 import net.sf.jasperreports.engine.component.DefaultComponentManager;
-import net.sf.jasperreports.engine.component.DefaultComponentXmlParser;
 import net.sf.jasperreports.engine.component.DefaultComponentsBundle;
 import net.sf.jasperreports.engine.export.GenericElementHandlerBundle;
 import net.sf.jasperreports.extensions.ExtensionsRegistry;
@@ -41,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>GoogleChartsExtensionsRegistryFactory class.</p>
@@ -71,14 +73,7 @@ public class GoogleChartsExtensionsRegistryFactory implements ExtensionsRegistry
 
         GoogleChartsDesignConverter designConverter = new GoogleChartsDesignConverter();
 
-        DefaultComponentXmlParser parser = new DefaultComponentXmlParser();
-        parser.setNamespace(NAMESPACE);
-        parser.setPublicSchemaLocation(XSD_LOCATION);
-        parser.setInternalSchemaResource(XSD_RESOURCE);
-        parser.setDigesterConfigurer(handler);
-        bundle.setXmlParser(parser);
-
-        HashMap<String, ComponentManager> componentManagers = new HashMap<>();
+        Map<Class<? extends Component>, ComponentManager> componentManagers = new HashMap<>();
         bundle.setComponentManagers(componentManagers);
 
         REGISTRY = new ExtensionsRegistry() {
@@ -99,13 +94,13 @@ public class GoogleChartsExtensionsRegistryFactory implements ExtensionsRegistry
         };
 
         // geoMap
-        handler.add(GeoMapPrintElement.GEOMAP_ELEMENT_NAME, GeoMapComponent.class, new GeoMapElementHtmlHandler());
+        handler.add(GeoMapPrintElement.GEOMAP_ELEMENT_NAME, new GeoMapElementHtmlHandler());
         DefaultComponentManager geoMapManager = new DefaultComponentManager();
         geoMapManager.setDesignConverter(designConverter);
         geoMapManager.setComponentCompiler(new GeoMapCompiler());
-        geoMapManager.setComponentXmlWriter(handler);
         geoMapManager.setComponentFillFactory(new GeoMapFillFactory());
-        componentManagers.put(GeoMapPrintElement.GEOMAP_ELEMENT_NAME, geoMapManager);
+        componentManagers.put(StandardGeoMapComponent.class, geoMapManager);
+        componentManagers.put(GeoMapComponent.class, geoMapManager);
         transforms.add(new GeoMapTransform());
     }
 

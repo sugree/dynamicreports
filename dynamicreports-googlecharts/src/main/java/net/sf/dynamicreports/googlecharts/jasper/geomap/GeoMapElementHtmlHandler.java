@@ -22,6 +22,7 @@ package net.sf.dynamicreports.googlecharts.jasper.geomap;
 
 import net.sf.dynamicreports.googlecharts.report.geomap.GeoMapDataMode;
 import net.sf.jasperreports.engine.JRGenericPrintElement;
+import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.export.GenericElementHtmlHandler;
 import net.sf.jasperreports.engine.export.HtmlExporter;
 import net.sf.jasperreports.engine.export.JRHtmlExporterContext;
@@ -32,12 +33,16 @@ import net.sf.jasperreports.export.ExporterInput;
 import net.sf.jasperreports.export.HtmlExporterConfiguration;
 import net.sf.jasperreports.export.HtmlExporterOutput;
 import net.sf.jasperreports.export.HtmlReportConfiguration;
-import net.sf.jasperreports.web.util.VelocityUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 import java.awt.Color;
+import java.io.StringWriter;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 /**
@@ -49,6 +54,15 @@ import java.util.Set;
 public class GeoMapElementHtmlHandler implements GenericElementHtmlHandler {
 
     private static final String GEOMAP_ELEMENT_HTML_TEMPLATE = "net/sf/dynamicreports/googlecharts/jasper/geomap/GeoMapElementHtmlTemplate.vm";
+    private static final VelocityEngine VELOCITY_ENGINE;
+
+    static {
+        Properties properties = new Properties();
+        properties.setProperty(RuntimeConstants.RESOURCE_LOADERS, "classpath");
+        properties.setProperty("resource.loader.classpath.class", ClasspathResourceLoader.class.getName());
+        VELOCITY_ENGINE = new VelocityEngine(properties);
+        VELOCITY_ENGINE.init();
+    }
 
     /**
      * {@inheritDoc}
@@ -93,22 +107,28 @@ public class GeoMapElementHtmlHandler implements GenericElementHtmlHandler {
         velocityContext.put("colors", stringColors == null ? null : stringColors.toString());
         velocityContext.put("dataset", dataset);
         @SuppressWarnings("unchecked") Exporter<ExporterInput, ? extends HtmlReportConfiguration, ? extends HtmlExporterConfiguration, HtmlExporterOutput> exporter = context.getExporterRef();
-        HtmlExporter htmlExporter2 = exporter instanceof HtmlExporter ? (HtmlExporter) exporter : null;
-        if (htmlExporter2 == null) {
-            velocityContext.put("xhtml", "xhtml");
-            velocityContext.put("elementX", ((HtmlExporter) context.getExporterRef()).toSizeUnit((float) element.getX()));
-            velocityContext.put("elementY", ((HtmlExporter) context.getExporterRef()).toSizeUnit((float) element.getY()));
+        HtmlExporter htmlExporter = exporter instanceof HtmlExporter ? (HtmlExporter) exporter : null;
+        if (htmlExporter != null) {
+            velocityContext.put("elementX", htmlExporter.toSizeUnit((float) element.getX()));
+            velocityContext.put("elementY", htmlExporter.toSizeUnit((float) element.getY()));
         } else {
-            velocityContext.put("elementX", ((HtmlExporter) context.getExporterRef()).toSizeUnit((float) element.getX()));
-            velocityContext.put("elementY", ((HtmlExporter) context.getExporterRef()).toSizeUnit((float) element.getY()));
+            velocityContext.put("elementX", element.getX() + "px");
+            velocityContext.put("elementY", element.getY() + "px");
         }
         velocityContext.put("elementWidth", element.getWidth());
         velocityContext.put("elementHeight", element.getHeight());
 
-        if (element.getModeValue() == ModeEnum.OPAQUE) {
+        if (element.getMode() == ModeEnum.OPAQUE) {
             velocityContext.put("backgroundColor", JRColorUtil.getColorHexa(element.getBackcolor()));
         }
-        return VelocityUtil.processTemplate(GEOMAP_ELEMENT_HTML_TEMPLATE, velocityContext);
+
+        StringWriter writer = new StringWriter();
+        try {
+            VELOCITY_ENGINE.mergeTemplate(GEOMAP_ELEMENT_HTML_TEMPLATE, "UTF-8", velocityContext, writer);
+        } catch (Exception e) {
+            throw new JRRuntimeException(e);
+        }
+        return writer.toString();
     }
 
     private String getColorString(Color color) {

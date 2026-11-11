@@ -39,6 +39,8 @@
 
     <modules>
         <module>dynamicreports-core</module>
+        <module>dynamicreports-adhoc</module>
+        <module>dynamicreports-googlecharts</module>
         <module>dynamicreports-examples</module>
     </modules>
 

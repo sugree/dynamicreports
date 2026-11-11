@@ -23,7 +23,7 @@ package net.sf.dynamicreports.adhoc.exception;
 import net.sf.dynamicreports.adhoc.xmlconfiguration.XmlAdhocConfiguration;
 import net.sf.dynamicreports.report.exception.DRException;
 
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBElement;
 import javax.xml.transform.stream.StreamResult;
 import java.io.OutputStream;
 

@@ -20,21 +20,10 @@
  */
 package net.sf.dynamicreports.googlecharts.jasper;
 
-import net.sf.jasperreports.engine.DefaultJasperReportsContext;
-import net.sf.jasperreports.engine.JRComponentElement;
-import net.sf.jasperreports.engine.component.Component;
-import net.sf.jasperreports.engine.component.ComponentXmlWriter;
-import net.sf.jasperreports.engine.component.ComponentsEnvironment;
-import net.sf.jasperreports.engine.component.XmlDigesterConfigurer;
 import net.sf.jasperreports.engine.export.GenericElementHandler;
 import net.sf.jasperreports.engine.export.GenericElementHandlerBundle;
 import net.sf.jasperreports.engine.export.HtmlExporter;
-import net.sf.jasperreports.engine.util.JRXmlWriteHelper;
-import net.sf.jasperreports.engine.util.XmlNamespace;
-import net.sf.jasperreports.engine.xml.JRXmlWriter;
-import org.apache.commons.digester.Digester;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,65 +33,24 @@ import java.util.Map;
  * @author Ricardo Mariaca
  * 
  */
-public class GoogleChartsHandler implements XmlDigesterConfigurer, ComponentXmlWriter, GenericElementHandlerBundle {
-    private Map<String, Class<? extends Component>> components;
+public class GoogleChartsHandler implements GenericElementHandlerBundle {
     private Map<String, GenericElementHandler> handlers;
 
     /**
      * <p>Constructor for GoogleChartsHandler.</p>
      */
     public GoogleChartsHandler() {
-        components = new HashMap<>();
         handlers = new HashMap<>();
     }
 
     /**
      * <p>add.</p>
      *
-     * @param name           a {@link java.lang.String} object.
-     * @param componentClass a {@link java.lang.Class} object.
-     * @param handler        a {@link net.sf.jasperreports.engine.export.GenericElementHandler} object.
+     * @param name    a {@link java.lang.String} object.
+     * @param handler a {@link net.sf.jasperreports.engine.export.GenericElementHandler} object.
      */
-    public void add(String name, Class<? extends Component> componentClass, GenericElementHandler handler) {
-        components.put(name, componentClass);
+    public void add(String name, GenericElementHandler handler) {
         handlers.put(name, handler);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void configureDigester(Digester digester) {
-        components.keySet().forEach(name -> {
-            String mapPattern = "*/componentElement/googleCharts/" + name;
-            digester.addObjectCreate(mapPattern, components.get(name));
-        });
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isToWrite(JRComponentElement componentElement, JRXmlWriter reportWriter) {
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void writeToXml(JRComponentElement componentElement, JRXmlWriter reportWriter) throws IOException {
-        if (components.containsKey(componentElement.getComponentKey().getName())) {
-            JRXmlWriteHelper writer = reportWriter.getXmlWriteHelper();
-
-            String namespaceURI = componentElement.getComponentKey().getNamespace();
-            String schemaLocation = ComponentsEnvironment.getInstance(DefaultJasperReportsContext.getInstance()).getBundle(namespaceURI).getXmlParser().getPublicSchemaLocation();
-            XmlNamespace namespace = new XmlNamespace(namespaceURI, componentElement.getComponentKey().getNamespacePrefix(), schemaLocation);
-
-            writer.startElement(componentElement.getComponentKey().getName(), namespace);
-
-            writer.closeElement();
-        }
     }
 
     /**
