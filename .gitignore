@@ -100,3 +100,10 @@ DerivedData
 !default.mode2v3
 !default.perspectivev3
 
+# build scripts #
+#################
+compile.sh
+deploy.sh
+release-unattended.sh
+release.sh
+validate.sh
