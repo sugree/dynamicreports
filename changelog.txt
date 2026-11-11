@@ -1,10 +1,47 @@
 DynamicReports Change Log
 =========================
 
+Changes in version 7.0.8 (2026-11-11)
+---------------------------------------------------
+ - upgrade to JasperReports 7.0.8
+ - fixed vulnerable dependencies: jackson 2.18.9, log4j 2.25.5, velocity-engine-core 2.4.1
+ - added dependency-check suppressions for false positive CVE reports
+
+Changes in version 7.0.7 (2026-07-07)
+---------------------------------------------------
+ - upgrade to JasperReports 7.0.7
+
+Changes in version 7.0.6 (2026-05-08)
+---------------------------------------------------
+ - upgrade to JasperReports 7.0.6
+
+Changes in version 7.0.5 (2026-03-12)
+---------------------------------------------------
+ - upgrade to JasperReports 7.0.5
+ - upgrade barcode4j to 2.4.0
+ - added Maven wrapper and deserialization whitelist for test resources
+ - dependency updates (jakarta.xml.bind, commons-text, commons-lang3, logback, junit, hsqldb)
+
 Changes in version 7.0.0 (2026-02-10)
 ---------------------------------------------------
  - Update jasperreport to major version 7
 
+Changes in version 6.20.1 (2023-11-21)
+---------------------------------------------------
+ - dependency updates (poi, spring framework, commons-lang3, groovy, log4j, logback, json, xmlgraphics)
+ - maven plugin updates
+
+Changes in version 6.20.0 (2023-11-21)
+---------------------------------------------------
+ - updates to the JasperReports 6.20 API
+ - dynamicreports-adhoc and dynamicreports-googlecharts are no longer part of the build
+ - removed xalan dependency
+ - reactivated the examples project
+
+Changes in version 6.12.1 (2021-05-05)
+---------------------------------------------------
+ - removed the old commons-lang (v2) dependency
+ - corrected poms to use https repositories
 
 Changes in version 6.12.0 (2020-10-08)
 ---------------------------------------------------
