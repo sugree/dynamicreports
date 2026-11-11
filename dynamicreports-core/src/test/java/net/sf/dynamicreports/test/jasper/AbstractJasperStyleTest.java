@@ -66,25 +66,33 @@ public abstract class AbstractJasperStyleTest extends AbstractJasperTest {
       float right) {
     final JRStyle style = getElementAt(name, index).getStyle();
 
+    // since jasperreports 7.1.0 getLineWidth() returns null when the width is not
+    // set explicitly anywhere in the style chain; such a pen renders no border,
+    // which is equivalent to the 0 default that was returned before
     JRBoxPen pen = style.getLineBox().getTopPen();
-    Assertions.assertEquals(top, pen.getLineWidth().floatValue(), 0);
+    Assertions.assertEquals(top, lineWidth(pen), 0);
     Assertions.assertEquals(topColor, pen.getLineColor());
     Assertions.assertEquals(topLineStyle, pen.getLineStyle());
 
     pen = style.getLineBox().getBottomPen();
-    Assertions.assertEquals(bottom, pen.getLineWidth().floatValue(), 0);
+    Assertions.assertEquals(bottom, lineWidth(pen), 0);
     Assertions.assertEquals(bottomColor, pen.getLineColor());
     Assertions.assertEquals(bottomLineStyle, pen.getLineStyle());
 
     pen = style.getLineBox().getLeftPen();
-    Assertions.assertEquals(left, pen.getLineWidth().floatValue(), 0);
+    Assertions.assertEquals(left, lineWidth(pen), 0);
     Assertions.assertEquals(leftColor, pen.getLineColor());
     Assertions.assertEquals(leftLineStyle, pen.getLineStyle());
 
     pen = style.getLineBox().getRightPen();
-    Assertions.assertEquals(right, pen.getLineWidth().floatValue(), 0);
+    Assertions.assertEquals(right, lineWidth(pen), 0);
     Assertions.assertEquals(rightColor, pen.getLineColor());
     Assertions.assertEquals(rightLineStyle, pen.getLineStyle());
+  }
+
+  private static float lineWidth(JRBoxPen pen) {
+    final Float lineWidth = pen.getLineWidth();
+    return lineWidth == null ? 0f : lineWidth.floatValue();
   }
 
   protected void paddingTest(String name, int index, Integer top, Integer bottom, Integer left,

@@ -132,7 +132,8 @@ public class CustomChartReport {
         @Override
         public Renderable evaluate(ReportParameters reportParameters) {
             JFreeChart chart = ChartFactory.createBoxAndWhiskerChart("Box and Whisker chart", "Category", "Value", dataset, true);
-            return new DrawChartRendererImpl(chart, null);
+            // 72 is the default value of the net.sf.jasperreports.image.dpi property
+            return new DrawChartRendererImpl(chart, null, 72);
         }
     }
 

@@ -43,6 +43,7 @@ import com.lowagie.text.pdf.PdfWriter;
 
 import net.sf.jasperreports.engine.JRGenericPrintElement;
 import net.sf.jasperreports.pdf.GenericElementPdfHandler;
+import net.sf.jasperreports.pdf.classic.producer.StandardPdfProducer;
 import net.sf.jasperreports.pdf.JRPdfExporterContext;
 
 /**
@@ -70,7 +71,7 @@ public class OpenFlashChartPdfHandler implements GenericElementPdfHandler {
     @Override
     public void exportElement(JRPdfExporterContext exporterContext, JRGenericPrintElement element) {
         try {
-            final PdfWriter writer = exporterContext.getPdfWriter();
+            final PdfWriter writer = ((StandardPdfProducer) exporterContext.getPdfProducer()).getPdfWriter();
             PdfIndirectObject swfRef;
             final boolean newContext = !existingContexts.containsKey(exporterContext);
             if (newContext) {
