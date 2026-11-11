@@ -18,7 +18,7 @@
         in 7.0.4 (vendor advisory / GHSA-7c3f-cg9x-f3gr). The NVD CPE match covers the
         Professional edition (affected up to 9.0.2) which does not apply to this artifact.
         ]]></notes>
-        <packageUrl regex="true">^pkg:maven/net\.sf\.jasperreports/jasperreports@(7\.0\.[4-9]|7\.[1-9]|[89]\.\d+|1[0-9]\.\d+)$</packageUrl>
+        <packageUrl regex="true">^pkg:maven/net\.sf\.jasperreports/jasperreports@(7\.0\.[4-9]|7\.[1-9](\.\d+)?|[89]\.\d+|1[0-9]\.\d+)$</packageUrl>
         <vulnerabilityName>CVE-2025-10492</vulnerabilityName>
     </suppress>
 

@@ -1,6 +1,12 @@
 DynamicReports Change Log
 =========================
 
+Changes in version 7.1.1 (2026-11-11)
+---------------------------------------------------
+ - upgrade to JasperReports 7.1.1
+ - dependency updates (jackson-bom 2.23.0, maven plugin updates)
+ - verified OWASP dependency check
+
 Changes in version 7.1.0 (2026-11-11)
 ---------------------------------------------------
  - upgrade to JasperReports 7.1.0
