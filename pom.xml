@@ -48,7 +48,7 @@
         <targetVersion>8</targetVersion>
 
         <!--Dependencies Version,  only if used in mulitple -->
-        <jasperreportsVersion>7.0.7</jasperreportsVersion>
+        <jasperreportsVersion>7.0.8</jasperreportsVersion>
         <jasperreportsGoogleMapsVersion>7.0.1</jasperreportsGoogleMapsVersion>
 
 
@@ -75,6 +75,26 @@
 
     <dependencyManagement>
         <dependencies>
+            <!--Overrides vulnerable transitive versions of jasperreports (CVE-2026-54512/13/14/15)-->
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>2.18.9</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--Overrides vulnerable transitive version of jasperreports-excel-poi (CVE-2026-49844)-->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>2.25.5</version>
+            </dependency>
+            <!--Overrides vulnerable shaded commons-io of velocity-engine-core 2.3 (CVE-2024-47554)-->
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-engine-core</artifactId>
+                <version>2.4.1</version>
+            </dependency>
             <dependency>
                 <groupId>net.sf.jasperreports</groupId>
                 <artifactId>jasperreports</artifactId>
@@ -179,7 +199,7 @@
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-to-slf4j</artifactId>
-                <version>2.25.3</version>
+                <version>2.25.5</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>

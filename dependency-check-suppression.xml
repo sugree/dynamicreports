@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+
+    <!--
+        CVE-2025-10492 (Java deserialization in Jaspersoft Library)
+
+        False positive. Per the vendor advisory (Jaspersoft, CNA):
+        https://community.jaspersoft.com/advisories/jaspersoft-security-advisory-september-16-2025-jaspersoft-library-cve-2025-10492-r6/
+        JasperReports Library Community Edition is affected only in versions 0 - 7.0.3;
+        the fix ships in 7.0.4 (also confirmed by GHSA-7c3f-cg9x-f3gr, patched 7.0.4).
+        Dependency-check matches this Maven artifact against the JasperReports Library
+        *Professional* edition CPE range (0 - 9.0.2), which does not apply to the
+        net.sf.jasperreports:jasperreports community artifact.
+    -->
+    <suppress>
+        <notes><![CDATA[
+        CVE-2025-10492 false positive: JasperReports Library Community Edition is fixed
+        in 7.0.4 (vendor advisory / GHSA-7c3f-cg9x-f3gr). The NVD CPE match covers the
+        Professional edition (affected up to 9.0.2) which does not apply to this artifact.
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/net\.sf\.jasperreports/jasperreports@(7\.0\.[4-9]|7\.[1-9]|[89]\.\d+|1[0-9]\.\d+)$</packageUrl>
+        <vulnerabilityName>CVE-2025-10492</vulnerabilityName>
+    </suppress>
+
+    <!--
+        Spring Framework 6.2.x CVEs reported against spring-core and spring-beans.
+
+        DynamicReports stays on spring-framework 6.2.19 (transitive of
+        net.sf.jasperreports:jasperreports-spring). The 6.2.x OSS line is EOL:
+        6.2.20 is Enterprise-only, the only OSS fix is 7.0.9 (Java 17/Jakarta generation),
+        so there is no available fix version on Maven Central for the 6.2.x line.
+
+        These CVEs affect spring-web, spring-webmvc, spring-webflux, spring-jms,
+        spring-websocket, spring-rsocket, spring-expression and spring-context.
+        DynamicReports only uses spring-core and spring-beans (for the JasperReports
+        SpringExtensionsRegistryFactory bean loading); none of the affected modules
+        or features (web stack, SpEL, JMS, RSocket, WebSocket) are on the classpath
+        or exposed by this library.
+    -->
+    <suppress>
+        <notes><![CDATA[Not applicable: only spring-core/spring-beans are used (CVE affects spring-jms converter). spring 6.2.19 retained by decision; 6.2.x OSS line EOL, no fix on Central.]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-(core|beans)@6\.2\.19$</packageUrl>
+        <vulnerabilityName>CVE-2026-47884</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Not applicable: only spring-core/spring-beans are used (CVE affects Spring MVC/WebFlux SSE stream corruption). spring 6.2.19 retained by decision; 6.2.x OSS line EOL, no fix on Central.]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-(core|beans)@6\.2\.19$</packageUrl>
+        <vulnerabilityName>CVE-2026-47890</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Not applicable: only spring-core/spring-beans are used (CVE affects Spring WebFlux Aalto XML limit). spring 6.2.19 retained by decision; 6.2.x OSS line EOL, no fix on Central.]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-(core|beans)@6\.2\.19$</packageUrl>
+        <vulnerabilityName>CVE-2026-47891</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Not applicable: only spring-core/spring-beans are used (CVE affects WebFlux functional endpoints). spring 6.2.19 retained by decision; 6.2.x OSS line EOL, no fix on Central.]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-(core|beans)@6\.2\.19$</packageUrl>
+        <vulnerabilityName>CVE-2026-47892</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Not applicable: only spring-core/spring-beans are used (CVE affects Spring MVC SSE via functional web framework). spring 6.2.19 retained by decision; 6.2.x OSS line EOL, no fix on Central.]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-(core|beans)@6\.2\.19$</packageUrl>
+        <vulnerabilityName>CVE-2026-59313</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Not applicable: only spring-core/spring-beans are used (CVE affects SpEL compiler bypass, spring-expression). spring 6.2.19 retained by decision; 6.2.x OSS line EOL, no fix on Central.]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-(core|beans)@6\.2\.19$</packageUrl>
+        <vulnerabilityName>CVE-2026-59283</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Not applicable: only spring-core/spring-beans are used (CVE affects Spring WebFlux PartEventHttpMessageReader). spring 6.2.19 retained by decision; 6.2.x OSS line EOL, no fix on Central.]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-(core|beans)@6\.2\.19$</packageUrl>
+        <vulnerabilityName>CVE-2026-47885</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Not applicable: only spring-core/spring-beans are used (CVE affects SpEL power operator DoS, spring-expression). spring 6.2.19 retained by decision; 6.2.x OSS line EOL, no fix on Central.]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-(core|beans)@6\.2\.19$</packageUrl>
+        <vulnerabilityName>CVE-2026-47886</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Not applicable: only spring-core/spring-beans are used (CVE affects spring-rsocket SETUP frame). spring 6.2.19 retained by decision; 6.2.x OSS line EOL, no fix on Central.]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-(core|beans)@6\.2\.19$</packageUrl>
+        <vulnerabilityName>CVE-2026-47888</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Not applicable: only spring-core/spring-beans are used (CVE affects WebFlux Jetty cookie serialization). spring 6.2.19 retained by decision; 6.2.x OSS line EOL, no fix on Central.]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-(core|beans)@6\.2\.19$</packageUrl>
+        <vulnerabilityName>CVE-2026-47889</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Not applicable: only spring-core/spring-beans are used (CVE affects Spring WebFlux WebSocket info disclosure). spring 6.2.19 retained by decision; 6.2.x OSS line EOL, no fix on Central.]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-(core|beans)@6\.2\.19$</packageUrl>
+        <vulnerabilityName>CVE-2026-47893</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Not applicable: only spring-core/spring-beans are used (CVE affects Spring data binding DoS in web stack). spring 6.2.19 retained by decision; 6.2.x OSS line EOL, no fix on Central.]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-(core|beans)@6\.2\.19$</packageUrl>
+        <vulnerabilityName>CVE-2026-59282</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Not applicable: only spring-core/spring-beans are used (CVE affects UrlHandlerFilter open redirect, spring-web). spring 6.2.19 retained by decision; 6.2.x OSS line EOL, no fix on Central.]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-(core|beans)@6\.2\.19$</packageUrl>
+        <vulnerabilityName>CVE-2026-47883</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Not applicable: only spring-core/spring-beans are used (CVE affects UrlFileNameViewController, Spring MVC). spring 6.2.19 retained by decision; 6.2.x OSS line EOL, no fix on Central.]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-(core|beans)@6\.2\.19$</packageUrl>
+        <vulnerabilityName>CVE-2026-47887</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Not applicable: only spring-core/spring-beans are used (CVE affects Errors field-error rendering, Spring MVC). spring 6.2.19 retained by decision; 6.2.x OSS line EOL, no fix on Central.]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-(core|beans)@6\.2\.19$</packageUrl>
+        <vulnerabilityName>CVE-2026-59281</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Not applicable: only spring-core/spring-beans are used (CVE affects FreeMarker integration, spring-context). spring 6.2.19 retained by decision; 6.2.x OSS line EOL, no fix on Central.]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-(core|beans)@6\.2\.19$</packageUrl>
+        <vulnerabilityName>CVE-2026-59280</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Not applicable: only spring-core/spring-beans are used (CVE affects Content-Disposition header splitting, web stack). spring 6.2.19 retained by decision; 6.2.x OSS line EOL, no fix on Central.]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-(core|beans)@6\.2\.19$</packageUrl>
+        <vulnerabilityName>CVE-2026-59314</vulnerabilityName>
+    </suppress>
+
+</suppressions>
